@@ -13,6 +13,7 @@
     "nodemon": "^3.1.0"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "firebase": "^10.10.0",
     "react-firebase-hooks": "^5.1.1"
   }
