@@ -1,17 +1,19 @@
 import { auth } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "./App.css";
-import NavBar from "./components/NavBar";
 import ChatBox from "./components/ChatBox";
 import Welcome from "./components/Welcome";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
     const [user] = useAuthState(auth);
     return (
-        <div className="App">
-            <NavBar />
-            {!user ? <Welcome /> : <ChatBox />}
-        </div>
+        <BrowserRouter>
+        <Routes>
+            <Route exact path="/login" element={<Welcome/>} />
+            <Route exact path="/chat" element={<ChatBox user={user}/>} />
+        </Routes>
+        </BrowserRouter>
     );
 }
 export default App;

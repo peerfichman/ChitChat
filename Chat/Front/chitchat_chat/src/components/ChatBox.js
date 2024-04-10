@@ -35,6 +35,7 @@ const ChatBox = () => {
     }, []);
 
     return (
+        <div className="App">
         <main className="chat-box">
             <div className="messages-wrapper">
                 {messages?.map((message) => (
@@ -45,6 +46,7 @@ const ChatBox = () => {
             <span ref={scroll}></span>
             <SendMessage scroll={scroll} />
         </main>
+        </div>
     );
 };
 
