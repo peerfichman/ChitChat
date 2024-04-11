@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "build",
+    "public": "ChitChat",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -8,7 +8,7 @@
     ],
     "rewrites": [
       {
-        "source": "**",
+        "source": "%RESOURCE_DIR%",
         "destination": "/index.html"
       }
     ]
