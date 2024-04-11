@@ -13,8 +13,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Change directory to project
         run:  ls -la
-              cd ../Chat
-              ls -la
       - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
