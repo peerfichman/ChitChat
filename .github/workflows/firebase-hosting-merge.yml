@@ -11,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Change directory to project
-        run:  cd Chat
       - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
