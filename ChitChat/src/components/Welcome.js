@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import GoogleSignin from "../img/btn_google_signin_dark_pressed_web.png";
 import { auth } from "../firebase";
-import { GoogleAuthProvider, signInWithRedirect, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import NavBar from "./NavBar";
 import { useNavigate } from "react-router-dom";
 
@@ -9,7 +9,7 @@ const Welcome = () => {
   const navigate = useNavigate();
     const googleSignIn = async  () => {
         const provider = new GoogleAuthProvider();
-        const result = await signInWithPopup(auth, provider);
+        await signInWithPopup(auth, provider);
         navigate("/chat")
     };
 
