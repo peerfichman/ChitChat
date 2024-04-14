@@ -4,6 +4,7 @@ import Welcome from './components/Welcome';
 import ExperimentCreatePage from './components/Experiment/ExperimentCreatePage';
 import ExperimentsPage from './components/Experiment/ExperimentsPage';
 import Experiment from './components/Experiment/Experiment';
+import ExperimentMetric from './components/Metrics/ExperimentMetric'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import SetExperiment from './components/Experiment/SetExperiment';
@@ -58,6 +59,11 @@ function App() {
                     path="/experiment/:id"
                     // remove this when we get the experiment from api call
                     element={<Experiment experiments={experiments} />}
+                />
+                <Route
+                    exact
+                    path="/experiment/metric/:id"
+                    element={<ExperimentMetric/>}
                 />
             </Routes>
         </BrowserRouter>
