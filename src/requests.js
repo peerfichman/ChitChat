@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { statusOptions } from './constant';
-import {collection} from "firebase/firestore";
+import { collection } from 'firebase/firestore';
 const baseURL = process.env.REACT_APP_CHICHAT_API_URL;
 
 const getAllExperiments = async () => {
@@ -73,7 +73,7 @@ const createAgent = async (agent, experimentID) => {
     }
 };
 
-const getNeo4jGraph = async(collectionId) => {
+const getNeo4jGraph = async (collectionId) => {
     const URL = `http://localhost:3001/api/sna/get/${collectionId}`;
     try {
         const response = await axios.get(URL);
@@ -82,7 +82,7 @@ const getNeo4jGraph = async(collectionId) => {
         console.error('Failed to fetch metric', error);
         return null;
     }
-}
+};
 
 const getCSV = async (collectionId, experimentName) => {
     const URL = `http://localhost:3001/api/sna/get/${collectionId}/name/${experimentName}`;
@@ -101,7 +101,7 @@ const getCSV = async (collectionId, experimentName) => {
     } catch (error) {
         console.error('Failed to fetch metric', error);
     }
-}
+};
 
 export {
     getAllExperiments,
@@ -110,5 +110,5 @@ export {
     createExperiment,
     createAgent,
     getCSV,
-    getNeo4jGraph
+    getNeo4jGraph,
 };

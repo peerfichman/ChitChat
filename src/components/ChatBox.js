@@ -25,7 +25,7 @@ const ChatBox = () => {
             orderBy('createdAt', 'desc'),
             limit(50),
         );
-
+        console.log('dd');
         const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
             const fetchedMessages = [];
             QuerySnapshot.forEach((doc) => {
