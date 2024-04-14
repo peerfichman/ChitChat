@@ -31,6 +31,7 @@ function App() {
                     path="/experiment/metric/:id"
                     element={<ExperimentMetric />}
                 />
+                <Route exact path="/experiments/:id" element={<Experiment />} />
             </Routes>
         </BrowserRouter>
     );
