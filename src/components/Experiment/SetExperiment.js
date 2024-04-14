@@ -6,29 +6,30 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Stack from 'react-bootstrap/Stack';
-import { db } from '../../firebase';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { createExperiment, createAgent } from '../../requests';
+import { useNavigate } from 'react-router';
 
 const SetExperiment = () => {
     const [expSubject, setExpSubject] = useState('');
     const [expPrompt, setExpPrompt] = useState('');
     const [numAIAgents, setNumAIAgents] = useState(0);
     const [AIAgents, setAIAgents] = useState([]);
+    const navigate = useNavigate();
+
     const newExperiment = async (e) => {
         e.preventDefault();
 
-        await addDoc(collection(db, 'experiments'), {
-            id: uuidv4(),
-            subject: expSubject,
-            openingPrompt: expPrompt,
-            created: serverTimestamp(),
-            aiAgents: AIAgents,
-            active: true,
+        const newExperiment = await createExperiment({
+            expSubject,
+            expPrompt,
         });
-        setExpSubject('');
-        setExpPrompt('');
-        setNumAIAgents(0);
-        setAIAgents([]);
+        console.log(newExperiment);
+        // CONSIDER CREATING A NEW FIREBASE COLLECTION.
+        AIAgents.forEach(async (agent) => {
+            await createAgent(agent, newExperiment.exp_id);
+        });
+
+        navigate('/experiments');
     };
 
     const incAgents = () => {
