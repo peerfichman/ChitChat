@@ -25,11 +25,6 @@ function App() {
                     path="/experiments"
                     element={<ExperimentsPage />}
                 />
-                <Route
-                    exact
-                    path="/experiment/metric/:id"
-                    element={<ExperimentMetric />}
-                />
                 <Route exact path="/experiments/:id" element={<Experiment />} />
                 <Route
                     exact
