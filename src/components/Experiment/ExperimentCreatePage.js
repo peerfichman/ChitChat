@@ -2,13 +2,10 @@ import React, { useState } from 'react';
 import InputBlock from '../InputBlock';
 import Button from '../Button';
 import { v4 as uuidv4 } from 'uuid';
-import AgentCardNew from './AgentCardNew';
-import { createExperiment, createAgent } from '../../requests';
+import AgentCard from './AgentCard';
+import { createExperiment } from '../../requests/experiments';
+import { createAgent } from '../../requests/agents';
 import { useNavigate } from 'react-router';
-
-// import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-// import { db } from '../../firebase';
-// import { v4 as uuidv4 } from 'uuid';
 
 const ExperimentCreatePage = () => {
     const [expSubject, setExpSubject] = useState('');
@@ -18,6 +15,10 @@ const ExperimentCreatePage = () => {
     const navigate = useNavigate();
 
     const newExperiment = async () => {
+        if (!expSubject || !expName) {
+            alert('Please fill the required fields.');
+            return;
+        }
         const newExperiment = await createExperiment({
             expSubject,
             expPrompt,
@@ -33,11 +34,19 @@ const ExperimentCreatePage = () => {
     };
 
     const addAgentBlock = () => {
-        setAIAgents([...AIAgents, { id: uuidv4(), name: '', sentiment: '' }]);
+        setAIAgents([
+            ...AIAgents,
+            { id: uuidv4(), name: '', sentiment: 'Positive', agent_eng: 0.25 },
+        ]);
     };
 
     return (
         <div className="min-h-screen w-full flex flex-col items-center bg-[#1c2c4c] gap-3">
+            <button
+                className="absolute top-5 left-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-12"
+                onClick={() => navigate('/experiments')}>
+                Back
+            </button>
             <h1 className="mb-3 mt-5 text-4xl font-bold text-white">
                 Create Experiment
             </h1>
@@ -46,11 +55,13 @@ const ExperimentCreatePage = () => {
                     title="Name"
                     placeHolder='"Gun License Rules"'
                     setValue={setExpName}
+                    isRequired={true}
                 />
                 <InputBlock
                     title="Subject"
                     placeHolder='"The new rules for a gun license"'
                     setValue={setExpSubject}
+                    isRequired={true}
                 />
                 <InputBlock
                     title="Opening Prompt"
@@ -60,11 +71,11 @@ const ExperimentCreatePage = () => {
                 <Button text="Add Agent" onclick={addAgentBlock} />
                 <div className="grid grid-cols-2 gap-3">
                     {AIAgents.map((agent) => (
-                        <AgentCardNew
+                        <AgentCard
                             key={agent.id}
-                            agentId={agent.id}
+                            relevantAgent={agent}
                             agents={AIAgents}
-                            setAgents={setAIAgents}
+                            setAgent={setAIAgents}
                         />
                     ))}
                 </div>

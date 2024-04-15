@@ -3,7 +3,7 @@ import ExperimentDetail from './ExperimentDetail';
 
 const ExperimentDetails = ({ experiment }) => {
     return (
-        <div className="flex flex-col w-full">
+        <div className="grid grid-cols-2 w-full">
             <ExperimentDetail title="ID" value={experiment.exp_id} />
             <ExperimentDetail
                 title="Created At"
