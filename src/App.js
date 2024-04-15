@@ -13,6 +13,7 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
+<<<<<<< HEAD
                 <Route exact path="/login/:id" element={<Welcome />} />
                 <Route exact path="/chat/:id" element={<ChatBox />} />
                 <Route
@@ -20,9 +21,13 @@ function App() {
                     path="/experiment"
                     element={<ExperimentCreatePage />}
                 />
+=======
+                <Route exact path="/login" element={<Welcome />} />
+                <Route exact path="/chat" element={<ChatBox />} />
+>>>>>>> ba0e3d6 (Refactor constant.js, ChatBox.js, ExperimentDetails.js, SetExperiment.js, ExperimentCard.js, AgentDetails.js, AgentsBlock.js, InputBlock.js, and agents.js)
                 <Route
                     exact
-                    path="/experiment2"
+                    path="/experiment"
                     element={<ExperimentCreatePage />}
                 />
                 <Route
