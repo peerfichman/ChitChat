@@ -22,15 +22,9 @@ function App() {
                 />
                 <Route
                     exact
-                    path="/experiment2"
-                    element={<ExperimentCreatePage />}
-                />
-                <Route
-                    exact
                     path="/experiments"
                     element={<ExperimentsPage />}
                 />
-                <Route exact path="/experiments/:id" element={<Experiment />} />
                 <Route
                     exact
                     path="/experiment/metric/:id"
