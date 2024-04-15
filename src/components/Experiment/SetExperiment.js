@@ -6,7 +6,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Stack from 'react-bootstrap/Stack';
-import { createExperiment, createAgent } from '../../requests';
+import { createExperiment } from '../../requests/experiments';
+import { createAgent } from '../../requests/agents';
 import { useNavigate } from 'react-router';
 
 const SetExperiment = () => {
