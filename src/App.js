@@ -22,6 +22,11 @@ function App() {
                 />
                 <Route
                     exact
+                    path="/experiment2"
+                    element={<ExperimentCreatePage />}
+                />
+                <Route
+                    exact
                     path="/experiments"
                     element={<ExperimentsPage />}
                 />
