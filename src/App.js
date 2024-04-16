@@ -13,8 +13,8 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route exact path="/login" element={<Welcome />} />
-                <Route exact path="/chat" element={<ChatBox />} />
+                <Route exact path="/login/:id" element={<Welcome />} />
+                <Route exact path="/chat/:id" element={<ChatBox />} />
                 <Route
                     exact
                     path="/experiment"

@@ -33,7 +33,6 @@ const Experiment = () => {
                     })
                     .finally(() => {
                         setLoading(false);
-                        console.log('Agents', Agents);
                     });
             });
     }, [id, loading]);
