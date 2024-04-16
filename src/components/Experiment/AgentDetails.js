@@ -10,7 +10,7 @@ const AgentDetails = ({ agent }) => {
             <ExperimentDetail title="Sentiment" value={agent.sentiment} />
             <ExperimentDetail
                 title="Engagement Level"
-                value={agent.level_of_engagement}
+                value={agent.level_of_engagement * 100 + '%'}
             />
         </div>
     );

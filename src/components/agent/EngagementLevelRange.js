@@ -4,7 +4,6 @@ const EngagementLevelRange = ({
     newEngagementLevel,
     modifyEngagementLevel,
 }) => {
-    console.log(newEngagementLevel);
     return (
         <div>
             <label className="block text-lg font-medium ml-1">

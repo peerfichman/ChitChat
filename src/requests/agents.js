@@ -7,7 +7,7 @@ const createAgent = async (agent, experimentID) => {
         const response = await axios.post(URL, {
             agent_name: agent.name,
             agent_sentiment: agent.sentiment,
-            agent_eng: 0.25,
+            agent_eng: agent.agent_eng,
             exp_id: experimentID,
         });
         return response.data;

@@ -14,6 +14,10 @@ const ExperimentDetails = ({ experiment }) => {
                 title="Provoking Prompt"
                 value={experiment.exp_provoking_prompt}
             />
+            <ExperimentDetail
+                title="Login Link"
+                value={`http://localhost:3000/login/${experiment.exp_messages_col_id}`}
+            />
         </div>
     );
 };
