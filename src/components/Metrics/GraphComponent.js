@@ -48,8 +48,6 @@ const GraphComponent = ({ id }) => {
                     edges: links,
                 });
                 setIsEmpty(false);
-
-                console.log(graph.edges, graph.nodes);
             })
             .catch((e) => {
                 console.error('Failed to fetch graph data:', e);
