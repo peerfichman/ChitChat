@@ -30,4 +30,19 @@ const getCSV = async (collectionId, experimentName) => {
         console.error('Failed to fetch metric', error);
     }
 };
-export { getNeo4jGraph, getCSV };
+
+const createGraph = async (collectionId) => {
+    const URL = `${baseURL}sna/create`;
+    try {
+        const response = await axios.post(URL, {
+            collection_id: collectionId,
+            label_name: collectionId,
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Failed to fetch metric', error);
+        return null;
+    }
+};
+
+export { getNeo4jGraph, getCSV, createGraph };
