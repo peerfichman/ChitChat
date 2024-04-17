@@ -13,7 +13,6 @@ const AgentCard = ({ relevantAgent, agents, setAgent }) => {
             }
             return agent;
         });
-        console.log(updatedAgents);
         setAgent(updatedAgents);
     };
 
@@ -28,16 +27,15 @@ const AgentCard = ({ relevantAgent, agents, setAgent }) => {
         if (value < 25) {
             return;
         }
+        value = parseFloat(value) / 100;
         const updatedAgents = agents.map((agent) => {
             if (agent.id === relevantAgent.id) {
-                return { ...agent, agent_eng: parseFloat(value) / 100 };
+                return { ...agent, agent_eng: value };
             }
             return agent;
         });
-        console.log(updatedAgents);
-        setNewEngagementLevel(parseFloat(value) / 100);
-        console.log(newEngagementLevel);
         setAgent(updatedAgents);
+        setNewEngagementLevel(value);
     };
 
     return (
