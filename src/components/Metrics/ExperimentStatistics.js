@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getNeo4jGraph } from '../../requests';
-import StatisticCard from "./StatisticCard";
+import { getNeo4jGraph } from '../../requests/metric';
+import StatisticCard from './StatisticCard';
 
 const GraphStatistics = ({ id }) => {
     const [statistics, setStatistics] = useState({
@@ -21,7 +21,7 @@ const GraphStatistics = ({ id }) => {
                 statistics.Positive_Edges = 0;
                 statistics.Negative_Edges = 0;
                 statistics.Natural_Edges = 0;
-                response.records.forEach(record => {
+                response.records.forEach((record) => {
                     const node1 = record._fields[record._fieldLookup.p];
                     const node2 = record._fields[record._fieldLookup.q];
                     const relationship = record._fields[record._fieldLookup.r];
@@ -54,8 +54,6 @@ const GraphStatistics = ({ id }) => {
                     Negative_Edges: statistics.Negative_Edges,
                     Natural_Edges: statistics.Natural_Edges,
                 });
-
-
             } catch (error) {
                 console.error('Failed to fetch graph data:', error);
             }
@@ -66,17 +64,17 @@ const GraphStatistics = ({ id }) => {
 
     // Render or return statistics as needed
     return (
-        Object.keys(statistics) && <div className="flex flex-wrap justify-center gap-2">
-            {
-                Object.keys(statistics).map((key) => (
+        Object.keys(statistics) && (
+            <div className="flex flex-wrap justify-center gap-2">
+                {Object.keys(statistics).map((key) => (
                     <StatisticCard
                         key={key}
                         name={key} // Assuming you want to display the key
                         count={statistics[key]} // Accessing the count value for each key
                     />
-                ))
-            }
-        </div>
+                ))}
+            </div>
+        )
     );
 };
 

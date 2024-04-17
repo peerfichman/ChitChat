@@ -1,9 +1,8 @@
 import React from 'react';
 import GraphComponent from './GraphComponent';
-import {useParams} from "react-router-dom";
-import ExperimentCard from "../Experiment/ExperimentCard";
-import ExperimentStatistics from "./ExperimentStatistics";
-import DownloadCSVButton from "./DownloadCSVButton";
+import { useParams } from 'react-router-dom';
+import ExperimentStatistics from './ExperimentStatistics';
+import DownloadCSVButton from './DownloadCSVButton';
 
 const ExperimentMetric = () => {
     let { id } = useParams();
@@ -16,13 +15,10 @@ const ExperimentMetric = () => {
                 <ExperimentStatistics id={id} />
             </div>
             <div className="bg-light h-96">
-                <GraphComponent id={id}/>
+                <GraphComponent id={id} />
             </div>
             <DownloadCSVButton collectionId={id} experimentName="messages" />
         </div>
-
-
-
     );
 };
 
