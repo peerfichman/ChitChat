@@ -20,7 +20,6 @@ const ChatBox = () => {
     const [messages, setMessages] = useState([]);
     const scroll = useRef();
     const navigate = useNavigate();
-    const [experimentStatus, setExperimentStatus] = useState(null);
 
     useEffect(() => {
         const socket = new WebSocket(
@@ -46,7 +45,7 @@ const ChatBox = () => {
             setMessages(sortedMessages);
         });
         return () => unsubscribe;
-    }, []);
+    }, [id]);
 
     return user ? (
         <div className="App">

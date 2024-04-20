@@ -66,6 +66,7 @@ const Experiment = () => {
                     <ChangeStatusButton
                         status={experiment.exp_status}
                         setStatus={ChangeExperimentStatus}
+                        experiment={experiment}
                     />
                 </div>
             </div>
