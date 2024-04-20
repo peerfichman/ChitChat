@@ -1,5 +1,5 @@
 import React from 'react';
-import {getCSV} from "../../requests";
+import { getCSV } from '../../requests/metric';
 
 const DownloadCSVButton = ({ collectionId, experimentName }) => {
     const handleDownload = async () => {
