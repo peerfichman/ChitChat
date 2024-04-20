@@ -3,8 +3,8 @@ import ExperimentDetail from './ExperimentDetail';
 
 const AgentDetails = ({ agent }) => {
     return (
-        <div className="flex flex-col rounded-xl p-3 bg-slate-50 border">
-            <p className="font-bold text-gray-800 text-2xl">
+        <div className="flex flex-col rounded-xl p-3 bg-slate-50 border max-w-[230px]">
+            <p className="font-bold text-gray-800 text-2xl truncate">
                 {agent.agent_name}
             </p>
             <ExperimentDetail title="Sentiment" value={agent.sentiment} />

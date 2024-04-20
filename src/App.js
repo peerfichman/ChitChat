@@ -8,35 +8,39 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ExperimentCreatePage from './components/Experiment/ExperimentCreatePage';
+import ExperimentMetric from './components/metrics/ExperimentMetric';
+import SideBar from './components/sideBar/SideBar';
 
 function App() {
     return (
         <BrowserRouter>
-            <Routes>
-                <Route exact path="/login/:id" element={<Welcome />} />
-                <Route exact path="/chat/:id" element={<ChatBox />} />
-                <Route
-                    exact
-                    path="/experiment"
-                    element={<ExperimentCreatePage />}
-                />
-                <Route
-                    exact
-                    path="/experiments"
-                    element={<ExperimentsPage />}
-                />
-                <Route exact path="/experiments/:id" element={<Experiment />} />
-                <Route
-                    exact
-                    path="/experiment/metric/:id"
-                    element={<ExperimentMetric />}
-                />
-                <Route
-                    exact
-                    path="/experiment/metric/:id"
-                    element={<ExperimentMetric/>}
-                />
-            </Routes>
+            <div className="flex flex-row w-full gap-3 bg-slate-100 min-h-screen">
+                <SideBar />
+                <Routes>
+                    <Route exact path="/login/:id" element={<Welcome />} />
+                    <Route exact path="/chat/:id" element={<ChatBox />} />
+                    <Route
+                        exact
+                        path="/experiment"
+                        element={<ExperimentCreatePage />}
+                    />
+                    <Route
+                        exact
+                        path="/experiments"
+                        element={<ExperimentsPage />}
+                    />
+                    <Route
+                        exact
+                        path="/experiments/:id"
+                        element={<Experiment />}
+                    />
+                    <Route
+                        exact
+                        path="/experiment/metric/:id"
+                        element={<ExperimentMetric />}
+                    />
+                </Routes>
+            </div>
         </BrowserRouter>
     );
 }

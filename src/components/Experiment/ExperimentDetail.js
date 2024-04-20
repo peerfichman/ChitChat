@@ -2,7 +2,7 @@ import React from 'react';
 
 const ExperimentDetail = ({ title, value }) => {
     return (
-        <div className="p-2">
+        <div className="p-2 max-w-96">
             <p className="mb-1 text-lg font-bold">{title}</p>
             <p>{value}</p>
         </div>

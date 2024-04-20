@@ -71,6 +71,7 @@ const GraphComponent = ({ id }) => {
 
                 const nodesList = Array.from(nodesMap.values());
 
+
                 setGraph({
                     nodes: nodesList,
                     edges: links,
