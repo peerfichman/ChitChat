@@ -15,6 +15,7 @@ const averageCalc = (data) => {
     const dataSum = dataValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
     return dataSum/dataValues.length;
 }
+//Statistics Component
 const GraphStatistics = ({ id }) => {
 
     const [statistics, setStatistics] = useState({
