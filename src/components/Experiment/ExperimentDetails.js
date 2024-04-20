@@ -1,6 +1,6 @@
 import React from 'react';
 import ExperimentDetail from './ExperimentDetail';
-
+import { statusOptions } from '../../constant';
 const ExperimentDetails = ({ experiment }) => {
     return (
         <div className="grid grid-cols-2 w-full">
@@ -14,10 +14,17 @@ const ExperimentDetails = ({ experiment }) => {
                 title="Provoking Prompt"
                 value={experiment.exp_provoking_prompt}
             />
-            <ExperimentDetail
-                title="Login Link"
-                value={`http://localhost:3000/login/${experiment.exp_messages_col_id}`}
-            />
+            {experiment.exp_status == statusOptions.RUNNING ? (
+                <ExperimentDetail
+                    title="Login Link"
+                    value={`http://localhost:3000/login/${experiment.exp_messages_col_id}`}
+                />
+            ) : (
+                <ExperimentDetail
+                    title="Login Link"
+                    value="Start the experiment to get the login link"
+                />
+            )}
         </div>
     );
 };

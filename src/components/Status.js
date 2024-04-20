@@ -9,7 +9,7 @@ const colorDict = {
 };
 
 const sizeDict = {
-    small: 'py-1 text-xs w-1/3',
+    small: 'py-2 text-md w-1/2',
     large: 'py-2 text-lg w-1/4',
 };
 

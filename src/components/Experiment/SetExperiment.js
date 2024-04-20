@@ -24,7 +24,6 @@ const SetExperiment = () => {
             expSubject,
             expPrompt,
         });
-        console.log(newExperiment);
         // CONSIDER CREATING A NEW FIREBASE COLLECTION.
         AIAgents.forEach(async (agent) => {
             await createAgent(agent, newExperiment.exp_id);

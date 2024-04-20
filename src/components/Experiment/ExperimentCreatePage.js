@@ -6,7 +6,7 @@ import AgentCard from './AgentCard';
 import { createExperiment } from '../../requests/experiments';
 import { createAgent } from '../../requests/agents';
 import { useNavigate } from 'react-router';
-
+import SideBar from '../sideBar/SideBar';
 const ExperimentCreatePage = () => {
     const [expSubject, setExpSubject] = useState('');
     const [expPrompt, setExpPrompt] = useState('');
@@ -40,13 +40,8 @@ const ExperimentCreatePage = () => {
     };
 
     return (
-        <div className="min-h-screen w-full flex flex-col items-center bg-[#1c2c4c] gap-3">
-            <button
-                className="absolute top-5 left-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-12"
-                onClick={() => navigate('/experiments')}>
-                Back
-            </button>
-            <h1 className="mb-3 mt-5 text-4xl font-bold text-white">
+        <div className="min-h-screen w-full flex flex-col items-center bg-slate-100 gap-3">
+            <h1 className="mb-4 mt-5 text-5xl font-bold text-black">
                 Create Experiment
             </h1>
             <div className="w-full max-w-lg bg-white p-4 rounded-lg shadow-lg flex flex-col gap-3">
@@ -80,7 +75,7 @@ const ExperimentCreatePage = () => {
                 </div>
             </div>
             <button
-                className="bg-blue-500 text-white py-3 px-4 rounded-lg"
+                className="bg-blue-500 text-white py-3 px-4 rounded-lg my-3"
                 onClick={newExperiment}>
                 Create Experiment
             </button>

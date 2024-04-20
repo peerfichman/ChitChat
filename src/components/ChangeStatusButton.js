@@ -17,23 +17,11 @@ const ChangeStatusButton = ({ status, setStatus, experiment }) => {
             setStatus('Running');
         } else if (status === statusOptions.RUNNING) {
             setStatus('Completed');
-            console.log(experiment.exp_messages_col_id);
             createGraph(experiment.exp_messages_col_id);
         } else if (status === statusOptions.COMPLETED) {
-            // setStatus('Running');
             navigate(`/experiment/metric/${experiment.exp_messages_col_id}`);
         }
     };
-
-    // return status === statusOptions.COMPLETED ? (
-    //     <></>
-    // ) : (
-    //     <button
-    //         onClick={handleStatusChange}
-    //         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    //         {statusDict[status]}
-    //     </button>
-    // );
 
     return (
         <button

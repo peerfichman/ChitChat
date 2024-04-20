@@ -40,8 +40,6 @@ const GraphComponent = ({ id }) => {
 
                 const nodeArray = Array.from(nodesMap.values());
 
-                console.log(nodeArray);
-                console.log(links);
                 // Convert Map values to an array for the nodes
                 setGraph({
                     nodes: nodeArray,

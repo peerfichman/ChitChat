@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import Status from '../Status';
-import { useNavigate } from 'react-router';
+import Loading from '../Loading';
 import { useEffect, useState } from 'react';
 import {
     getExperimentById,
@@ -11,34 +11,46 @@ import { getAllAgents } from '../../requests/agents';
 import ExperimentDetails from './ExperimentDetails';
 import ChangeStatusButton from '../ChangeStatusButton';
 import AgentsBlock from './AgentsBlock';
-
+import LoadingAgents from '../agent/LoadingAgents';
 const Experiment = () => {
-    const navigate = useNavigate();
     let { id } = useParams();
 
     const [experiment, setExperiment] = useState(null);
     const [loading, setLoading] = useState(true);
     const [Agents, setAgents] = useState([]);
+    const [loadingAgents, setLoadingAgents] = useState(true);
+
     useEffect(() => {
         getExperimentById(id)
-            .then((data) => setExperiment(data))
+            .then((data) => {
+                const date = new Date(data.exp_created_at);
+                const stringDate =
+                    String(date.getDate()) +
+                    '/' +
+                    String(date.getMonth() + 1) +
+                    '/' +
+                    String(date.getFullYear());
+
+                setExperiment({ ...data, exp_created_at: stringDate });
+            })
             .catch((error) => {
                 console.error('Failed to fetch experiment', error);
             })
             .finally(() => {
+                setLoading(false);
                 getAllAgents(id)
                     .then((data) => setAgents(data))
                     .catch((error) => {
                         console.error('Failed to fetch agents', error);
                     })
                     .finally(() => {
-                        setLoading(false);
+                        setLoadingAgents(false);
                     });
             });
     }, [id, loading]);
 
-    if (loading && !experiment) {
-        return <div>Loading...</div>;
+    if (loading) {
+        return <Loading />;
     }
 
     const ChangeExperimentStatus = (status) => {
@@ -47,12 +59,7 @@ const Experiment = () => {
     };
 
     return experiment ? (
-        <div className="min-h-screen w-full flex flex-col items-center bg-[#1c2c4c]">
-            <button
-                className="absolute top-5 left-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-12"
-                onClick={() => navigate('/experiments')}>
-                Back
-            </button>
+        <div className="min-h-screen w-full flex flex-col items-center bg-slate-100">
             <div className="flex flex-col shadow-sm rounded-xl p-4 bg-white mt-20 min-w-[600px] gap-4">
                 <h1 className="font-bold text-gray-800 text-5xl">
                     {experiment.exp_name}
@@ -61,7 +68,11 @@ const Experiment = () => {
                 <div className="w-full">
                     <ExperimentDetails experiment={experiment} />
                 </div>
-                <AgentsBlock agents={Agents} />
+                {loadingAgents ? (
+                    <LoadingAgents />
+                ) : (
+                    <AgentsBlock agents={Agents} />
+                )}
                 <div className="flex justify-end">
                     <ChangeStatusButton
                         status={experiment.exp_status}
