@@ -1,25 +1,26 @@
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
+import { statusOptions } from '../constant';
 
 const colorDict = {
-    'Not Started': 'bg-red-200 text-red-800',
-    'In Progress': 'bg-yellow-200 text-yellow-800',
-    Completed: 'bg-green-200 text-green-800',
+    [statusOptions.NOT_STARTED]: 'bg-red-200 text-red-800',
+    [statusOptions.RUNNING]: 'bg-yellow-200 text-yellow-800',
+    [statusOptions.COMPLETED]: 'bg-green-200 text-green-800',
 };
 
 const sizeDict = {
-    small: 'py-1 px-2 text-xs w-1/3',
-    large: 'py-3 px-4 text-sm',
+    small: 'py-1 text-xs w-1/3',
+    large: 'py-2 text-lg w-1/4',
 };
 
 const Status = ({ status, size = 'large' }) => {
     let className = twMerge(
-        'inline-flex items-center gap-x-2 font-semibold rounded-lg border border-transparent disabled:opacity-50 disabled:pointer-events-none',
+        ' flex justify-center rounded-lg font-semibold',
         colorDict[status],
     );
 
     className = twMerge(className, sizeDict[size]);
-    return <button className={className}>{status}</button>;
+    return <div className={className}>{status}</div>;
 };
 
 export default Status;

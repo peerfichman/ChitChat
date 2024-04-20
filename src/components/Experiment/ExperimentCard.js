@@ -6,14 +6,13 @@ const ExperimentCard = ({ experiment }) => {
 
     return (
         <div
-            className="flex flex-col bg-gray-50 hover:bg-gray-200 border shadow-sm rounded-xl p-4 w-[300px] gap-3  cursor-pointer"
-            onClick={() => navigate(`/experiment/${experiment.id}`)}>
-            <h3 className="text-lg font-bold text-gray-800 ">
-                {experiment.name} #{experiment.id}
+            className="flex flex-col items-center bg-gray-50 hover:bg-gray-200 border shadow-sm rounded-xl p-4 w-[300px] gap-3  cursor-pointer"
+            onClick={() => navigate(`/experiments/${experiment.exp_id}`)}>
+            
+            <h3 className="text-2xl font-bold text-gray-800 ">
+                {experiment.exp_name}
             </h3>
-            <Status status={experiment.status} size="small" />
-
-            <p className="mt-2 text-gray-500 ">{experiment.subject}</p>
+            <Status status={experiment.exp_status} size="small" />
         </div>
     );
 };

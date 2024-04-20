@@ -12,20 +12,28 @@ import SendMessage from './SendMessage';
 import { auth } from '../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const ChatBox = () => {
+    const { id } = useParams();
     const [user] = useAuthState(auth);
     const [messages, setMessages] = useState([]);
     const scroll = useRef();
     const navigate = useNavigate();
 
     useEffect(() => {
+        const socket = new WebSocket(
+            process.env.REACT_APP_EXPERIMENT_SOCKET_URL,
+        );
+        socket.addEventListener('open', () => {
+            console.log('Connected to the WS Server');
+        });
+
         const q = query(
-            collection(db, 'messages'),
+            collection(db, id),
             orderBy('createdAt', 'desc'),
             limit(50),
         );
-
         const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
             const fetchedMessages = [];
             QuerySnapshot.forEach((doc) => {
@@ -37,7 +45,7 @@ const ChatBox = () => {
             setMessages(sortedMessages);
         });
         return () => unsubscribe;
-    }, []);
+    }, [id]);
 
     return user ? (
         <div className="App">
@@ -49,7 +57,7 @@ const ChatBox = () => {
                 </div>
                 {/* when a new message enters the chat, the screen scrolls down to the scroll div */}
                 <span ref={scroll}></span>
-                <SendMessage scroll={scroll} />
+                <SendMessage scroll={scroll} id={id} />
             </main>
         </div>
     ) : (

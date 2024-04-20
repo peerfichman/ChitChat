@@ -1,61 +1,78 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import Status from '../Status';
-// we will get the experiment from the api call not from props
 import { useNavigate } from 'react-router';
+import { useEffect, useState } from 'react';
+import {
+    getExperimentById,
+    updateExperimentStatus,
+} from '../../requests/experiments';
+import { getAllAgents } from '../../requests/agents';
+import ExperimentDetails from './ExperimentDetails';
+import ChangeStatusButton from '../ChangeStatusButton';
+import AgentsBlock from './AgentsBlock';
 
-const Experiment = ({ experiments }) => {
+const Experiment = () => {
+    const navigate = useNavigate();
     let { id } = useParams();
 
-    const navigate = useNavigate();
+    const [experiment, setExperiment] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [Agents, setAgents] = useState([]);
+    useEffect(() => {
+        getExperimentById(id)
+            .then((data) => setExperiment(data))
+            .catch((error) => {
+                console.error('Failed to fetch experiment', error);
+            })
+            .finally(() => {
+                getAllAgents(id)
+                    .then((data) => setAgents(data))
+                    .catch((error) => {
+                        console.error('Failed to fetch agents', error);
+                    })
+                    .finally(() => {
+                        setLoading(false);
+                    });
+            });
+    }, [id, loading]);
 
-    const onClickNext = () => {
-        id = (parseInt(id) + 1) % experiments.length;
-        navigate(`/experiment/${parseInt(id)}`);
+    if (loading && !experiment) {
+        return <div>Loading...</div>;
+    }
+
+    const ChangeExperimentStatus = (status) => {
+        setExperiment({ ...experiment, exp_status: status });
+        updateExperimentStatus(experiment, status);
     };
 
-    const onClickPrev = () => {
-        id = parseInt(id) - 1;
-        if (parseInt(id) < 0) {
-            id = experiments.length - 1;
-        }
-        navigate(`/experiment/${parseInt(id)}`);
-    };
-
-    return (
-        <div className="min-h-screen w-full flex flex-col items-center bg-[#1c2c4c] gap-3 ">
+    return experiment ? (
+        <div className="min-h-screen w-full flex flex-col items-center bg-[#1c2c4c]">
             <button
                 className="absolute top-5 left-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-12"
-                onClick={() => navigate('/experiment')}>
+                onClick={() => navigate('/experiments')}>
                 Back
             </button>
-            <div className="flex flex-row gap-5 mt-20 border bg-white p-4 ">
-                <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-12"
-                    onClick={() => onClickPrev()}>
-                    prev
-                </button>
-                <div className="flex flex-col shadow-sm rounded-xl p-4 gap-3">
-                    <h1 className="font-bold text-gray-800 text-5xl">
-                        {experiments[id].name}
-                    </h1>
-                    <p className="mt-2 text-xs font-medium uppercase text-gray-500">
-                        <Status status={experiments[id].status} />
-                    </p>
-                    <p className="mt-2 text-3xl font-medium uppercase text-gray-500">
-                        #{experiments[id].id}
-                    </p>
-                    <p className="mt-4 text-gray-500 ">
-                        {experiments[id].subject}
-                    </p>
+            <div className="flex flex-col shadow-sm rounded-xl p-4 bg-white mt-20 min-w-[600px] gap-4">
+                <h1 className="font-bold text-gray-800 text-5xl">
+                    {experiment.exp_name}
+                </h1>
+                <Status status={experiment.exp_status} />
+                <div className="w-full">
+                    <ExperimentDetails experiment={experiment} />
                 </div>
-                <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-12"
-                    onClick={() => onClickNext()}>
-                    Next
-                </button>
+                <AgentsBlock agents={Agents} />
+                <div className="flex justify-end">
+                    <ChangeStatusButton
+                        status={experiment.exp_status}
+                        setStatus={ChangeExperimentStatus}
+                        experiment={experiment}
+                    />
+                </div>
             </div>
         </div>
+    ) : (
+        <div>Experiment not found</div>
     );
 };
 export default Experiment;
