@@ -8,7 +8,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ExperimentCreatePage from './components/Experiment/ExperimentCreatePage';
-import ExperimentMetric from './components/metrics/ExperimentMetric';
 
 function App() {
     return (
