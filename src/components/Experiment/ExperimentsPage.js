@@ -4,9 +4,8 @@ import { useState } from 'react';
 import { getAllExperiments } from '../../requests/experiments';
 import { useNavigate } from 'react-router';
 import Loading from '../Loading';
-import { GrFilter } from 'react-icons/gr';
-import { BiSortAlt2 } from 'react-icons/bi';
-import OverlayDropDown from '../OverlayDropDown';
+import SortComponent from './SortComponent';
+import FilterComponent from './FilterComponent';
 
 const ExperimentsPage = () => {
     const [experiments, setExperiments] = useState([]);
@@ -15,11 +14,21 @@ const ExperimentsPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('fetching experiments');
         getAllExperiments()
             .then((data) => {
-                setExperiments(data);
-                setFilteredExperiments(data);
+                const newExperiments = data.map((experiment) => {
+                    const date = new Date(experiment.exp_created_at);
+                    const stringDate =
+                        String(date.getDate()) +
+                        '/' +
+                        String(date.getMonth() + 1) +
+                        '/' +
+                        String(date.getFullYear());
+                    return { ...experiment, exp_created_at: stringDate };
+                });
+                console.log(newExperiments);
+                setExperiments(newExperiments);
+                setFilteredExperiments(newExperiments);
             })
             .catch((error) => {
                 console.error('Failed to fetch experiments', error);
@@ -40,18 +49,29 @@ const ExperimentsPage = () => {
         setFilteredExperiments(filtered);
     };
 
-    const handleSort = (isAscending) => {
+    const handleSort = (isAscending, key) => {
         let sorted;
         if (isAscending) {
             sorted = [...filteredExperiments].sort((a, b) => {
-                return a.exp_name.localeCompare(b.exp_name);
+                return a[key].localeCompare(b[key]);
             });
         } else {
             sorted = [...filteredExperiments].sort((a, b) => {
-                return b.exp_name.localeCompare(a.exp_name);
+                return b[key].localeCompare(a[key]);
             });
         }
         setFilteredExperiments(sorted);
+    };
+
+    const handleFilter = (status = '') => {
+        if (status) {
+            const filtered = experiments.filter((experiment) => {
+                return experiment.exp_status === status;
+            });
+            setFilteredExperiments(filtered);
+        } else {
+            setFilteredExperiments(experiments);
+        }
     };
 
     if (loading) {
@@ -70,8 +90,8 @@ const ExperimentsPage = () => {
                     Add Experiment
                 </button>
             </div>
-            <div>
-                <div className="w-full flex items-center justify-between mb-3">
+            <div className="">
+                <div className="min-w-[916px] flex items-center justify-between mb-3">
                     <input
                         type="text"
                         placeholder="Search"
@@ -79,23 +99,8 @@ const ExperimentsPage = () => {
                         onChange={handleSearch}
                     />
                     <div className="flex gap-2">
-                        <OverlayDropDown Icon={BiSortAlt2}>
-                            <div
-                                className="hover:bg-slate-200 px-2 py-1"
-                                onClick={() => handleSort(true)}>
-                                A-Z
-                            </div>
-                            <div
-                                className="hover:bg-slate-200 px-2 py-1"
-                                onClick={() => handleSort(false)}>
-                                Z-A
-                            </div>
-                        </OverlayDropDown>
-                        <OverlayDropDown Icon={GrFilter}>
-                            <button>Option 1</button>
-                            <button>Option 2</button>
-                            <button>Option 3</button>
-                        </OverlayDropDown>
+                        <SortComponent handleSort={handleSort} />
+                        <FilterComponent handleFilter={handleFilter} />
                     </div>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
