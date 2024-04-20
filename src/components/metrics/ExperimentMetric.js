@@ -14,7 +14,7 @@ const ExperimentMetric = ({name}) => {
             <div className="h-fit">
                 <ExperimentStatistics id={id} />
             </div>
-            <div className="bg-light h-96 rounded-3">
+            <div className="bg-light h-96 rounded-2">
                 <GraphComponent id={id} />
             </div>
             <DownloadCSVButton collectionId={id} experimentName="messages" />
