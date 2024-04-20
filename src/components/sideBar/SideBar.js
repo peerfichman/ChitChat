@@ -17,11 +17,6 @@ const sideBarItems = [
             },
         ],
     },
-    {
-        title: 'Metrics',
-        Icon: AiOutlineExperiment,
-        path: '/metrics',
-    },
 ];
 
 const SideBar = () => {

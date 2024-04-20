@@ -20,7 +20,6 @@ const ChatBox = () => {
     const [messages, setMessages] = useState([]);
     const scroll = useRef();
     const navigate = useNavigate();
-    const [experimentStatus, setExperimentStatus] = useState(null);
 
     useEffect(() => {
         const socket = new WebSocket(

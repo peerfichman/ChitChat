@@ -6,10 +6,11 @@ const OverlayDropDown = ({ Icon, children }) => {
     return (
         <button
             className="border p-2 rounded hover:bg-slate-200"
-            onClick={() => setIsOpen((prev) => !prev)}>
+            onMouseEnter={() => setIsOpen(true)}
+            onMouseLeave={() => setIsOpen(false)}>
             <Icon className="size-6" />
             {isOpen && (
-                <div className="flex flex-col absolute bg-white border border-gray-300 rounded">
+                <div className="flex flex-col absolute bg-white border border-gray-300 rounded items-start">
                     {children}
                 </div>
             )}
