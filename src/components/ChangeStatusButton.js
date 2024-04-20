@@ -1,11 +1,15 @@
 import React from 'react';
 import { statusOptions } from '../constant';
+import { createGraph } from '../requests/metric';
+import { useNavigate } from 'react-router-dom';
 
-const ChangeStatusButton = ({ status, setStatus }) => {
+const ChangeStatusButton = ({ status, setStatus, experiment }) => {
+    const navigate = useNavigate();
+
     const statusDict = {
         [statusOptions.NOT_STARTED]: 'Run Experiment',
         [statusOptions.RUNNING]: 'End Experiment',
-        [statusOptions.COMPLETED]: 'Restart Experiment',
+        [statusOptions.COMPLETED]: 'See Results',
     };
 
     const handleStatusChange = () => {
@@ -13,9 +17,11 @@ const ChangeStatusButton = ({ status, setStatus }) => {
             setStatus('Running');
         } else if (status === statusOptions.RUNNING) {
             setStatus('Completed');
+            console.log(experiment.exp_messages_col_id);
+            createGraph(experiment.exp_messages_col_id);
         } else if (status === statusOptions.COMPLETED) {
-            // THIS IF SHOULD BE REMOVED IN THE FINAL IMPLEMENTATION
-            setStatus('Not Started');
+            // setStatus('Running');
+            navigate(`/experiment/metric/${experiment.exp_messages_col_id}`);
         }
     };
 
