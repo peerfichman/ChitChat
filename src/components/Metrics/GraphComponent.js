@@ -15,7 +15,7 @@ const GraphComponent = ({ id }) => {
                 response.records.forEach((record) => {
                     const node1 = record._fields[record._fieldLookup.p];
                     const node2 = record._fields[record._fieldLookup.q];
-                    // const relationship = record._fields[record._fieldLookup.r];
+                    const relationship = record._fields[record._fieldLookup.r];
 
                     const node1Id = `${node1.identity.low}_${node1.identity.high}`;
                     const node2Id = `${node2.identity.low}_${node2.identity.high}`;
@@ -24,7 +24,11 @@ const GraphComponent = ({ id }) => {
                     if (!nodesMap.has(node1Id)) {
                         nodesMap.set(node1Id, {
                             id: node1Id,
-                            name: node1.properties.name,
+                            label: node1.properties.name,
+                            sentimentSum: 0,
+                            sentimentCount: 0,
+                            sentiment: 0,
+                            color: '#b2b4b3'
                         });
                     }
                     if (!nodesMap.has(node2Id)) {
