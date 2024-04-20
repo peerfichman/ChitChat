@@ -1,33 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { getNeo4jGraph } from '../../requests/metric';
 import StatisticCard from './StatisticCard';
-import Graph from 'graphology';
-import { density } from 'graphology-metrics/graph/density';
+import Graph  from 'graphology';
+import {density} from 'graphology-metrics/graph/density';
 import diameter from 'graphology-metrics/graph/diameter';
 import eccentricity from 'graphology-metrics/node/eccentricity';
 import betweennessCentrality from 'graphology-metrics/centrality/betweenness';
 import closenessCentrality from 'graphology-metrics/centrality/closeness';
 import { degreeCentrality } from 'graphology-metrics/centrality/degree';
 
+
 const averageCalc = (data) => {
     const dataValues = Object.values(data);
-    const dataSum = dataValues.reduce(
-        (accumulator, currentValue) => accumulator + currentValue,
-        0,
-    );
-    return dataSum / dataValues.length;
-};
+    const dataSum = dataValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    return dataSum/dataValues.length;
+}
 const GraphStatistics = ({ id }) => {
+
     const [statistics, setStatistics] = useState({
         Nodes: 0,
         Edges: 0,
         Positive_Edges: 0,
         Negative_Edges: 0,
         Natural_Edges: 0,
-    });
+    })
 
     useEffect(() => {
-        const graph = new Graph({ multi: true });
+        const graph = new Graph({multi: true});
         const fetchData = async () => {
             try {
                 const response = await getNeo4jGraph(id);
@@ -52,12 +51,12 @@ const GraphStatistics = ({ id }) => {
                     const node1Id = `${node1.identity.low}${node1.identity.high}`;
                     const node2Id = `${node2.identity.low}${node2.identity.high}`;
 
-                    if (!nodesSet.has(node1Id)) {
+                    if(!nodesSet.has(node1Id)) {
                         graph.addNode(node1Id);
                         nodesSet.add(node1Id);
                     }
 
-                    if (!nodesSet.has(node2Id)) {
+                    if(!nodesSet.has(node2Id)) {
                         graph.addNode(node2Id);
                         nodesSet.add(node2Id);
                     }
@@ -76,22 +75,17 @@ const GraphStatistics = ({ id }) => {
                     }
                 });
                 let radius = eccentricity(graph, Array.from(nodesSet)[0]);
-                nodesSet.forEach((node) => {
+                nodesSet.forEach(node => {
                     let currRadius = eccentricity(graph, node);
-                    if (currRadius < radius) {
+                    if(currRadius < radius){
                         radius = currRadius;
                     }
-                });
+                })
 
-                const betweennessCentralisesAvg = averageCalc(
-                    betweennessCentrality(graph, { getEdgeWeight: null }),
-                );
-                const closenessCentralisesAvg = averageCalc(
-                    closenessCentrality(graph),
-                );
-                const degreeCentralisesAvg = averageCalc(
-                    degreeCentrality(graph),
-                );
+                const betweennessCentralisesAvg = averageCalc(betweennessCentrality(graph, {getEdgeWeight: null}));
+                const closenessCentralisesAvg  = averageCalc(closenessCentrality(graph));
+                const degreeCentralisesAvg = averageCalc(degreeCentrality(graph));
+
 
                 // Update statistics state
                 setStatistics({
@@ -106,7 +100,7 @@ const GraphStatistics = ({ id }) => {
                     Density: density(graph),
                     Avg_Betweenness_Centrality: betweennessCentralisesAvg,
                     Avg_Closeness_Centrality: closenessCentralisesAvg,
-                    Avg_Degree_Centrality: degreeCentralisesAvg,
+                    Avg_Degree_Centrality: degreeCentralisesAvg
                 });
             } catch (error) {
                 console.error('Failed to fetch graph data:', error);
