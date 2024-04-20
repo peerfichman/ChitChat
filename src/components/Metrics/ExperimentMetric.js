@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import ExperimentStatistics from './ExperimentStatistics';
 import DownloadCSVButton from './DownloadCSVButton';
 
-//the main component
 const ExperimentMetric = ({name}) => {
     let { id } = useParams();
     return (

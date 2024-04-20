@@ -3,7 +3,6 @@ import Graph from 'react-graph-vis';
 import { getNeo4jGraph } from '../../requests/metric';
 import { v4 as uuidv4 } from 'uuid';
 
-//Graph Component
 const GraphComponent = ({ id }) => {
     const [graph, setGraph] = useState({ nodes: [], edges: [] });
     const [isEmpty, setIsEmpty] = useState(true);
