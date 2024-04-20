@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Graph from 'react-graph-vis';
-import {getCSV, getNeo4jGraph} from '../../requests/metric';
+import { getNeo4jGraph } from '../../requests/metric';
 import { v4 as uuidv4 } from 'uuid';
 
 const GraphComponent = ({ id }) => {
     const [graph, setGraph] = useState({ nodes: [], edges: [] });
     const [isEmpty, setIsEmpty] = useState(true);
-
 
     useEffect(() => {
         getNeo4jGraph(id)
