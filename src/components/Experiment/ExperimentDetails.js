@@ -17,7 +17,7 @@ const ExperimentDetails = ({ experiment }) => {
             {experiment.exp_status == statusOptions.RUNNING ? (
                 <ExperimentDetail
                     title="Login Link"
-                    value={`http://localhost:3000/login/${experiment.exp_messages_col_id}`}
+                    value={`https://chitchat-chat-d9fd9.web.app/login/${experiment.exp_messages_col_id}`}
                 />
             ) : (
                 <ExperimentDetail

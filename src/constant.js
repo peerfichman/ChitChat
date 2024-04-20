@@ -2,6 +2,7 @@ const statusOptions = Object.freeze({
     NOT_STARTED: 'Not Started',
     RUNNING: 'Running',
     COMPLETED: 'Completed',
+    PROCESSING: 'Processing'
 });
 
 const ExperimentVariables = Object.freeze({

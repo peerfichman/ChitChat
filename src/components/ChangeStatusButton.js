@@ -9,6 +9,7 @@ const ChangeStatusButton = ({ status, setStatus, experiment }) => {
     const statusDict = {
         [statusOptions.NOT_STARTED]: 'Run Experiment',
         [statusOptions.RUNNING]: 'End Experiment',
+        [statusOptions.PROCESSING]: 'Processing...',
         [statusOptions.COMPLETED]: 'See Results',
     };
 
@@ -16,8 +17,12 @@ const ChangeStatusButton = ({ status, setStatus, experiment }) => {
         if (status === statusOptions.NOT_STARTED) {
             setStatus('Running');
         } else if (status === statusOptions.RUNNING) {
-            setStatus('Completed');
-            createGraph(experiment.exp_messages_col_id);
+            setStatus('Processing');
+            console.log("processing");
+            createGraph(experiment.exp_messages_col_id).then(() => {
+                setStatus('Completed');
+                console.log("completed");
+            });
         } else if (status === statusOptions.COMPLETED) {
             navigate(`/experiment/metric/${experiment.exp_messages_col_id}`);
         }
