@@ -3,7 +3,7 @@ import ChatBox from './components/ChatBox';
 import Welcome from './components/Welcome';
 import ExperimentsPage from './components/Experiment/ExperimentsPage';
 import Experiment from './components/Experiment/Experiment';
-import ExperimentMetric from './components/metrics/ExperimentMetric';
+import ExperimentMetric from './components/Metrics/ExperimentMetric';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
