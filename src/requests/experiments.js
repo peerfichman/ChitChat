@@ -41,7 +41,7 @@ const createExperiment = async (experiment) => {
     try {
         const response = await axios.post(URL, {
             exp_subject: experiment.expSubject,
-            exp_prompt: experiment.expPrompt,
+            exp_provoking_prompt: experiment.expPrompt,
             exp_name: experiment.expName,
             exp_status: statusOptions.NOT_STARTED,
         });

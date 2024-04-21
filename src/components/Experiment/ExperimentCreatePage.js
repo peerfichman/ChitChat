@@ -6,7 +6,7 @@ import AgentCard from './AgentCard';
 import { createExperiment } from '../../requests/experiments';
 import { createAgent } from '../../requests/agents';
 import { useNavigate } from 'react-router';
-import SideBar from '../sideBar/SideBar';
+
 const ExperimentCreatePage = () => {
     const [expSubject, setExpSubject] = useState('');
     const [expPrompt, setExpPrompt] = useState('');

@@ -4,8 +4,9 @@ import { useParams } from 'react-router-dom';
 import ExperimentStatistics from './ExperimentStatistics';
 import DownloadCSVButton from './DownloadCSVButton';
 
-const ExperimentMetric = ({name}) => {
+const ExperimentMetric = ({ name }) => {
     let { id } = useParams();
+
     return (
         <div className="min-h-screen w-full flex flex-col items-center bg-[#1c2c4c] gap-3">
             <h1 className="mb-3 mt-5 text-4xl font-bold text-white">

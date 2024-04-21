@@ -16,8 +16,6 @@ function App() {
             <div className="flex flex-row w-full gap-3 bg-slate-100 min-h-screen">
                 <SideBar />
                 <Routes>
-                    <Route exact path="/login/:id" element={<Welcome />} />
-                    <Route exact path="/chat/:id" element={<ChatBox />} />
                     <Route
                         exact
                         path="/experiment"

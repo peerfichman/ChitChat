@@ -5,8 +5,8 @@ import { statusOptions } from '../../constant';
 
 const FilterComponent = ({ handleFilter }) => {
     return (
-        <OverlayDropDown Icon={GrFilter}>
-            <div className="flex px-2 py-1 text-md w-full font-bold">
+        <OverlayDropDown Icon={GrFilter} className="">
+            <div className="flex px-2 py-1 text-md w-full font-bold cursor-default">
                 By Status:
             </div>
             <div
