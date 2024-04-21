@@ -2,7 +2,7 @@ const statusOptions = Object.freeze({
     NOT_STARTED: 'Not Started',
     RUNNING: 'Running',
     COMPLETED: 'Completed',
-    PROCESSING: 'Processing'
+    PROCESSING: 'Processing',
 });
 
 const ExperimentVariables = Object.freeze({
@@ -13,4 +13,17 @@ const ExperimentVariables = Object.freeze({
     EXP_DATE: 'exp_created_at',
 });
 
-export { statusOptions, ExperimentVariables };
+const chatURL = 'https://chitchat-chatplatform.web.app/login';
+const chitChatUserID = 'RPLkPefjRdQ3WL3prDMQLTtwjZ02';
+const chitChatUserName = 'ChitChat';
+const chitChatUserPhotoURL =
+    'https://lh3.googleusercontent.com/a/ACg8ocIhwxHeHkG3hl0T-FnN0IEj0tQlhUTPq9SFblnl26bjN1095w=s96-c';
+
+export {
+    statusOptions,
+    ExperimentVariables,
+    chatURL,
+    chitChatUserID,
+    chitChatUserName,
+    chitChatUserPhotoURL,
+};
