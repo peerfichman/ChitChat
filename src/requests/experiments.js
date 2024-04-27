@@ -17,7 +17,7 @@ const getExperimentById = async (id) => {
     const URL = baseURL + `experiments/${id}`;
     try {
         const response = await axios.get(URL);
-        return response.data[0];
+        return response.data;
     } catch (error) {
         console.error('Failed to fetch experiment', error);
         return null;
@@ -36,15 +36,19 @@ const updateExperimentStatus = async (experiment, status) => {
     }
 };
 
-const createExperiment = async (experiment) => {
+const createExperiment = async (experiment, agents) => {
     const URL = baseURL + 'experiments';
     try {
         const response = await axios.post(URL, {
-            exp_subject: experiment.expSubject,
-            exp_provoking_prompt: experiment.expPrompt,
-            exp_name: experiment.expName,
-            exp_status: statusOptions.NOT_STARTED,
+            exp: {
+                exp_subject: experiment.expSubject,
+                exp_provoking_prompt: experiment.expPrompt,
+                exp_name: experiment.expName,
+                exp_status: statusOptions.NOT_STARTED,
+            },
+            agents,
         });
+
         return response.data;
     } catch (error) {
         console.error('Failed to create experiment', error);

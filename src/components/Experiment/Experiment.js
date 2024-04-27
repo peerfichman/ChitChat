@@ -7,10 +7,9 @@ import {
     getExperimentById,
     updateExperimentStatus,
 } from '../../requests/experiments';
-import { getAllAgents } from '../../requests/agents';
 import ExperimentDetails from './ExperimentDetails';
 import ChangeStatusButton from '../ChangeStatusButton';
-import AgentsBlock from './AgentsBlock';
+import AgentsBlock from '../agent/AgentsBlock';
 import LoadingAgents from '../agent/LoadingAgents';
 const Experiment = () => {
     let { id } = useParams();
@@ -18,12 +17,12 @@ const Experiment = () => {
     const [experiment, setExperiment] = useState(null);
     const [loading, setLoading] = useState(true);
     const [Agents, setAgents] = useState([]);
-    const [loadingAgents, setLoadingAgents] = useState(true);
 
     useEffect(() => {
         getExperimentById(id)
             .then((data) => {
-                const date = new Date(data.exp_created_at);
+                console.log(data);
+                const date = new Date(data.exp.exp_crated_at);
                 const stringDate =
                     String(date.getDate()) +
                     '/' +
@@ -31,21 +30,14 @@ const Experiment = () => {
                     '/' +
                     String(date.getFullYear());
 
-                setExperiment({ ...data, exp_created_at: stringDate });
+                setExperiment({ ...data.exp, exp_created_at: stringDate });
+                setAgents(data.agents);
             })
             .catch((error) => {
                 console.error('Failed to fetch experiment', error);
             })
             .finally(() => {
                 setLoading(false);
-                getAllAgents(id)
-                    .then((data) => setAgents(data))
-                    .catch((error) => {
-                        console.error('Failed to fetch agents', error);
-                    })
-                    .finally(() => {
-                        setLoadingAgents(false);
-                    });
             });
     }, [id, loading]);
 
@@ -68,11 +60,7 @@ const Experiment = () => {
                 <div className="w-full">
                     <ExperimentDetails experiment={experiment} />
                 </div>
-                {loadingAgents ? (
-                    <LoadingAgents />
-                ) : (
-                    <AgentsBlock agents={Agents} />
-                )}
+                <AgentsBlock agents={Agents} />
                 <div className="flex justify-end">
                     <ChangeStatusButton
                         status={experiment.exp_status}

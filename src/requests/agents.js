@@ -17,8 +17,8 @@ const createAgent = async (agent, experimentID) => {
     }
 };
 
-const getAllAgents = async (id) => {
-    const URL = baseURL + `agents/${id}`;
+const getAllAgents = async (experiment_id) => {
+    const URL = baseURL + `agents/${experiment_id}`;
     try {
         const response = await axios.get(URL);
         return response.data;

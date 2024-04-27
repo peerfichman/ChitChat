@@ -9,15 +9,15 @@ const ExperimentDetails = ({ experiment }) => {
                 value={String(experiment.exp_created_at).split('T')[0]}
             />
             <ExperimentDetail title="Subject" value={experiment.exp_subject} />
-            {experiment.exp_status == statusOptions.RUNNING ? (
+            {experiment.exp_status == statusOptions.NOT_STARTED ? (
                 <ExperimentDetail
                     title="Login Link"
-                    value={`${chatURL}/${experiment.exp_id}`}
+                    value="Start the experiment to get the login link"
                 />
             ) : (
                 <ExperimentDetail
                     title="Login Link"
-                    value="Start the experiment to get the login link"
+                    value={`${chatURL}/${experiment.exp_id}`}
                 />
             )}
             <ExperimentDetail
