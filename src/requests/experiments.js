@@ -56,26 +56,10 @@ const createExperiment = async (experiment, agents) => {
     }
 };
 
-const createAgent = async (agent, experimentID) => {
-    const URL = baseURL + 'agents';
-    try {
-        const response = await axios.post(URL, {
-            agent_name: agent.name,
-            agent_sentiment: agent.sentiment,
-            agent_eng: 0.25,
-            exp_id: experimentID,
-        });
-        return response.data;
-    } catch (error) {
-        console.error('Failed to create agent', error);
-        return null;
-    }
-};
 
 export {
     getAllExperiments,
     getExperimentById,
     updateExperimentStatus,
     createExperiment,
-    createAgent,
 };

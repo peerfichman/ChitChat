@@ -10,7 +10,7 @@ import {
 import ExperimentDetails from './ExperimentDetails';
 import ChangeStatusButton from '../ChangeStatusButton';
 import AgentsBlock from '../agent/AgentsBlock';
-import LoadingAgents from '../agent/LoadingAgents';
+
 const Experiment = () => {
     let { id } = useParams();
 
