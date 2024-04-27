@@ -7,8 +7,6 @@ import {
 } from '../constant';
 
 const sendProvokingPrompt = async (id, value) => {
-    console.log(id, value);
-    console.log(chitChatUserName, chitChatUserPhotoURL, chitChatUserID);
     if (value.trim() === '') {
         alert('Enter valid message');
         return;
