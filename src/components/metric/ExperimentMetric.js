@@ -3,8 +3,6 @@ import GraphComponent from './GraphComponent';
 import { useParams } from 'react-router-dom';
 import ExperimentStatistics from './ExperimentStatistics';
 import DownloadCSVButton from './DownloadCSVButton';
-import {getExperimentById} from '../../requests/experiments'
-import {ExperimentVariables} from "../../constant";
 
 const ExperimentMetric = () => {
     let { id } = useParams();

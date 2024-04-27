@@ -2,40 +2,87 @@ import React, { useState } from 'react';
 import InputBlock from '../InputBlock';
 import Button from '../Button';
 import { v4 as uuidv4 } from 'uuid';
-import AgentCard from './AgentCard';
+import AgentCard from '../agent/AgentCard';
 import { createExperiment } from '../../requests/experiments';
-import { createAgent } from '../../requests/agents';
 import { useNavigate } from 'react-router';
+import {
+    Sentiments,
+    OpinionAlignment,
+    TalkingStyle,
+    ActivityLevels,
+    NumberOfMessages,
+    AgentParametersInDB,
+} from '../../constants/agentsConstants';
 
 const ExperimentCreatePage = () => {
     const [expSubject, setExpSubject] = useState('');
     const [expPrompt, setExpPrompt] = useState('');
     const [expName, setExpName] = useState('');
     const [AIAgents, setAIAgents] = useState([]);
+    const [creatingExperiment, setCreatingExperiment] = useState(false);
+
     const navigate = useNavigate();
 
     const newExperiment = async () => {
-        if (!expSubject || !expName) {
-            alert('Please fill the required fields.');
+        setCreatingExperiment(true);
+        if (AIAgents.length > 0) {
+            const agentNames = AIAgents.map(
+                (agent) => agent[AgentParametersInDB.NAME],
+            );
+            const allAgentNamesNotEmpty = agentNames.every(
+                (name) => name !== '',
+            );
+            if (!allAgentNamesNotEmpty) {
+                alert('Please pick a name for all AI agents.');
+                setCreatingExperiment(false);
+                return;
+            }
+            const duplicateNames = agentNames.some(
+                (name, index) => agentNames.indexOf(name) !== index,
+            );
+            if (duplicateNames) {
+                alert('Please choose unique names for each AI agents.');
+                setCreatingExperiment(false);
+                return;
+            }
+        }
+        if (!expSubject) {
+            alert('Please choose a subject for the experiment.');
+            setCreatingExperiment(false);
             return;
         }
-        const newExperiment = await createExperiment({
-            expSubject,
-            expPrompt,
-            expName,
-        });
-
-        AIAgents.forEach(async (agent) => {
-            await createAgent(agent, newExperiment.exp_id);
-        });
-
+        if (!expName) {
+            alert('Please choose a name for the experiment.');
+            setCreatingExperiment(false);
+            return;
+        }
+        await createExperiment(
+            {
+                expSubject,
+                expPrompt,
+                expName,
+            },
+            AIAgents,
+        );
         navigate('/experiments');
     };
 
     const addAgentBlock = () => {
         setAIAgents([
             ...AIAgents,
-            { id: uuidv4(), name: '', sentiment: 'Positive', agent_eng: 0.25 },
+            {
+                id: uuidv4(),
+                [AgentParametersInDB.NAME]: '',
+                [AgentParametersInDB.SENTIMENT]: Sentiments.POSITIVE,
+                [AgentParametersInDB.OPINION_ALIGNMENT]:
+                    OpinionAlignment.SUPPORT,
+                [AgentParametersInDB.TALKING_STYLE]: TalkingStyle.CASUAL,
+                [AgentParametersInDB.ACTIVITY_LEVEL]: ActivityLevels.ACTIVITY_1,
+
+                [AgentParametersInDB.TOPICS_OF_INTEREST]: [],
+                [AgentParametersInDB.NUMBER_OF_MESSAGES]:
+                    NumberOfMessages.ACTIVITY_3,
+            },
         ]);
     };
 
@@ -62,7 +109,11 @@ const ExperimentCreatePage = () => {
                     placeHolder='"The new rules can make women abuse more common."'
                     setValue={setExpPrompt}
                 />
-                <Button text="Add Agent" onclick={addAgentBlock} />
+                {AIAgents.length < 3 ? (
+                    <Button text="Add Agent" onclick={addAgentBlock} />
+                ) : (
+                    <Button text="Add Agent" enabled={false} />
+                )}
                 <div className="grid grid-cols-2 gap-3">
                     {AIAgents.map((agent) => (
                         <AgentCard
@@ -74,11 +125,20 @@ const ExperimentCreatePage = () => {
                     ))}
                 </div>
             </div>
-            <button
-                className="bg-blue-500 text-white py-3 px-4 rounded-lg my-3"
-                onClick={newExperiment}>
-                Create Experiment
-            </button>
+            {!creatingExperiment ? (
+                <button
+                    className="bg-blue-500 text-white py-3 px-4 rounded-lg my-3 w-48"
+                    onClick={newExperiment}>
+                    Create Experiment
+                </button>
+            ) : (
+                <button
+                    className="bg-blue-500 text-white py-3 px-4 rounded-lg my-3 w-48 opacity-50 cursor-not-allowed"
+                    onClick={() => {}}
+                    disabled>
+                    Creating...
+                </button>
+            )}
         </div>
     );
 };

@@ -20,8 +20,10 @@ const ChangeStatusButton = ({ status, setStatus, experiment }) => {
                 experiment.exp_id,
                 experiment.exp_provoking_prompt,
             );
+            //run listener
             setStatus('Running');
         } else if (status === statusOptions.RUNNING) {
+            //stop listener
             setStatus('Processing');
             createGraph(experiment.exp_id).then(() => {
                 setStatus('Completed');

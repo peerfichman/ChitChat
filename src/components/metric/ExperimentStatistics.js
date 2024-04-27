@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { getNeo4jGraph } from '../../requests/metric';
-import StatisticCard from './StatisticCard';
 import Graph  from 'graphology';
 import {density} from 'graphology-metrics/graph/density';
 import diameter from 'graphology-metrics/graph/diameter';

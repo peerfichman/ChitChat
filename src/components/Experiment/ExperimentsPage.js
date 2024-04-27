@@ -26,7 +26,6 @@ const ExperimentsPage = () => {
                         String(date.getFullYear());
                     return { ...experiment, exp_created_at: stringDate };
                 });
-                console.log(newExperiments);
                 setExperiments(newExperiments);
                 setFilteredExperiments(newExperiments);
             })
@@ -39,7 +38,6 @@ const ExperimentsPage = () => {
     }, []);
 
     const handleSearch = (e) => {
-        console.log(e.target.value);
         const search = e.target.value;
         const filtered = experiments.filter((experiment) => {
             return experiment.exp_name

@@ -13,6 +13,7 @@ const ExperimentVariables = Object.freeze({
     EXP_DATE: 'exp_created_at',
 });
 
+
 const chatURL = 'https://chitchat-chatplatform.web.app/login';
 const chitChatUserID = 'RPLkPefjRdQ3WL3prDMQLTtwjZ02';
 const chitChatUserName = 'ChitChat';
