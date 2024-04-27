@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { getNeo4jGraph } from '../../requests/metric';
-import StatisticCard from './StatisticCard';
 import Graph  from 'graphology';
 import {density} from 'graphology-metrics/graph/density';
 import diameter from 'graphology-metrics/graph/diameter';
@@ -8,7 +7,7 @@ import eccentricity from 'graphology-metrics/node/eccentricity';
 import betweennessCentrality from 'graphology-metrics/centrality/betweenness';
 import closenessCentrality from 'graphology-metrics/centrality/closeness';
 import { degreeCentrality } from 'graphology-metrics/centrality/degree';
-
+import StatisticsColumn from './StatisticsColumn'
 
 const averageCalc = (data) => {
     const dataValues = Object.values(data);
@@ -97,10 +96,10 @@ const GraphStatistics = ({ id }) => {
                     Self_Loops: graph.selfLoopCount,
                     Diameter: diameter(graph),
                     Radius: radius,
-                    Density: density(graph),
+                    Density: density(graph).toFixed(3),
                     Avg_Betweenness_Centrality: betweennessCentralisesAvg,
                     Avg_Closeness_Centrality: closenessCentralisesAvg,
-                    Avg_Degree_Centrality: degreeCentralisesAvg
+                    Avg_Degree_Centrality: degreeCentralisesAvg.toFixed(3)
                 });
             } catch (error) {
                 console.error('Failed to fetch graph data:', error);
@@ -113,9 +112,9 @@ const GraphStatistics = ({ id }) => {
     // Render or return statistics as needed
     return (
         Object.keys(statistics) && (
-            <div className="flex flex-wrap justify-center gap-2">
+            <div className="grid grid-cols-3 gap-x-20 gap-y-5 bg-slate-200 border shadow-sm rounded-xl p-10 " >
                 {Object.keys(statistics).map((key) => (
-                    <StatisticCard
+                    <StatisticsColumn
                         key={key}
                         name={key} // Assuming you want to display the key
                         count={statistics[key]} // Accessing the count value for each key
