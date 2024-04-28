@@ -24,9 +24,9 @@ const getExperimentById = async (id) => {
     }
 };
 
-const updateExperimentStatus = async (experiment, status) => {
-    const newExperiment = { ...experiment, exp_status: status };
-    const URL = baseURL + `experiments`;
+const updateExperimentStatus = async (exp_id, exp_status) => {
+    const newExperiment = { exp_id, exp_status };
+    const URL = baseURL + `experiments/status`;
     try {
         const response = await axios.put(URL, newExperiment);
         return response.data;
@@ -55,7 +55,6 @@ const createExperiment = async (experiment, agents) => {
         return null;
     }
 };
-
 
 export {
     getAllExperiments,
