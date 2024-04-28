@@ -21,7 +21,6 @@ const Experiment = () => {
     useEffect(() => {
         getExperimentById(id)
             .then((data) => {
-                console.log(data);
                 const date = new Date(data.exp.exp_crated_at);
                 const stringDate =
                     String(date.getDate()) +
@@ -47,12 +46,12 @@ const Experiment = () => {
 
     const ChangeExperimentStatus = (status) => {
         setExperiment({ ...experiment, exp_status: status });
-        updateExperimentStatus(experiment, status);
+        updateExperimentStatus(experiment.exp_id, status);
     };
 
     return experiment ? (
         <div className="min-h-screen w-full flex flex-col items-center bg-slate-100">
-            <div className="flex flex-col shadow-sm rounded-xl p-4 bg-white mt-20 min-w-[600px] gap-4">
+            <div className="flex flex-col shadow-sm rounded-xl p-4 bg-white my-20 min-w-[990px] gap-4">
                 <h1 className="font-bold text-gray-800 text-5xl">
                     {experiment.exp_name}
                 </h1>

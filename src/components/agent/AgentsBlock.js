@@ -8,10 +8,15 @@ const AgentsBlock = ({ agents }) => {
                 <p className="text-2xl font-bold">Agents</p>
             </div>
             <div className="grid grid-cols-3 gap-4 w-full">
-                {agents &&
+                {agents.length > 0 ? (
                     agents.map((agent) => (
                         <AgentDetails key={agent.agent_id} agent={agent} />
-                    ))}
+                    ))
+                ) : (
+                    <div className="text-2xl font-bold text-gray-500 px-2">
+                        None
+                    </div>
+                )}
             </div>
         </div>
     );
