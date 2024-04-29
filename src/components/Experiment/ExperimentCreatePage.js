@@ -13,6 +13,7 @@ import {
     NumberOfMessages,
     AgentParametersInDB,
 } from '../../constants/agentsConstants';
+import PageTitle from '../PageTitle';
 
 const ExperimentCreatePage = () => {
     const [expSubject, setExpSubject] = useState('');
@@ -88,9 +89,7 @@ const ExperimentCreatePage = () => {
 
     return (
         <div className="min-h-screen w-full flex flex-col items-center bg-slate-100 gap-3">
-            <h1 className="mb-4 mt-5 text-5xl font-bold text-black">
-                Create Experiment
-            </h1>
+            <PageTitle>Create Experiment</PageTitle>
             <div className="w-full max-w-lg bg-white p-4 rounded-lg shadow-lg flex flex-col gap-3">
                 <InputBlock
                     title="Name"

@@ -8,7 +8,6 @@ import {
 
 const sendProvokingPrompt = async (id, value) => {
     if (value.trim() === '') {
-        alert('Enter valid message');
         return;
     }
     await addDoc(collection(db, id), {
