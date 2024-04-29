@@ -1,16 +1,15 @@
 import React from 'react';
 import { getCSV } from '../../requests/metric';
-
+import Button from '../Button';
 const DownloadCSVButton = ({ collectionId, experimentName }) => {
-    const handleDownload = async () => {
-        await getCSV(collectionId, experimentName);
+    const handleDownload = () => {
+        console.log(collectionId);
+        console.log(experimentName);
+
+        getCSV(collectionId, experimentName);
     };
 
-    return (
-        <button className="btn btn-info" onClick={handleDownload}>
-            Download CSV
-        </button>
-    );
+    return <Button text={'Download CSV'} onclick={handleDownload} />;
 };
 
 export default DownloadCSVButton;

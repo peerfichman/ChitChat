@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import Loading from '../Loading';
 import SortComponent from './SortComponent';
 import FilterComponent from './FilterComponent';
+import PageTitle from '../PageTitle';
 
 const ExperimentsPage = () => {
     const [experiments, setExperiments] = useState([]);
@@ -78,9 +79,7 @@ const ExperimentsPage = () => {
 
     return filteredExperiments ? (
         <div className="min-h-screen w-full flex flex-col items-center bg-slate-100 gap-3">
-            <h1 className="mb-3 mt-5 text-5xl font-bold text-black">
-                Experiments
-            </h1>
+            <PageTitle>Experiments</PageTitle>
             <div className="w-full flex items-center justify-center mb-3">
                 <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm px-3 rounded h-12"

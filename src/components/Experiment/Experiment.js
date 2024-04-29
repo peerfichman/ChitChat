@@ -10,6 +10,7 @@ import {
 import ExperimentDetails from './ExperimentDetails';
 import ChangeStatusButton from '../ChangeStatusButton';
 import AgentsBlock from '../agent/AgentsBlock';
+import PageTitle from '../PageTitle';
 
 const Experiment = () => {
     let { id } = useParams();
@@ -52,9 +53,7 @@ const Experiment = () => {
     return experiment ? (
         <div className="min-h-screen w-full flex flex-col items-center bg-slate-100">
             <div className="flex flex-col shadow-sm rounded-xl p-4 bg-white my-20 min-w-[990px] gap-4">
-                <h1 className="font-bold text-gray-800 text-5xl">
-                    {experiment.exp_name}
-                </h1>
+                <PageTitle marginY="">{experiment.exp_name}</PageTitle>
                 <Status status={experiment.exp_status} />
                 <div className="w-full">
                     <ExperimentDetails experiment={experiment} />
