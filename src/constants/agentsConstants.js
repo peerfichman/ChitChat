@@ -60,7 +60,7 @@ const AgentCardTitles = Object.freeze({
     ACTIVITY_LEVEL: 'Activity Level', // 1-5
     TALKING_STYLE: 'Talking Style',
     TOPICS_OF_INTEREST: 'Topics of Interest',
-    NUMBER_OF_MESSAGES: 'Number of Messages', //1-5
+    NUMBER_OF_MESSAGES: 'Number of Messages to Reply to', //1-5
 });
 
 const AgentParametersInDB = Object.freeze({
