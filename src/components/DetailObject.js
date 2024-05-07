@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ExperimentDetail = ({ title, value, text = 'text-lg' }) => {
+const DetailObject = ({ title, value, text = 'text-lg' }) => {
     const className = `mb-1 ${text} font-bold`;
     return (
         <div className="p-2 max-w-96">
@@ -10,4 +10,4 @@ const ExperimentDetail = ({ title, value, text = 'text-lg' }) => {
     );
 };
 
-export default ExperimentDetail;
+export default DetailObject;

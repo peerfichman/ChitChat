@@ -3,9 +3,6 @@ import { getCSV } from '../../requests/metric';
 import Button from '../Button';
 const DownloadCSVButton = ({ collectionId, experimentName }) => {
     const handleDownload = () => {
-        console.log(collectionId);
-        console.log(experimentName);
-
         getCSV(collectionId, experimentName);
     };
 

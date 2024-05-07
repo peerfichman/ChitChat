@@ -63,6 +63,7 @@ const AgentCard = ({ relevantAgent, agents, setAgent }) => {
                 <div>
                     <label className="block text-lg font-medium ml-1">
                         {AgentCardTitles.NAME}
+                        <span className="text-red-500 pl-1">*</span>
                     </label>
                     <input
                         type="text"

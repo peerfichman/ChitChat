@@ -6,9 +6,9 @@ const ExperimentCard = ({ experiment }) => {
 
     return (
         <div
-            className="flex flex-col items-center bg-gray-50 hover:bg-gray-200 border shadow-md rounded-xl p-4 w-[300px] gap-3 cursor-pointer"
+            className="flex w-[300px] cursor-pointer flex-col items-center gap-3 rounded-xl border bg-gray-50 p-4  hover:bg-gray-200"
             onClick={() => navigate(`/experiments/${experiment.exp_id}`)}>
-            <p className="text-2xl font-bold text-gray-800 truncate w-11/12 text-center">
+            <p className="w-11/12 truncate text-center text-2xl font-bold text-gray-800">
                 {experiment.exp_name}
             </p>
             <p className="text-gray-500">{experiment.exp_created_at}</p>

@@ -1,26 +1,28 @@
 import React from 'react';
-import ExperimentDetail from './ExperimentDetail';
-import { statusOptions, chatURL } from '../../constant';
+import DetailObject from '../DetailObject';
+import { chatURL } from '../../constants/generalConstants';
+import { statusOptions } from '../../constants/experimentsConstants';
+
 const ExperimentDetails = ({ experiment }) => {
     return (
-        <div className="grid grid-cols-2 w-full">
-            <ExperimentDetail
+        <div className="grid w-full grid-cols-2">
+            <DetailObject
                 title="Created At"
                 value={String(experiment.exp_created_at).split('T')[0]}
             />
-            <ExperimentDetail title="Subject" value={experiment.exp_subject} />
+            <DetailObject title="Subject" value={experiment.exp_subject} />
             {experiment.exp_status == statusOptions.NOT_STARTED ? (
-                <ExperimentDetail
+                <DetailObject
                     title="Login Link"
                     value="Start the experiment to get the login link"
                 />
             ) : (
-                <ExperimentDetail
+                <DetailObject
                     title="Login Link"
                     value={`${chatURL}/${experiment.exp_id}`}
                 />
             )}
-            <ExperimentDetail
+            <DetailObject
                 title="Provoking Prompt"
                 value={experiment.exp_provoking_prompt}
             />

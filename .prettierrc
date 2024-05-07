@@ -4,5 +4,7 @@
     "jsxBracketSameLine": true,
     "printWidth": 80,
     "semi": true,
-    "tabWidth": 4
+    "tabWidth": 4,
+    "plugins": ["prettier-plugin-tailwindcss"]
+
 }

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { statusOptions } from '../constant';
+import { statusOptions } from '../constants/experimentsConstants';
 const baseURL = process.env.REACT_APP_CHICHAT_API_URL;
 
 const getAllExperiments = async () => {
@@ -36,7 +36,7 @@ const updateExperimentStatus = async (exp_id, exp_status) => {
     }
 };
 
-const createExperiment = async (experiment, agents) => {
+const createExperiment = async (experiment, agents, study_id) => {
     const URL = baseURL + 'experiments';
     try {
         const response = await axios.post(URL, {
@@ -45,6 +45,7 @@ const createExperiment = async (experiment, agents) => {
                 exp_provoking_prompt: experiment.expPrompt,
                 exp_name: experiment.expName,
                 exp_status: statusOptions.NOT_STARTED,
+                study_id,
             },
             agents,
         });

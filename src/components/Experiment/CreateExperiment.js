@@ -14,17 +14,25 @@ import {
     AgentParametersInDB,
 } from '../../constants/agentsConstants';
 import PageTitle from '../PageTitle';
+import { useParams } from 'react-router-dom';
 
-const ExperimentCreatePage = () => {
-    const [expSubject, setExpSubject] = useState('');
-    const [expPrompt, setExpPrompt] = useState('');
-    const [expName, setExpName] = useState('');
+const CreateExperiment = () => {
+    const { study_id } = useParams();
+    const [experiment, setExperiment] = useState({
+        expSubject: '',
+        expPrompt: '',
+        expName: '',
+    });
     const [AIAgents, setAIAgents] = useState([]);
     const [creatingExperiment, setCreatingExperiment] = useState(false);
 
     const navigate = useNavigate();
 
-    const newExperiment = async () => {
+    const handleExperimentChanges = (key, value) => {
+        setExperiment({ ...experiment, [key]: value });
+    };
+
+    const handleExperimentCreation = async () => {
         setCreatingExperiment(true);
         if (AIAgents.length > 0) {
             const agentNames = AIAgents.map(
@@ -47,24 +55,17 @@ const ExperimentCreatePage = () => {
                 return;
             }
         }
-        if (!expSubject) {
-            alert('Please choose a subject for the experiment.');
-            setCreatingExperiment(false);
-            return;
-        }
-        if (!expName) {
+        if (!experiment.expName) {
             alert('Please choose a name for the experiment.');
             setCreatingExperiment(false);
             return;
         }
-        await createExperiment(
-            {
-                expSubject,
-                expPrompt,
-                expName,
-            },
-            AIAgents,
-        );
+        if (!experiment.expSubject) {
+            alert('Please choose a subject for the experiment.');
+            setCreatingExperiment(false);
+            return;
+        }
+        await createExperiment(experiment, AIAgents, study_id);
         navigate('/experiments');
     };
 
@@ -88,25 +89,28 @@ const ExperimentCreatePage = () => {
     };
 
     return (
-        <div className="min-h-screen w-full flex flex-col items-center bg-slate-100 gap-3">
+        <div className="flex min-h-screen w-full flex-col items-center gap-3 bg-slate-100">
             <PageTitle>Create Experiment</PageTitle>
-            <div className="w-full max-w-lg bg-white p-4 rounded-lg shadow-lg flex flex-col gap-3">
+            <div className="flex w-full max-w-lg flex-col gap-3 rounded-lg bg-white p-4 shadow-lg">
                 <InputBlock
                     title="Name"
                     placeHolder='"Gun License Rules"'
-                    setValue={setExpName}
+                    setValue={handleExperimentChanges}
+                    attribute="expName"
                     isRequired={true}
                 />
                 <InputBlock
                     title="Subject"
                     placeHolder='"The new rules for a gun license"'
-                    setValue={setExpSubject}
+                    setValue={handleExperimentChanges}
+                    attribute="expSubject"
                     isRequired={true}
                 />
                 <InputBlock
                     title="Opening Prompt"
                     placeHolder='"The new rules can make women abuse more common."'
-                    setValue={setExpPrompt}
+                    setValue={handleExperimentChanges}
+                    attribute="expPrompt"
                 />
                 {AIAgents.length < 3 ? (
                     <Button text="Add Agent" onclick={addAgentBlock} />
@@ -124,21 +128,18 @@ const ExperimentCreatePage = () => {
                     ))}
                 </div>
             </div>
-            {!creatingExperiment ? (
-                <button
-                    className="bg-blue-500 text-white py-3 px-4 rounded-lg my-3 w-48"
-                    onClick={newExperiment}>
-                    Create Experiment
-                </button>
-            ) : (
-                <button
-                    className="bg-blue-500 text-white py-3 px-4 rounded-lg my-3 w-48 opacity-50 cursor-not-allowed"
-                    onClick={() => {}}
-                    disabled>
-                    Creating...
-                </button>
-            )}
+            <div className="flex w-full max-w-lg items-center justify-center">
+                {!creatingExperiment ? (
+                    <button
+                        onClick={handleExperimentCreation}
+                        className="h-12 w-[150px] rounded-lg  bg-blue-500 text-sm font-bold text-white hover:bg-blue-700">
+                        Create Experiment
+                    </button>
+                ) : (
+                    <Button enabled={false} />
+                )}
+            </div>
         </div>
     );
 };
-export default ExperimentCreatePage;
+export default CreateExperiment;

@@ -20,8 +20,6 @@ const ExperimentMetric = () => {
     };
 
     const handleTabChange = (tabID) => {
-        console.log(ViewOptions.TABLE);
-        console.log(tabID);
         setViewOptions(tabID);
     };
 
