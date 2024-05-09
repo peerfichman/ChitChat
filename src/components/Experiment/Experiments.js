@@ -53,6 +53,7 @@ const Experiments = ({ experiments }) => {
                 attributes: {
                     name: ExperimentVariables.EXP_NAME,
                     date: ExperimentVariables.EXP_DATE,
+                    research: ExperimentVariables.EXP_RESEARCH_NAME,
                 },
             }}
             filterComponent={{

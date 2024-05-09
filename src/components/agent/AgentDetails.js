@@ -33,13 +33,6 @@ const AgentDetails = ({ agent }) => {
                     value={agent.messages_to_reply}
                     text="text-md"
                 />
-                <DetailObject
-                    title={AgentCardTitles.TOPICS_OF_INTEREST}
-                    value={agent.topics_of_interest
-                        .map((topic) => topic)
-                        .join(', ')}
-                    text="text-md"
-                />
             </div>
         </div>
     );

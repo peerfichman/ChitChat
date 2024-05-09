@@ -59,7 +59,6 @@ const AgentCardTitles = Object.freeze({
     OPINION_ALIGNMENT: 'Opinion Alignment',
     ACTIVITY_LEVEL: 'Activity Level', // 1-5
     TALKING_STYLE: 'Talking Style',
-    TOPICS_OF_INTEREST: 'Topics of Interest',
     NUMBER_OF_MESSAGES: 'Number of Messages to Reply to', //1-5
 });
 
@@ -69,7 +68,6 @@ const AgentParametersInDB = Object.freeze({
     OPINION_ALIGNMENT: 'opinion_alignment',
     ACTIVITY_LEVEL: 'activity_level',
     TALKING_STYLE: 'talking_style',
-    TOPICS_OF_INTEREST: 'topics_of_interest',
     NUMBER_OF_MESSAGES: 'messages_to_reply',
 });
 

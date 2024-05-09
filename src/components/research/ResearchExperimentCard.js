@@ -16,6 +16,10 @@ const ResearchExperimentCard = ({
                 {experiment.exp_name}
             </p>
             <div className="flex gap-1">
+                <p className="font-bold text-gray-500">Number of Agents:</p>
+                <p className="text-gray-500">{experiment.num_agents}</p>
+            </div>
+            <div className="flex gap-1">
                 <p className="font-bold text-gray-500">Maximum Participants:</p>
                 <p className="text-gray-500">
                     {experiment.exp_num_participants}

@@ -6,7 +6,13 @@ const DownloadCSVButton = ({ collectionId, experimentName }) => {
         getCSV(collectionId, experimentName);
     };
 
-    return <Button text={'Download CSV'} onclick={handleDownload} />;
+    return (
+        <button
+            className="h-10 w-1/6 rounded-lg bg-blue-500 text-sm font-bold text-white hover:bg-blue-700"
+            onClick={handleDownload}>
+            Download CSV
+        </button>
+    );
 };
 
 export default DownloadCSVButton;

@@ -125,8 +125,6 @@ const CreateExperiment = () => {
                     OpinionAlignment.SUPPORT,
                 [AgentParametersInDB.TALKING_STYLE]: TalkingStyle.CASUAL,
                 [AgentParametersInDB.ACTIVITY_LEVEL]: ActivityLevels.ACTIVITY_1,
-
-                [AgentParametersInDB.TOPICS_OF_INTEREST]: [],
                 [AgentParametersInDB.NUMBER_OF_MESSAGES]:
                     NumberOfMessages.ACTIVITY_3,
             },

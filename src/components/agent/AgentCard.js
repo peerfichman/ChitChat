@@ -99,12 +99,6 @@ const AgentCard = ({ relevantAgent, agents, setAgent }) => {
                     setSelected={modifyAgent}
                     agentField={AgentParametersInDB.TALKING_STYLE}
                 />
-                <CheckboxList
-                    title={AgentCardTitles.TOPICS_OF_INTEREST}
-                    options={listOfTopics}
-                    setSelected={modifyAgent}
-                    agentField={AgentParametersInDB.TOPICS_OF_INTEREST}
-                />
                 <Range
                     title={AgentCardTitles.ACTIVITY_LEVEL}
                     value={activityLevel}
