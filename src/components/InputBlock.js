@@ -5,6 +5,7 @@ const InputBlock = ({
     placeHolder,
     setValue,
     attribute,
+    maxLength = 200,
     defaultValue = '',
     isRequired = false,
 }) => {
@@ -21,6 +22,7 @@ const InputBlock = ({
                 onChange={(e) => setValue(attribute, e.target.value)}
                 required={isRequired}
                 defaultValue={defaultValue}
+                maxLength={maxLength}
             />
         </>
     );

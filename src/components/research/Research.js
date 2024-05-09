@@ -58,7 +58,10 @@ const Research = () => {
     return research ? (
         <div className="my-10 flex min-h-screen w-full flex-col items-center bg-slate-100">
             <div className=" flex min-w-[990px] flex-col gap-4 rounded-xl bg-white p-4 shadow-sm">
-                <PageTitle marginY="">{research.study_name}</PageTitle>
+                <div className="flex flex-col gap-2">
+                    <PageTitle marginY="">{research.study_name}</PageTitle>
+                    <p className="opacity-55">Research</p>
+                </div>
                 <div className="w-full">
                     <ResearchDetails study={research} />
                 </div>

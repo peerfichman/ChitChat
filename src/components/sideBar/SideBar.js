@@ -1,26 +1,36 @@
 import React from 'react';
 import SideBarItem from './SideBarItem';
-import { AiOutlineExperiment } from 'react-icons/ai';
+import {
+    AiOutlineExperiment,
+    AiOutlineFileSearch,
+    AiOutlineBarChart,
+} from 'react-icons/ai';
 
 const sideBarItems = [
+    {
+        title: 'Researches',
+        Icon: AiOutlineFileSearch,
+        path: '/researches',
+        // submenu: [
+        //     {
+        //         title: 'All Researches',
+        //         path: '/researches',
+        //     },
+        //     {
+        //         title: 'New Research',
+        //         path: '/research',
+        //     },
+        // ],
+    },
     {
         title: 'Experiments',
         path: '/experiments',
         Icon: AiOutlineExperiment,
     },
     {
-        title: 'Researches',
-        Icon: AiOutlineExperiment,
-        submenu: [
-            {
-                title: 'All Researches',
-                path: '/researches',
-            },
-            {
-                title: 'New Research',
-                path: '/research',
-            },
-        ],
+        title: 'Results',
+        path: '/results',
+        Icon: AiOutlineBarChart,
     },
 ];
 

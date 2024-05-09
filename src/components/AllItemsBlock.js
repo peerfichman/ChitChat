@@ -6,7 +6,6 @@ const AllItemsBlock = ({
     sortComponent,
     filterComponent = null,
 }) => {
-    console.log('children: ', children);
     return (
         <div className="">
             <SearchBlock

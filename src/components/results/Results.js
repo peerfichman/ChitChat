@@ -1,9 +1,47 @@
+import React, { useEffect, useState } from 'react';
+import { getAllExperiments } from '../../requests/experiments';
+import Loading from '../Loading';
+import PageTitle from '../PageTitle';
+import { getDateFormatted } from '../../utils';
 import AllItemsBlock from './../AllItemsBlock';
-import { useState } from 'react';
-import { ExperimentVariables } from '../../constants/experimentsConstants';
-import ResearchExperimentCard from './ResearchExperimentCard';
-const ResearchExperimentsBlock = ({ experiments }) => {
+import {
+    ExperimentVariables,
+    statusOptions,
+} from '../../constants/experimentsConstants';
+import ExperimentCard from '../Experiment/ExperimentCard';
+
+const Results = () => {
+    const [experiments, setExperiments] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [filteredExperiments, setFilteredExperiments] = useState(experiments);
+
+    useEffect(() => {
+        getAllExperiments()
+            .then((data) => {
+                const newExperiments = data.map((experiment) => {
+                    const stringDate = getDateFormatted(
+                        experiment.exp_created_at,
+                    );
+                    return { ...experiment, exp_created_at: stringDate };
+                });
+                const completedExperiments = newExperiments.filter(
+                    (experiment) =>
+                        experiment.exp_status === statusOptions.COMPLETED,
+                );
+                setExperiments(completedExperiments);
+                setFilteredExperiments(completedExperiments);
+            })
+            .catch((error) => {
+                console.error('Failed to fetch experiments', error);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, []);
+
+    if (loading) {
+        return <Loading />;
+    }
 
     const handleSearch = (e) => {
         const search = e.target.value;
@@ -45,13 +83,9 @@ const ResearchExperimentsBlock = ({ experiments }) => {
         }
     };
 
-    return (
-        <div className="flex flex-col gap-2">
-            <div className="mb-2 flex w-fit items-center">
-                <p className="h-fit align-middle text-3xl font-bold">
-                    Experiments
-                </p>
-            </div>
+    return experiments ? (
+        <div className="mb-16 flex min-h-screen w-full flex-col items-center gap-3 bg-slate-100">
+            <PageTitle>Results</PageTitle>
             <AllItemsBlock
                 handleSearch={handleSearch}
                 sortComponent={{
@@ -61,19 +95,18 @@ const ResearchExperimentsBlock = ({ experiments }) => {
                         date: ExperimentVariables.EXP_DATE,
                     },
                 }}
-                filterComponent={{
-                    onclick: handleFilter,
-                }}
-                totalItems={experiments.length + ' Experiments'}>
+                totalItems={experiments.length + ' Results'}>
                 {filteredExperiments.map((experiment) => (
-                    <ResearchExperimentCard
+                    <ExperimentCard
                         key={experiment.exp_id}
                         experiment={experiment}
+                        navigateTo={`/experiment/metric/${experiment.exp_id}`}
                     />
                 ))}
             </AllItemsBlock>
         </div>
+    ) : (
+        <div>Experiments not found</div>
     );
 };
-
-export default ResearchExperimentsBlock;
+export default Results;

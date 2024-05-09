@@ -24,19 +24,8 @@ const getExperimentById = async (id) => {
     }
 };
 
-const updateExperimentStatus = async (exp_id, exp_status) => {
-    const newExperiment = { exp_id, exp_status };
-    const URL = baseURL + `experiments/status`;
-    try {
-        const response = await axios.put(URL, newExperiment);
-        return response.data;
-    } catch (error) {
-        console.error('Failed to update experiment status', error);
-        return null;
-    }
-};
-
 const createExperiment = async (experiment, agents, study_id) => {
+    console.log(experiment);
     const URL = baseURL + 'experiments';
     try {
         const response = await axios.post(URL, {
@@ -45,6 +34,7 @@ const createExperiment = async (experiment, agents, study_id) => {
                 exp_provoking_prompt: experiment.expPrompt,
                 exp_name: experiment.expName,
                 exp_status: statusOptions.NOT_STARTED,
+                exp_num_participants: experiment.exp_num_participants,
                 study_id,
             },
             agents,
@@ -57,9 +47,36 @@ const createExperiment = async (experiment, agents, study_id) => {
     }
 };
 
+const updateExperimentStatus = async (exp_id, exp_status) => {
+    const newExperiment = { exp_id, exp_status };
+    const URL = baseURL + `experiments/status`;
+    try {
+        const response = await axios.put(URL, newExperiment);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to update experiment status', error);
+        return null;
+    }
+};
+
+const updateExperimentPrompt = async (exp_id, prompt) => {
+    const URL = baseURL + `experiments/${exp_id}`;
+    try {
+        const response = await axios.put(URL, {
+            exp_id,
+            exp_provoking_prompt: prompt,
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Failed to update experiment prompt', error);
+        return null;
+    }
+};
+
 export {
     getAllExperiments,
     getExperimentById,
-    updateExperimentStatus,
     createExperiment,
+    updateExperimentStatus,
+    updateExperimentPrompt,
 };

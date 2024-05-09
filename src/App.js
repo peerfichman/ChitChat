@@ -10,6 +10,7 @@ import SideBar from './components/sideBar/SideBar';
 import Research from './components/research/Research';
 import CreateResearch from './components/research/CreateResearch';
 import Researches from './components/research/Researches';
+import Results from './components/results/Results';
 
 function App() {
     return (
@@ -35,6 +36,7 @@ function App() {
                         path="/experiments"
                         element={<ExperimentsPage />}
                     />
+                    <Route exact path="/results" element={<Results />} />
                     <Route
                         exact
                         path="/experiments/:id"

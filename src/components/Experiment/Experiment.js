@@ -46,7 +46,10 @@ const Experiment = () => {
     return experiment ? (
         <div className="flex min-h-screen w-full flex-col items-center bg-slate-100">
             <div className="my-20 flex min-w-[990px] flex-col gap-4 rounded-xl bg-white p-4 shadow-sm">
-                <PageTitle marginY="">{experiment.exp_name}</PageTitle>
+                <div className="flex flex-col gap-2">
+                    <PageTitle marginY="">{experiment.exp_name}</PageTitle>
+                    <p className="opacity-55">Experiment</p>
+                </div>
                 <Status status={experiment.exp_status} />
                 <div className="w-full">
                     <ExperimentDetails experiment={experiment} />

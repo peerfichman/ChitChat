@@ -4,7 +4,6 @@ const baseURL = process.env.REACT_APP_CHICHAT_API_URL + 'studies';
 
 const getAllResearches = async () => {
     try {
-        console.log('getAllResearches Request sent');
         const response = await axios.get(baseURL);
         return response.data;
     } catch (error) {
@@ -42,9 +41,38 @@ const getAllExperimentsOfResearch = async (id) => {
         return null;
     }
 };
+
+const updateResearchPrompt = async (study_id, prompt) => {
+    try {
+        const response = await axios.put(baseURL, {
+            study_id,
+            study_prompt: prompt,
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Failed to update study prompt', error);
+        return null;
+    }
+};
+
+const updateResearchDescription = async (study_id, description) => {
+    try {
+        const response = await axios.put(baseURL, {
+            study_id,
+            study_description: description,
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Failed to update study description', error);
+        return null;
+    }
+};
+
 export {
     getAllResearches,
     getResearchById,
     createResearch,
     getAllExperimentsOfResearch,
+    updateResearchPrompt,
+    updateResearchDescription,
 };

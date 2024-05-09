@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getAllResearches } from '../../requests/researches';
 import PageTitle from '../PageTitle';
@@ -6,6 +6,7 @@ import AllItemsBlock from '../AllItemsBlock';
 import ResearchCard from './ResearchCard';
 import { ResearchVariables } from '../../constants/studiesConstants';
 import { getDateFormatted } from '../../utils';
+import Loading from '../Loading';
 
 const Researches = () => {
     const [researches, setResearches] = React.useState([]);
@@ -16,7 +17,6 @@ const Researches = () => {
     React.useEffect(() => {
         getAllResearches()
             .then((data) => {
-                console.log(data);
                 const researchesFormatted = data.map((research) => {
                     const stringDate = getDateFormatted(
                         research.study_created_at,
@@ -37,7 +37,7 @@ const Researches = () => {
         const search = e.target.value;
         const filtered = researches.filter((research) => {
             return research.study_name
-                .toLowerCase()
+                ?.toLowerCase()
                 .includes(search.toLowerCase());
         });
         setFilteredResearches(filtered);
@@ -56,15 +56,19 @@ const Researches = () => {
         }
         setFilteredResearches(sorted);
     };
-    console.log('filtered: ', filteredResearches);
+
+    if (loading) {
+        return <Loading />;
+    }
+
     return filteredResearches ? (
-        <div className="flex min-h-screen w-full flex-col items-center gap-3 bg-slate-100">
+        <div className="mb-16 flex min-h-screen w-full flex-col items-center gap-3 bg-slate-100">
             <PageTitle>Researches</PageTitle>
             <div className="mb-3 flex w-full items-center justify-center">
                 <button
                     onClick={() => navigate('/research')}
                     className="h-12 w-[150px] rounded-lg  bg-blue-500 text-sm font-bold text-white hover:bg-blue-700">
-                    Add Research
+                    New Research
                 </button>
             </div>
             <AllItemsBlock

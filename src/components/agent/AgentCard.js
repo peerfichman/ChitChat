@@ -55,19 +55,19 @@ const AgentCard = ({ relevantAgent, agents, setAgent }) => {
     };
 
     return (
-        <div className="flex flex-col border border-gray-500 p-2 rounded-lg ">
+        <div className="flex flex-col rounded-lg border border-gray-500 p-2 ">
             <div className="flex justify-end">
                 <button onClick={removeAgent}>❌</button>
             </div>
             <div className="flex flex-col gap-3">
                 <div>
-                    <label className="block text-lg font-medium ml-1">
+                    <label className="ml-1 block text-lg font-medium">
                         {AgentCardTitles.NAME}
-                        <span className="text-red-500 pl-1">*</span>
+                        <span className="pl-1 text-red-500">*</span>
                     </label>
                     <input
                         type="text"
-                        className="border cursor-text py-2 px-2  block w-full rounded-lg text-sm "
+                        className="block w-full cursor-text rounded-lg  border px-2 py-2 text-sm "
                         placeholder="Agent name"
                         onChange={(e) =>
                             modifyAgent(
@@ -75,6 +75,7 @@ const AgentCard = ({ relevantAgent, agents, setAgent }) => {
                                 AgentParametersInDB.NAME,
                             )
                         }
+                        maxLength={30}
                     />
                 </div>
                 <SelectBlock

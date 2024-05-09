@@ -46,6 +46,7 @@ const CreateResearch = () => {
                     setValue={handleResearchChanges}
                     attribute="study_name"
                     isRequired={true}
+                    maxLength={50}
                 />
                 <InputBlock
                     title="Subject"

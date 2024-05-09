@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import AllItemsBlock from './../AllItemsBlock';
+import React, { useState } from 'react';
+import AllItemsBlock from '../AllItemsBlock';
 import { ExperimentVariables } from '../../constants/experimentsConstants';
 import ExperimentCard from './ExperimentCard';
 
-const ExperimentSearchBar = ({ experiments }) => {
+const Experiments = ({ experiments }) => {
     const [filteredExperiments, setFilteredExperiments] = useState(experiments);
 
     const handleSearch = (e) => {
         const search = e.target.value;
         const filtered = experiments.filter((experiment) => {
-            return experiment.exp_name
-                .toLowerCase()
-                .includes(search.toLowerCase());
+            return (
+                experiment.exp_name
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) |
+                experiment.study_name
+                    ?.toLowerCase()
+                    .includes(search.toLowerCase())
+            );
         });
         setFilteredExperiments(filtered);
     };
@@ -53,7 +58,7 @@ const ExperimentSearchBar = ({ experiments }) => {
             filterComponent={{
                 onclick: handleFilter,
             }}
-            totalItems={experiments.length + " Experiments"}>
+            totalItems={experiments.length + ' Experiments'}>
             {filteredExperiments.map((experiment) => (
                 <ExperimentCard
                     key={experiment.exp_id}
@@ -64,4 +69,4 @@ const ExperimentSearchBar = ({ experiments }) => {
     );
 };
 
-export default ExperimentSearchBar;
+export default Experiments;

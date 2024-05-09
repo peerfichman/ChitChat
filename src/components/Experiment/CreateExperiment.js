@@ -15,7 +15,11 @@ import {
 } from '../../constants/agentsConstants';
 import PageTitle from '../PageTitle';
 import { useParams } from 'react-router-dom';
-import { getResearchById } from '../../requests/researches';
+import {
+    getAllExperimentsOfResearch,
+    getResearchById,
+} from '../../requests/researches';
+import AllItemsBlock from './../AllItemsBlock';
 
 const CreateExperiment = () => {
     const { research_id } = useParams();
@@ -24,10 +28,11 @@ const CreateExperiment = () => {
         expName: '',
         expSubject: research?.study_subject || '',
         expPrompt: research?.study_prompt || '',
+        exp_num_participants: 1,
     });
     const [AIAgents, setAIAgents] = useState([]);
     const [creatingExperiment, setCreatingExperiment] = useState(false);
-
+    const [allExperiments, setAllExperiments] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -42,6 +47,16 @@ const CreateExperiment = () => {
             })
             .catch((error) => {
                 console.error('Failed to fetch research', error);
+            })
+            .finally(() => {
+                getAllExperimentsOfResearch(research_id)
+                    .then((data) => {
+                        console.log('data', data);
+                        setAllExperiments(data);
+                    })
+                    .catch((error) => {
+                        console.error('Failed to fetch experiments', error);
+                    });
             });
     }, [research_id]);
 
@@ -77,11 +92,24 @@ const CreateExperiment = () => {
             setCreatingExperiment(false);
             return;
         }
-        if (!experiment.expSubject) {
-            alert('Please choose a subject for the experiment.');
+        if (experiment.exp_num_participants < 1) {
+            alert(
+                'Please choose the number of participants for the experiment.',
+            );
             setCreatingExperiment(false);
             return;
         }
+        const isNameAlreadyExists = allExperiments.some(
+            (exp) => exp.exp_name === experiment.expName,
+        );
+        if (isNameAlreadyExists) {
+            alert(
+                'Experiment name already exists. Please choose a different name.',
+            );
+            setCreatingExperiment(false);
+            return;
+        }
+
         await createExperiment(experiment, AIAgents, research_id);
         navigate('/experiments');
     };
@@ -116,6 +144,7 @@ const CreateExperiment = () => {
                     attribute="expName"
                     isRequired={true}
                     defaultValue={experiment.expName}
+                    maxLength={50}
                 />
                 <InputBlock
                     title="Opening Prompt"
@@ -123,6 +152,14 @@ const CreateExperiment = () => {
                     setValue={handleExperimentChanges}
                     attribute="expPrompt"
                     defaultValue={experiment.expPrompt}
+                />
+                <InputBlock
+                    title="Maximum Participants"
+                    setValue={handleExperimentChanges}
+                    attribute="exp_num_participants"
+                    isRequired={true}
+                    defaultValue={experiment.exp_num_participants}
+                    maxLength={2}
                 />
                 {AIAgents.length < 3 ? (
                     <button
