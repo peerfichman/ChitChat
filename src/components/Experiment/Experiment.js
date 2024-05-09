@@ -11,6 +11,7 @@ import ExperimentDetails from './ExperimentDetails';
 import ChangeStatusButton from '../ChangeStatusButton';
 import AgentsBlock from '../agent/AgentsBlock';
 import PageTitle from '../PageTitle';
+import { getDateFormatted } from '../../utils';
 
 const Experiment = () => {
     let { id } = useParams();
@@ -18,18 +19,10 @@ const Experiment = () => {
     const [experiment, setExperiment] = useState(null);
     const [loading, setLoading] = useState(true);
     const [Agents, setAgents] = useState([]);
-    console.log(experiment);
     useEffect(() => {
         getExperimentById(id)
             .then((data) => {
-                const date = new Date(data.exp.exp_crated_at);
-                const stringDate =
-                    String(date.getDate()) +
-                    '/' +
-                    String(date.getMonth() + 1) +
-                    '/' +
-                    String(date.getFullYear());
-
+                const stringDate = getDateFormatted(data.exp.exp_crated_at);
                 setExperiment({ ...data.exp, exp_created_at: stringDate });
                 setAgents(data.agents);
             })

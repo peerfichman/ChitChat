@@ -5,20 +5,22 @@ const InputBlock = ({
     placeHolder,
     setValue,
     attribute,
+    defaultValue = '',
     isRequired = false,
 }) => {
     return (
         <>
-            <label className="block text-lg font-medium dark:text-white ml-1">
+            <label className="ml-1 block text-lg font-medium dark:text-white">
                 {title}
-                {isRequired && <span className="text-red-500 pl-1">*</span>}
+                {isRequired && <span className="pl-1 text-red-500">*</span>}
             </label>
             <input
                 type="text"
-                className="border cursor-text border-gray-400 py-3 px-4 block w-full rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                className="block w-full cursor-text rounded-lg border border-gray-400 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
                 placeholder={placeHolder}
                 onChange={(e) => setValue(attribute, e.target.value)}
                 required={isRequired}
+                defaultValue={defaultValue}
             />
         </>
     );

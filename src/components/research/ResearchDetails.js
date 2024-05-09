@@ -1,12 +1,9 @@
-import DetailObject from './../DetailObject';
+import DetailObject from '../DetailObject';
 
-const StudyDetails = ({ study }) => {
+const ResearchDetails = ({ study }) => {
     return (
         <div className="grid w-full grid-cols-2">
-            <DetailObject
-                title="Created At"
-                value={String(study.study_created_at).split('T')[0]}
-            />
+            <DetailObject title="Created At" value={study.study_created_at} />
             <DetailObject
                 title="Default Provoking Prompt"
                 value={study.study_prompt}
@@ -17,4 +14,4 @@ const StudyDetails = ({ study }) => {
     );
 };
 
-export default StudyDetails;
+export default ResearchDetails;

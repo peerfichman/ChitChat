@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import InputBlock from '../InputBlock';
 import Button from '../Button';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,18 +15,35 @@ import {
 } from '../../constants/agentsConstants';
 import PageTitle from '../PageTitle';
 import { useParams } from 'react-router-dom';
+import { getResearchById } from '../../requests/researches';
 
 const CreateExperiment = () => {
-    const { study_id } = useParams();
+    const { research_id } = useParams();
+    const [research, setResearch] = useState(null);
     const [experiment, setExperiment] = useState({
-        expSubject: '',
-        expPrompt: '',
         expName: '',
+        expSubject: research?.study_subject || '',
+        expPrompt: research?.study_prompt || '',
     });
     const [AIAgents, setAIAgents] = useState([]);
     const [creatingExperiment, setCreatingExperiment] = useState(false);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        getResearchById(research_id)
+            .then((data) => {
+                setResearch(data);
+                setExperiment({
+                    ...experiment,
+                    expSubject: data.study_subject,
+                    expPrompt: data.study_prompt,
+                });
+            })
+            .catch((error) => {
+                console.error('Failed to fetch research', error);
+            });
+    }, [research_id]);
 
     const handleExperimentChanges = (key, value) => {
         setExperiment({ ...experiment, [key]: value });
@@ -65,7 +82,7 @@ const CreateExperiment = () => {
             setCreatingExperiment(false);
             return;
         }
-        await createExperiment(experiment, AIAgents, study_id);
+        await createExperiment(experiment, AIAgents, research_id);
         navigate('/experiments');
     };
 
@@ -98,24 +115,28 @@ const CreateExperiment = () => {
                     setValue={handleExperimentChanges}
                     attribute="expName"
                     isRequired={true}
-                />
-                <InputBlock
-                    title="Subject"
-                    placeHolder='"The new rules for a gun license"'
-                    setValue={handleExperimentChanges}
-                    attribute="expSubject"
-                    isRequired={true}
+                    defaultValue={experiment.expName}
                 />
                 <InputBlock
                     title="Opening Prompt"
                     placeHolder='"The new rules can make women abuse more common."'
                     setValue={handleExperimentChanges}
                     attribute="expPrompt"
+                    defaultValue={experiment.expPrompt}
                 />
                 {AIAgents.length < 3 ? (
-                    <Button text="Add Agent" onclick={addAgentBlock} />
+                    <button
+                        className="h-12 w-[150px] rounded-lg  bg-blue-500 text-sm font-bold text-white hover:bg-blue-700"
+                        onClick={addAgentBlock}>
+                        Add Agent
+                    </button>
                 ) : (
-                    <Button text="Add Agent" enabled={false} />
+                    <button
+                        className="h-12 w-[150px] cursor-not-allowed  rounded-lg bg-blue-500 text-sm font-bold text-white opacity-50"
+                        onClick={addAgentBlock}
+                        disabled>
+                        Add Agent
+                    </button>
                 )}
                 <div className="grid grid-cols-2 gap-3">
                     {AIAgents.map((agent) => (

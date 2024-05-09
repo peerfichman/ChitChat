@@ -8,7 +8,7 @@ const ExperimentDetails = ({ experiment }) => {
         <div className="grid w-full grid-cols-2">
             <DetailObject
                 title="Created At"
-                value={String(experiment.exp_created_at).split('T')[0]}
+                value={experiment.exp_created_at}
             />
             <DetailObject title="Subject" value={experiment.exp_subject} />
             {experiment.exp_status == statusOptions.NOT_STARTED ? (

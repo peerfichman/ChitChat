@@ -2,8 +2,9 @@ import axios from 'axios';
 
 const baseURL = process.env.REACT_APP_CHICHAT_API_URL + 'studies';
 
-const getAllStudies = async () => {
+const getAllResearches = async () => {
     try {
+        console.log('getAllResearches Request sent');
         const response = await axios.get(baseURL);
         return response.data;
     } catch (error) {
@@ -12,7 +13,7 @@ const getAllStudies = async () => {
     }
 };
 
-const getStudyById = async (id) => {
+const getResearchById = async (id) => {
     try {
         const response = await axios.get(baseURL + `/${id}`);
         return response.data;
@@ -22,7 +23,7 @@ const getStudyById = async (id) => {
     }
 };
 
-const createStudy = async (study) => {
+const createResearch = async (study) => {
     try {
         const response = await axios.post(baseURL, study);
         return response.data;
@@ -32,7 +33,7 @@ const createStudy = async (study) => {
     }
 };
 
-const getAllExperimentsOfStudy = async (id) => {
+const getAllExperimentsOfResearch = async (id) => {
     try {
         const response = await axios.get(baseURL + `/experiments/${id}`);
         return response.data;
@@ -41,4 +42,9 @@ const getAllExperimentsOfStudy = async (id) => {
         return null;
     }
 };
-export { getAllStudies, getStudyById, createStudy, getAllExperimentsOfStudy };
+export {
+    getAllResearches,
+    getResearchById,
+    createResearch,
+    getAllExperimentsOfResearch,
+};

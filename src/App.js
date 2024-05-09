@@ -7,9 +7,9 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CreateExperiment from './components/Experiment/CreateExperiment';
 import SideBar from './components/sideBar/SideBar';
-import CreateStudy from './components/study/CreateStudy';
-import Studies from './components/study/Studies';
-import Study from './components/study/Study';
+import Research from './components/research/Research';
+import CreateResearch from './components/research/CreateResearch';
+import Researches from './components/research/Researches';
 
 function App() {
     return (
@@ -17,13 +17,17 @@ function App() {
             <div className="flex min-h-screen w-full flex-row gap-3 bg-slate-100">
                 <SideBar />
                 <Routes>
-                    <Route exact path="/study" element={<CreateStudy />} />
-                    <Route exact path="/study/:id" element={<Study />} />
-
-                    <Route exact path="/studies" element={<Studies />} />
                     <Route
                         exact
-                        path="/experiment/:study_id"
+                        path="/research"
+                        element={<CreateResearch />}
+                    />
+                    <Route exact path="/research/:id" element={<Research />} />
+
+                    <Route exact path="/researches" element={<Researches />} />
+                    <Route
+                        exact
+                        path="/research/:research_id/experiment"
                         element={<CreateExperiment />}
                     />
                     <Route

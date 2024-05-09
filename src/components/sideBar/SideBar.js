@@ -9,16 +9,16 @@ const sideBarItems = [
         Icon: AiOutlineExperiment,
     },
     {
-        title: 'Studies',
+        title: 'Researches',
         Icon: AiOutlineExperiment,
         submenu: [
             {
-                title: 'All Studies',
-                path: '/studies',
+                title: 'All Researches',
+                path: '/researches',
             },
             {
-                title: 'New Study',
-                path: '/study',
+                title: 'New Research',
+                path: '/research',
             },
         ],
     },

@@ -1,4 +1,4 @@
-const StudyVariables = Object.freeze({
+const ResearchVariables = Object.freeze({
     STUDY_ID: 'study_id',
     STUDY_NAME: 'study_name',
     STUDY_SUBJECT: 'study_subject',
@@ -7,4 +7,4 @@ const StudyVariables = Object.freeze({
     STUDY_DATE: 'study_created_at',
 });
 
-export { StudyVariables };
+export { ResearchVariables };

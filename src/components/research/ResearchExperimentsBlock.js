@@ -1,6 +1,6 @@
 import ExperimentSearchBar from '../Experiment/ExperimentSearchBar';
 
-const StudyExperimentsBlock = ({ experiments }) => {
+const ResearchExperimentsBlock = ({ experiments }) => {
     return (
         <div className="flex flex-col gap-2">
             <div className="mb-2 flex w-fit items-center">
@@ -13,4 +13,4 @@ const StudyExperimentsBlock = ({ experiments }) => {
     );
 };
 
-export default StudyExperimentsBlock;
+export default ResearchExperimentsBlock;

@@ -52,7 +52,8 @@ const ExperimentSearchBar = ({ experiments }) => {
             }}
             filterComponent={{
                 onclick: handleFilter,
-            }}>
+            }}
+            totalItems={experiments.length + " Experiments"}>
             {filteredExperiments.map((experiment) => (
                 <ExperimentCard
                     key={experiment.exp_id}
