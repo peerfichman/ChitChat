@@ -5,25 +5,38 @@ import ExperimentMetric from './components/metric/ExperimentMetric';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ExperimentCreatePage from './components/Experiment/ExperimentCreatePage';
+import CreateExperiment from './components/Experiment/CreateExperiment';
 import SideBar from './components/sideBar/SideBar';
+import Research from './components/research/Research';
+import CreateResearch from './components/research/CreateResearch';
+import Researches from './components/research/Researches';
+import Results from './components/results/Results';
 
 function App() {
     return (
         <BrowserRouter>
-            <div className="flex flex-row w-full gap-3 bg-slate-100 min-h-screen">
+            <div className="flex min-h-screen w-full flex-row gap-3 bg-slate-100">
                 <SideBar />
                 <Routes>
                     <Route
                         exact
-                        path="/experiment"
-                        element={<ExperimentCreatePage />}
+                        path="/research"
+                        element={<CreateResearch />}
+                    />
+                    <Route exact path="/research/:id" element={<Research />} />
+
+                    <Route exact path="/researches" element={<Researches />} />
+                    <Route
+                        exact
+                        path="/research/:research_id/experiment"
+                        element={<CreateExperiment />}
                     />
                     <Route
                         exact
                         path="/experiments"
                         element={<ExperimentsPage />}
                     />
+                    <Route exact path="/results" element={<Results />} />
                     <Route
                         exact
                         path="/experiments/:id"

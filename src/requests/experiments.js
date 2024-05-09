@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { statusOptions } from '../constant';
+import { statusOptions } from '../constants/experimentsConstants';
 const baseURL = process.env.REACT_APP_CHICHAT_API_URL;
 
 const getAllExperiments = async () => {
@@ -24,6 +24,29 @@ const getExperimentById = async (id) => {
     }
 };
 
+const createExperiment = async (experiment, agents, study_id) => {
+    console.log(experiment);
+    const URL = baseURL + 'experiments';
+    try {
+        const response = await axios.post(URL, {
+            exp: {
+                exp_subject: experiment.expSubject,
+                exp_provoking_prompt: experiment.expPrompt,
+                exp_name: experiment.expName,
+                exp_status: statusOptions.NOT_STARTED,
+                exp_num_participants: experiment.exp_num_participants,
+                study_id,
+            },
+            agents,
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Failed to create experiment', error);
+        return null;
+    }
+};
+
 const updateExperimentStatus = async (exp_id, exp_status) => {
     const newExperiment = { exp_id, exp_status };
     const URL = baseURL + `experiments/status`;
@@ -36,22 +59,16 @@ const updateExperimentStatus = async (exp_id, exp_status) => {
     }
 };
 
-const createExperiment = async (experiment, agents) => {
-    const URL = baseURL + 'experiments';
+const updateExperimentPrompt = async (exp_id, prompt) => {
+    const URL = baseURL + `experiments/${exp_id}`;
     try {
-        const response = await axios.post(URL, {
-            exp: {
-                exp_subject: experiment.expSubject,
-                exp_provoking_prompt: experiment.expPrompt,
-                exp_name: experiment.expName,
-                exp_status: statusOptions.NOT_STARTED,
-            },
-            agents,
+        const response = await axios.put(URL, {
+            exp_id,
+            exp_provoking_prompt: prompt,
         });
-
         return response.data;
     } catch (error) {
-        console.error('Failed to create experiment', error);
+        console.error('Failed to update experiment prompt', error);
         return null;
     }
 };
@@ -59,6 +76,7 @@ const createExperiment = async (experiment, agents) => {
 export {
     getAllExperiments,
     getExperimentById,
-    updateExperimentStatus,
     createExperiment,
+    updateExperimentStatus,
+    updateExperimentPrompt,
 };
