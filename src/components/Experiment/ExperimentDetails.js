@@ -1,28 +1,46 @@
-import React from 'react';
-import ExperimentDetail from './ExperimentDetail';
-import { statusOptions, chatURL } from '../../constant';
+import React, { useState } from 'react';
+import DetailObject from '../DetailObject';
+import { chatURL } from '../../constants/generalConstants';
+import { statusOptions } from '../../constants/experimentsConstants';
+import EditableDetailObject from './../EditableDetailObject';
+import { updateExperimentPrompt } from '../../requests/experiments';
+
 const ExperimentDetails = ({ experiment }) => {
+    const [prompt, setPrompt] = useState(experiment.exp_provoking_prompt);
+    const [isEditingPrompt, setIsEditingPrompt] = useState(false);
+    console.log('experiment', experiment);
     return (
-        <div className="grid grid-cols-2 w-full">
-            <ExperimentDetail
+        <div className="grid w-full grid-cols-2">
+            <DetailObject title="Research" value={experiment.study_name} />
+            <DetailObject title="Subject" value={experiment.exp_subject} />
+            <DetailObject
                 title="Created At"
-                value={String(experiment.exp_created_at).split('T')[0]}
+                value={experiment.exp_created_at}
             />
-            <ExperimentDetail title="Subject" value={experiment.exp_subject} />
+            <EditableDetailObject
+                title="Provoking Prompt"
+                value={prompt}
+                setValue={(val) => {
+                    setPrompt(val);
+                    updateExperimentPrompt(experiment.exp_id, val);
+                }}
+                isEditing={isEditingPrompt}
+                setIsEditing={setIsEditingPrompt}
+            />
             {experiment.exp_status == statusOptions.NOT_STARTED ? (
-                <ExperimentDetail
+                <DetailObject
                     title="Login Link"
                     value="Start the experiment to get the login link"
                 />
             ) : (
-                <ExperimentDetail
+                <DetailObject
                     title="Login Link"
                     value={`${chatURL}/${experiment.exp_id}`}
                 />
             )}
-            <ExperimentDetail
-                title="Provoking Prompt"
-                value={experiment.exp_provoking_prompt}
+            <DetailObject
+                title="Maximum Participants"
+                value={experiment.exp_num_participants}
             />
         </div>
     );

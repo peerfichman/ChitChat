@@ -10,6 +10,8 @@ import {
 import ExperimentDetails from './ExperimentDetails';
 import ChangeStatusButton from '../ChangeStatusButton';
 import AgentsBlock from '../agent/AgentsBlock';
+import PageTitle from '../PageTitle';
+import { getDateFormatted } from '../../utils';
 
 const Experiment = () => {
     let { id } = useParams();
@@ -17,18 +19,10 @@ const Experiment = () => {
     const [experiment, setExperiment] = useState(null);
     const [loading, setLoading] = useState(true);
     const [Agents, setAgents] = useState([]);
-
     useEffect(() => {
         getExperimentById(id)
             .then((data) => {
-                const date = new Date(data.exp.exp_crated_at);
-                const stringDate =
-                    String(date.getDate()) +
-                    '/' +
-                    String(date.getMonth() + 1) +
-                    '/' +
-                    String(date.getFullYear());
-
+                const stringDate = getDateFormatted(data.exp.exp_crated_at);
                 setExperiment({ ...data.exp, exp_created_at: stringDate });
                 setAgents(data.agents);
             })
@@ -38,7 +32,7 @@ const Experiment = () => {
             .finally(() => {
                 setLoading(false);
             });
-    }, [id, loading]);
+    }, [id]);
 
     if (loading) {
         return <Loading />;
@@ -50,17 +44,18 @@ const Experiment = () => {
     };
 
     return experiment ? (
-        <div className="min-h-screen w-full flex flex-col items-center bg-slate-100">
-            <div className="flex flex-col shadow-sm rounded-xl p-4 bg-white my-20 min-w-[990px] gap-4">
-                <h1 className="font-bold text-gray-800 text-5xl">
-                    {experiment.exp_name}
-                </h1>
+        <div className="flex min-h-screen w-full flex-col items-center bg-slate-100">
+            <div className="my-20 flex min-w-[990px] flex-col gap-4 rounded-xl bg-white p-4 shadow-sm">
+                <div className="flex flex-col gap-2">
+                    <PageTitle marginY="">{experiment.exp_name}</PageTitle>
+                    <p className="opacity-55">Experiment</p>
+                </div>
                 <Status status={experiment.exp_status} />
                 <div className="w-full">
                     <ExperimentDetails experiment={experiment} />
                 </div>
                 <AgentsBlock agents={Agents} />
-                <div className="flex justify-end">
+                <div className="flex h-20 items-center justify-end">
                     <ChangeStatusButton
                         status={experiment.exp_status}
                         setStatus={ChangeExperimentStatus}
@@ -70,7 +65,7 @@ const Experiment = () => {
             </div>
         </div>
     ) : (
-        <div>Experiment not found</div>
+        <div>Experiment not found</div> //TODO: Add a better error message
     );
 };
 export default Experiment;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
-import { statusOptions } from '../constant';
+import { statusOptions } from '../constants/experimentsConstants';
 
 const colorDict = {
     [statusOptions.NOT_STARTED]: 'bg-red-200 text-red-800',
@@ -11,7 +11,7 @@ const colorDict = {
 
 const sizeDict = {
     small: 'py-2 text-md w-1/2',
-    large: 'py-2 text-lg w-1/4',
+    large: 'py-2 text-lg w-1/6',
 };
 
 const Status = ({ status, size = 'large' }) => {

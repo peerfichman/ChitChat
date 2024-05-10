@@ -1,23 +1,34 @@
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
+import { TailSpin } from 'react-loader-spinner';
 
 const Button = ({
-    text,
+    text = '',
     onclick = () => {},
+    width = '1/4',
     color = 'blue',
     enabled = true,
 }) => {
-    let bgColor = `bg-${color}-500`;
+    const bgColor = `bg-${color}-500 hover:bg-${color}-700`;
+    const w = `w-${width}`;
     let className = twMerge(
-        'text-sm text-white rounded-lg w-1/4 h-10',
+        ' font-bold text-sm text-white rounded-lg h-10',
         bgColor,
     );
+    className = twMerge(className, w);
+
     if (!enabled) {
-        className = twMerge(className, 'opacity-50 cursor-not-allowed');
         return (
-            <button className={className} onClick={onclick} disabled>
-                {text}
-            </button>
+            <TailSpin
+                visible={true}
+                height="50"
+                width="50"
+                color="blue"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                wrapperStyle={{}}
+                wrapperClass=""
+            />
         );
     }
 

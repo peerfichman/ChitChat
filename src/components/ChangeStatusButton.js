@@ -1,9 +1,10 @@
 import React from 'react';
-import { statusOptions } from '../constant';
+import { statusOptions } from '../constants/experimentsConstants';
 import { createGraph } from '../requests/metric';
 import { useNavigate } from 'react-router-dom';
-import { twMerge } from 'tailwind-merge';
 import { sendProvokingPrompt } from '../requests/FireBase';
+import Button from './Button';
+
 const ChangeStatusButton = ({ status, setStatus, experiment }) => {
     const navigate = useNavigate();
 
@@ -33,15 +34,19 @@ const ChangeStatusButton = ({ status, setStatus, experiment }) => {
         }
     };
 
-    const className =
-        'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ';
     if (status === statusOptions.PROCESSING) {
-        twMerge(className, 'opacity-50 cursor-not-allowed');
+        return (
+            <div className="mr-7 flex items-center">
+                <Button enabled={false} />;
+            </div>
+        );
     }
     return (
-        <button onClick={handleStatusChange} className={className}>
-            {statusDict[status]}
-        </button>
+        <Button
+            text={statusDict[status]}
+            onclick={handleStatusChange}
+            width="[150px]"
+        />
     );
 };
 

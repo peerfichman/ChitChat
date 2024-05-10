@@ -1,31 +1,31 @@
 import React from 'react';
-import OverlayDropDown from '../OverlayDropDown';
+import OverlayDropDown from './OverlayDropDown';
 import { GrFilter } from 'react-icons/gr';
-import { statusOptions } from '../../constant';
+import { statusOptions } from '../constants/experimentsConstants';
 
 const FilterComponent = ({ handleFilter }) => {
     return (
         <OverlayDropDown Icon={GrFilter} className="">
-            <div className="flex px-2 py-1 text-md w-full font-bold cursor-default">
+            <div className="text-md flex w-full cursor-default px-2 py-1 font-bold">
                 By Status:
             </div>
             <div
-                className="flex hover:bg-slate-200 pr-2 py-1 text-sm w-full pl-6"
+                className="flex w-full py-1 pl-6 pr-2 text-sm hover:bg-slate-200"
                 onClick={() => handleFilter(statusOptions.NOT_STARTED)}>
                 Not Started
             </div>
             <div
-                className="flex hover:bg-slate-200 pr-2 py-1 text-sm w-full pl-6"
+                className="flex w-full py-1 pl-6 pr-2 text-sm hover:bg-slate-200"
                 onClick={() => handleFilter(statusOptions.RUNNING)}>
                 Running
             </div>
             <div
-                className="flex hover:bg-slate-200 pr-2 py-1 text-sm w-full pl-6"
+                className="flex w-full py-1 pl-6 pr-2 text-sm hover:bg-slate-200"
                 onClick={() => handleFilter(statusOptions.COMPLETED)}>
                 Completed
             </div>
             <div
-                className="flex hover:bg-slate-200 pr-2 py-1 text-sm w-full pl-6"
+                className="flex w-full py-1 pl-6 pr-2 text-sm hover:bg-slate-200"
                 onClick={() => handleFilter()}>
                 All
             </div>
