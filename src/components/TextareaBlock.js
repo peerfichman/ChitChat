@@ -10,12 +10,12 @@ const TextareaBlock = ({
 }) => {
     return (
         <>
-            <label className="block text-lg font-medium dark:text-white ml-1">
+            <label className="ml-1 block text-lg  font-medium">
                 {title}
                 {isRequired && <span className="text-red-500">*</span>}
             </label>
             <textarea
-                className="border resize-none cursor-text border-gray-400 py-3 px-4 block w-full rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                className="block w-full cursor-text resize-none rounded-lg border border-gray-400 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
                 placeholder={placeHolder}
                 onChange={(e) => setValue(attribute, e.target.value)}
                 required={isRequired}

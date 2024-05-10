@@ -11,7 +11,7 @@ const InputBlock = ({
 }) => {
     return (
         <>
-            <label className="ml-1 block text-lg font-medium dark:text-white">
+            <label className="ml-1 block text-lg font-medium">
                 {title}
                 {isRequired && <span className="pl-1 text-red-500">*</span>}
             </label>
