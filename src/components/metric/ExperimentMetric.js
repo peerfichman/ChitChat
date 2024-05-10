@@ -3,6 +3,7 @@ import ExperimentGraph from './ExperimentGraph';
 import { useParams } from 'react-router-dom';
 import ExperimentStatistics from './ExperimentStatistics';
 import ExperimentTable from './ExperimentTable';
+import UserSentimentGraph from "./UserSentimentGraph";
 import DownloadCSVButton from './DownloadCSVButton';
 import PageTitle from '../PageTitle';
 import { ViewOptions } from '../../constants/metricsConstants';
@@ -17,6 +18,7 @@ const ExperimentMetric = () => {
         [ViewOptions.STATISTICS.id]: <ExperimentStatistics id={id} />,
         [ViewOptions.GRAPH.id]: <ExperimentGraph id={id} />,
         [ViewOptions.TABLE.id]: <ExperimentTable id={id} />,
+        [ViewOptions.SENTIMENT_GRAPH.id]: <UserSentimentGraph id={id} />,
     };
 
     const handleTabChange = (tabID) => {
