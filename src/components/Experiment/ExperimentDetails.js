@@ -10,7 +10,7 @@ const ExperimentDetails = ({ experiment }) => {
     const [isEditingPrompt, setIsEditingPrompt] = useState(false);
     console.log('experiment', experiment);
     return (
-        <div className="grid w-full grid-cols-2">
+        <div className="grid w-full grid-cols-1 lg:grid-cols-2">
             <DetailObject title="Research" value={experiment.study_name} />
             <DetailObject title="Subject" value={experiment.exp_subject} />
             <DetailObject

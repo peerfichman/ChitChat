@@ -7,7 +7,7 @@ const SearchBlock = ({
     filterComponent = null,
 }) => {
     return (
-        <div className="mb-3 flex min-w-[916px] items-center gap-2">
+        <div className="mb-3 flex min-w-[516px] items-center gap-2">
             <div className="flex gap-2">
                 {filterComponent && (
                     <FilterComponent handleFilter={filterComponent?.onclick} />

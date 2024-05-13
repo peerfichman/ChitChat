@@ -18,7 +18,11 @@ const AllItemsBlock = ({
                     {children.length} of {totalItems} Found
                 </p>
             </div>
-            <div className="grid grid-cols-3 gap-2">{children}</div>
+            <div className="flex w-full items-center justify-center">
+                <div className="grid w-fit grid-cols-1 items-center gap-4 lg:grid-cols-2 xl:grid-cols-3">
+                    {children}
+                </div>
+            </div>
         </div>
     );
 };
