@@ -1,11 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import GraphComponent from './GraphComponent';
+import NodeCard from './NodeCard';
 
 const ExperimentGraph = ({ id }) => {
+    const [isEmpty, setIsEmpty] = useState(false);
+
+    const [selectedNode, setSelectedNode] = useState({
+        label: '',
+        sentiment: '',
+        sentimentCount: '',
+        degree: '',
+    });
+
     return (
-        <div className="bg-slate-200 h-96 rounded-2 w-1/2 border border-gray-800 shadow-md">
-            <GraphComponent id={id} />
-        </div>
+        !isEmpty && (
+            <div className="flex w-full flex-col items-center gap-3 md:flex-row md:items-start md:justify-evenly">
+                {selectedNode && <NodeCard node={selectedNode} />}
+                <GraphComponent
+                    id={id}
+                    onClickNode={setSelectedNode}
+                    setIsEmpty={setIsEmpty}
+                />
+            </div>
+        )
     );
 };
 
