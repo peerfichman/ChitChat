@@ -7,7 +7,7 @@ const DetailObject = ({
     onClickEdit = () => {},
     text = 'text-lg',
 }) => {
-    const className = `mb-1 ${text} font-bold`;
+    const className = `mb-1 ${text} font-bold text-slate-500`;
     return isEditable ? (
         <div className="max-w-96 p-2">
             <div className="flex gap-3">
@@ -23,7 +23,7 @@ const DetailObject = ({
     ) : (
         <div className="max-w-96 p-2">
             <p className={className}>{title}</p>
-            <p>{value}</p>
+            {value === '' ? <br></br> : <p>{value}</p>}
         </div>
     );
 };
