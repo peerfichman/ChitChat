@@ -8,7 +8,6 @@ import { updateExperimentPrompt } from '../../requests/experiments';
 const ExperimentDetails = ({ experiment }) => {
     const [prompt, setPrompt] = useState(experiment.exp_provoking_prompt);
     const [isEditingPrompt, setIsEditingPrompt] = useState(false);
-    console.log('experiment', experiment);
     return (
         <div className="grid w-full grid-cols-1 lg:grid-cols-2">
             <DetailObject title="Research" value={experiment.study_name} />

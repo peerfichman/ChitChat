@@ -51,7 +51,6 @@ const CreateExperiment = () => {
             .finally(() => {
                 getAllExperimentsOfResearch(research_id)
                     .then((data) => {
-                        console.log('data', data);
                         setAllExperiments(data);
                     })
                     .catch((error) => {

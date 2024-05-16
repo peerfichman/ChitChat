@@ -2,7 +2,6 @@ import React from 'react';
 
 const OverlayDropDown = ({ Icon, children }) => {
     const [isOpen, setIsOpen] = React.useState(false);
-    console.log('children', children);
     return (
         <button
             className="rounded border p-2 hover:bg-slate-200"

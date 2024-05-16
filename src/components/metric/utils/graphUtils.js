@@ -2,13 +2,12 @@ const createGraph = (records) => {
     const nodesMap = new Map(); // Use Map instead of Set
     const links = [];
     records.forEach((record) => {
-        // console.log('record', record);
         const node1Data = record._fields[record._fieldLookup.p];
         const node2Data = record._fields[record._fieldLookup.q];
         const relationship = record._fields[record._fieldLookup.r];
         const node1Id = `${node1Data.identity.low}_${node1Data.identity.high}`;
         const node2Id = `${node2Data.identity.low}_${node2Data.identity.high}`;
-
+        console.log(node1Data.properties.name, 'ID: ', node1Id);
         // Store or update node information in Map by id
         if (!nodesMap.has(node1Id)) {
             nodesMap.set(
@@ -19,7 +18,7 @@ const createGraph = (records) => {
         if (!nodesMap.has(node2Id)) {
             nodesMap.set(
                 node2Id,
-                _createNode(node2Id, node1Data.properties.name),
+                _createNode(node2Id, node2Data.properties.name),
             );
         }
 
@@ -55,8 +54,9 @@ const createGraph = (records) => {
     });
 
     _reshapeNodes(links, nodesMap);
-
     const nodesList = Array.from(nodesMap.values());
+    console.log('nodesMap: ', nodesMap);
+    console.log('nodesList: ', nodesList);
     return { nodes: nodesList, edges: links };
 };
 
@@ -104,7 +104,7 @@ const _LightenDarkenColor = (col, amt) => {
 };
 
 const _increaseSizeAndColor = (node) => {
-    node.size += 2;
+    node.size += 3;
     node.degree += 1;
     node.color = _LightenDarkenColor(node.color, -15);
 };

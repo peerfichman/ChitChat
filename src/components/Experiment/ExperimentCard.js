@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import Status from '../Status';
+import CardDetailObject from './../CardDetailObject';
 const ExperimentCard = ({
     experiment,
     navigateTo = `/experiments/${experiment.exp_id}`,
@@ -13,14 +14,15 @@ const ExperimentCard = ({
             <p className="w-11/12 truncate text-center text-2xl font-bold text-gray-800">
                 {experiment.exp_name}
             </p>
-            <div className="flex gap-1">
-                <p className="font-bold text-gray-500">Research:</p>
-                <p className="text-gray-500">{experiment.study_name}</p>
-            </div>
-            <div className="flex gap-1">
-                <p className="font-bold text-gray-500">Created At:</p>
-                <p className="text-gray-500">{experiment.exp_created_at}</p>
-            </div>
+            <CardDetailObject title="Research" value={experiment.study_name} />
+            <CardDetailObject
+                title="Created At"
+                value={experiment.exp_created_at}
+            />
+            <CardDetailObject
+                title="Number of Participants"
+                value={experiment.exp_num_participants}
+            />
 
             <Status status={experiment.exp_status} size="small" />
         </div>

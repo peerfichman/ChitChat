@@ -104,7 +104,7 @@ const AgentCard = ({ relevantAgent, agents, setAgent }) => {
                     value={activityLevel}
                     setValue={modifyActivityRange}
                     min={0}
-                    max={ActivityLevels.ACTIVITY_5}
+                    max={ActivityLevels.ACTIVITY_3}
                     agentField={AgentParametersInDB.ACTIVITY_LEVEL}
                 />
                 <Range
