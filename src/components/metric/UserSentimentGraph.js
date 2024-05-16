@@ -9,11 +9,9 @@ const UserSentimentGraph =  ({id}) => {
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [users, setUsers] = useState([]);
-    console.log(id);
     useEffect(() => {
         getMessagesByCollectionId(id).then(messages => {
             setData(messages);
-            console.log(messages);
             let allNames = messages.map(obj => obj.name);
             allNames = allNames.filter(name => name !== "ChitChat");
             const uniqueNames = [...new Set(allNames)];
@@ -42,7 +40,6 @@ const UserSentimentGraph =  ({id}) => {
                 sentiment: totalSentimentScore
             });
         })
-        console.log("filtered Data " + JSON.stringify(tempData) );
         setFilteredData(tempData);
     }
 

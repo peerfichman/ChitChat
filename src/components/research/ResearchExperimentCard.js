@@ -7,7 +7,6 @@ const ResearchExperimentCard = ({
     navigateTo = `/experiments/${experiment.exp_id}`,
 }) => {
     const navigate = useNavigate();
-    console.log('experiment', experiment);
     return (
         <div
             className="flex w-[300px] cursor-pointer flex-col gap-3 rounded-xl border bg-gray-50 p-4  hover:bg-gray-200"

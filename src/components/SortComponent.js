@@ -3,7 +3,6 @@ import OverlayDropDown from './OverlayDropDown';
 import { BiSortAlt2 } from 'react-icons/bi';
 
 const SortComponent = ({ handleSort, attributes }) => {
-    console.log('attributes', attributes);
     return (
         <OverlayDropDown Icon={BiSortAlt2}>
             {Object.keys(attributes).map((key) => (
