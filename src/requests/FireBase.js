@@ -26,7 +26,11 @@ const getMessagesByCollectionId = async ( id ) => {
         const messagesQuery = query(messages, orderBy('createdAt'));
         const messagesList = await getDocs(messagesQuery);
         messagesList.forEach(doc => {
-            messagesData.push(doc.data()); // Push each document's data to the array
+            const temp = doc.data();
+            if(temp.sentimentScore || temp.sentimentScore === 0) {
+                messagesData.push(doc.data()); // Push each document's data to  the array
+            }
+
         });
         return messagesData; // Return the array containing all messages
     } catch (error) {
