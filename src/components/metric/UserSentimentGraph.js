@@ -61,12 +61,11 @@ const UserSentimentGraph =  ({id}) => {
         let tempData = [];
         let tempAverageData = [];
         let totalSentimentScore = 0;
-        let averageScore = filteredData[0].sentimentScore;
+        let averageScore = 0;
         filteredData.forEach(message => {
             totalSentimentScore += message.sentimentScore
-            totalSentimentScore = parseFloat(totalSentimentScore.toFixed(2));
-            averageScore = ((averageScore + message.sentimentScore) / 2);
-            averageScore = parseFloat(averageScore.toFixed(2));
+            totalSentimentScore = parseFloat(totalSentimentScore?.toFixed(2));
+            averageScore = parseFloat(message.sentimentScore?.toFixed(2));
             const milliseconds = message.createdAt.seconds * 1000 + Math.round(message.createdAt.nanoseconds / 1000000);
             const date = new Date(milliseconds);
             const hours = String(date.getHours()).padStart(2, '0');
