@@ -1,5 +1,5 @@
 import React, {PureComponent, useEffect, useState} from 'react';
-import { AreaChart, Area, XAxis, YAxis, Legend ,CartesianGrid, Tooltip, BarChart, Bar, Rectangle} from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, Legend ,CartesianGrid, Tooltip, BarChart, Bar, Rectangle, Line, LineChart} from 'recharts';
 import { getMessagesByCollectionId } from "../../requests/FireBase"
 
 
@@ -139,7 +139,7 @@ const UserSentimentGraph =  ({id}) => {
                         height={400}
                         data={filteredData}
                         margin={{
-                            top: 10,
+                            top: 20,
                             right: 30,
                             left: 0,
                             bottom: 0,
@@ -147,7 +147,7 @@ const UserSentimentGraph =  ({id}) => {
                     >
                         <CartesianGrid strokeDasharray="3 3"/>
                         <XAxis label={{ value: 'Time', position: 'insideBottom' }} dataKey="name"/>
-                        <YAxis label={{ value: 'Sentiment', angle: -90, position: 'insideLeft' }} />
+                        <YAxis domain={[-5, 5]} label={{ value: 'Sentiment', angle: -90, position: 'insideLeft' }} />
                         <Tooltip/>
                         <defs>
                             <linearGradient id="splitColor" x1="0" y1="0" x2="0" y2="1">
@@ -159,44 +159,43 @@ const UserSentimentGraph =  ({id}) => {
                     </AreaChart>
                 </div>
 
-                <AreaChart
+                <LineChart
                     width={500}
                     height={400}
                     data={averageData}
                     margin={{
-                        top: 10,
+                        top: 20,
                         right: 30,
-                        left: 0,
-                        bottom: 0,
+                        left: 20,
+                        bottom: 5,
                     }}
+
                 >
-                    <CartesianGrid strokeDasharray="3 3"/>
-                    <XAxis label={{ value: 'Time', position: 'insideBottom' }} dataKey="name"/>
-                    <YAxis label={{ value: 'Sentiment', angle: -90, position: 'insideLeft' }} />
-                    <Tooltip/>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis label={{ value: 'Time', position: 'insideBottom' }} />
+                    <YAxis  domain={[-1, 1]} label={{ value: 'Sentiment', angle: -90, position: 'insideLeft' }}/>
+                    <Tooltip />
                     <defs>
                         <linearGradient id="splitColor" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset={off} stopColor="green" stopOpacity={1}/>
-                            <stop offset={off} stopColor="red" stopOpacity={1}/>
                         </linearGradient>
                     </defs>
-                    <Area type="monotone" dataKey="sentiment" stroke="#000" fill="url(#splitColor)"/>
-                </AreaChart>
+                    <Line type="monotone" dataKey="sentiment" stroke="#8884d8" activeDot={{ r: 8 }} />
+                </LineChart>
                 <div>
                     <BarChart
                         width={500}
                         height={400}
                         data={barData}
                         margin={{
-                            top: 5,
+                            top: 20,
                             right: 30,
                             left: 20,
                             bottom: 5,
                         }}
                     >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
+                        <CartesianGrid strokeDasharray="3 3"  />
+                        <XAxis dataKey="name"  />
+                        <YAxis label={{ value: 'Num of Messages', angle: -90, position: 'insideLeft' }}/>
                         <Tooltip />
                         <Bar dataKey="value" fill="#8884d8" activeBar={<Rectangle stroke="blue" />} />
                     </BarChart>
