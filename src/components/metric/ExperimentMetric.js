@@ -3,7 +3,7 @@ import ExperimentGraph from './ExperimentGraph';
 import { useParams } from 'react-router-dom';
 import ExperimentStatistics from './ExperimentStatistics';
 import ExperimentTable from './ExperimentTable';
-import UserSentimentGraph from "./UserSentimentGraph";
+import UserSentimentGraph from './UserSentimentGraph';
 import DownloadCSVButton from './DownloadCSVButton';
 import PageTitle from '../PageTitle';
 import { ViewOptions } from '../../constants/metricsConstants';
@@ -26,9 +26,9 @@ const ExperimentMetric = () => {
     };
 
     return (
-        <div className="min-h-screen w-full flex flex-col items-center bg-slate-100 gap-3 mb-10">
+        <div className="mb-10 flex min-h-screen w-full flex-col items-center gap-3 bg-slate-100">
             <PageTitle>Experiment Results</PageTitle>
-            <div className="w-5/6 flex flex-col">
+            <div className="flex w-11/12 flex-col">
                 <div className="">
                     <Tab
                         handleTabChange={handleTabChange}
@@ -36,7 +36,7 @@ const ExperimentMetric = () => {
                         activated={viewOptions}
                     />
                 </div>
-                <div className="flex justify-center bg-white py-3 border-x border-b">
+                <div className="flex justify-center border-x border-b bg-white py-3">
                     {viewDict[viewOptions]}
                 </div>
             </div>

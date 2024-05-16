@@ -12,16 +12,11 @@ const UserSentimentGraph =  ({id}) => {
     const [barData, setBarData] = useState([]);
     const [averageData, setAverageData] = useState([]);
 
-    const tempData = [
-        { name: 'Positive', value: 10 },
-        { name: 'Negative', value: 1 },
-        { name: 'Natural', value: 0 }
-    ];
 
     useEffect(() => {
         getMessagesByCollectionId(id).then(messages => {
             setData(messages);
-            //console.log(messages);
+
             let allNames = messages.map(obj => obj.name);
             allNames = allNames.filter(name => name !== "ChitChat");
             const uniqueNames = [...new Set(allNames)];
@@ -80,7 +75,7 @@ const UserSentimentGraph =  ({id}) => {
                 sentiment: averageScore
             })
         })
-        console.log("average" + JSON.stringify(tempAverageData));
+
         setFilteredData(tempData);
         setAverageData(tempAverageData);
     }

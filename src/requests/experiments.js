@@ -25,7 +25,6 @@ const getExperimentById = async (id) => {
 };
 
 const createExperiment = async (experiment, agents, study_id) => {
-    console.log(experiment);
     const URL = baseURL + 'experiments';
     try {
         const response = await axios.post(URL, {
