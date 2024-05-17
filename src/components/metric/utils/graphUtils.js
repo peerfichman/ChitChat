@@ -1,6 +1,15 @@
+import Graph from 'graphology';
+import { graph } from 'graphology-library/metrics';
+
 const createGraph = (records) => {
     const nodesMap = new Map(); // Use Map instead of Set
     const links = [];
+    const newGraph = new Graph({ multi: true });
+
+    // graph.edges.map((edge) => {
+    //     newGraph.addEdge(edge.from, edge.to, { ...edge });
+    // });
+
     records.forEach((record) => {
         const node1Data = record._fields[record._fieldLookup.p];
         const node2Data = record._fields[record._fieldLookup.q];
@@ -8,41 +17,63 @@ const createGraph = (records) => {
         const node1Id = `${node1Data.identity.low}_${node1Data.identity.high}`;
         const node2Id = `${node2Data.identity.low}_${node2Data.identity.high}`;
         // Store or update node information in Map by id
-        if (!nodesMap.has(node1Id)) {
-            nodesMap.set(
+        if (!newGraph.hasNode(node1Id)) {
+            newGraph.addNode(
                 node1Id,
                 _createNode(node1Id, node1Data.properties.name),
             );
         }
-        if (!nodesMap.has(node2Id)) {
-            nodesMap.set(
+        if (!newGraph.hasNode(node2Id)) {
+            newGraph.addNode(
                 node2Id,
                 _createNode(node2Id, node2Data.properties.name),
             );
         }
 
         _changeNodeSentiment(
-            nodesMap.get(node1Id),
+            newGraph,
+            node1Id,
             relationship.properties.sentimentScore,
         );
 
-        links.push({
+        newGraph.addEdge(node1Id, node2Id, {
             from: node1Id,
             to: node2Id,
             sentiment: relationship.properties.sentimentScore,
         });
     });
 
-    _reshapeNodes(links, nodesMap);
-    const nodesList = Array.from(nodesMap.values());
-
-    return { nodes: nodesList, edges: links };
+    _reshapeNodes(newGraph.edges(), newGraph);
+    const nodesForVis = [];
+    newGraph.forEachNode((node, attributes) => {
+        nodesForVis.push(attributes);
+    });
+    const edgesForVis = [];
+    newGraph.forEachEdge((edge, attributes) => {
+        edgesForVis.push(attributes);
+    });
+    newGraph.setAttribute('nodesForVisualization', nodesForVis);
+    newGraph.setAttribute('edgesForVisualization', edgesForVis);
+    console.log('newGraph: ', newGraph.getAttribute('nodesForVisualization'));
+    console.log('newGraph: ', newGraph.getAttribute('edgesForVisualization'));
+    console.log('newGraph: ', newGraph);
+    return newGraph;
 };
 
-const _changeNodeSentiment = (node, sentimentScore) => {
-    node.sentimentSum += sentimentScore;
-    node.sentimentCount += 1;
-    node.sentiment = node.sentimentSum / node.sentimentCount;
+const _changeNodeSentiment = (graph, nodeId, sentimentScore) => {
+    graph.updateNode(nodeId, (attr) => {
+        const sentimentCount = attr.sentimentCount + 1;
+        const sentimentSum = parseFloat(
+            attr.sentimentSum + sentimentScore,
+        ).toFixed(2);
+        const sentiment = parseFloat(sentimentSum / sentimentCount).toFixed(2);
+        return {
+            ...attr,
+            sentimentSum,
+            sentimentCount,
+            sentiment,
+        };
+    });
 };
 
 const _createNode = (nodeId, nodeName) => {
@@ -82,17 +113,24 @@ const _LightenDarkenColor = (col, amt) => {
     return (usePound ? '#' : '') + (g | (b << 8) | (r << 16)).toString(16);
 };
 
-const _increaseSizeAndColor = (node) => {
-    node.size += 3;
-    node.degree += 1;
-    node.color = _LightenDarkenColor(node.color, -15);
+const _increaseSizeAndColor = (graph, nodeId) => {
+    graph.updateNode(nodeId, (attr) => {
+        return {
+            ...attr,
+            size: attr.size + 3,
+            degree: attr.degree + 1,
+            color: _LightenDarkenColor(attr.color, -15),
+        };
+    });
 };
 
-const _reshapeNodes = (links, nodesMap) => {
-    const pairs = links.map((link) => {
+const _reshapeNodes = (edges, graph) => {
+    const pairs = edges.map((edge) => {
+        const edgeAtributes = graph.getEdgeAttributes(edge);
+
         return {
-            from: link.from,
-            to: link.to,
+            from: edgeAtributes.from,
+            to: edgeAtributes.to,
         };
     });
     const uniquePairs = Array.from(
@@ -101,7 +139,7 @@ const _reshapeNodes = (links, nodesMap) => {
     );
 
     uniquePairs.forEach((pair) => {
-        _increaseSizeAndColor(nodesMap.get(pair.from));
+        _increaseSizeAndColor(graph, pair.from);
     });
 };
 

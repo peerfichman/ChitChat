@@ -17,7 +17,6 @@ const ExperimentMetric = () => {
     const [viewOptions, setViewOptions] = useState(ViewOptions.STATISTICS.id);
     const [graph, setGraph] = useState({ nodes: [], edges: [] });
     const [isLoading, setIsLoading] = useState(true);
-    console.log('graph: ', graph);
     useEffect(() => {
         getNeo4jGraph(id)
             .then((response) => {

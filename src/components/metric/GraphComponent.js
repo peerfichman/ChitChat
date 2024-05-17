@@ -7,10 +7,16 @@ const GraphComponent = ({ graph, onClickNode }) => {
     const events = {
         select: (event) => {
             if (event.nodes.length > 0) {
-                const node = graph.nodes.find(
-                    (node) => node.id === event.nodes[0],
+                console.log(
+                    'clicked: ',
+                    graph.getNodeAttributes(event.nodes[0]),
                 );
-                onClickNode(node);
+                onClickNode(graph.getNodeAttributes(event.nodes[0]));
+
+                // const node = graph.nodes.find(
+                //     (node) => node.id === event.nodes[0],
+                // );
+                // onClickNode(node);
             }
         },
     };
@@ -20,7 +26,10 @@ const GraphComponent = ({ graph, onClickNode }) => {
             <Graph
                 style={{ width: '100%', height: '100%' }}
                 key={uuidv4()}
-                graph={graph}
+                graph={{
+                    nodes: graph.getAttribute('nodesForVisualization'),
+                    edges: graph.getAttribute('edgesForVisualization'),
+                }}
                 options={graphOptions}
                 events={events}
                 getNetwork={(network) => {}}
