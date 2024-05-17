@@ -8,7 +8,7 @@ import betweennessCentrality from 'graphology-metrics/centrality/betweenness';
 import closenessCentrality from 'graphology-metrics/centrality/closeness';
 import { degreeCentrality } from 'graphology-metrics/centrality/degree';
 import StatisticsColumn from './StatisticsColumn';
-
+import { analyzeSentimentType } from './utils/statisticsUtils';
 const averageCalc = (data) => {
     const dataValues = Object.values(data);
     const dataSum = dataValues.reduce(
@@ -17,112 +17,91 @@ const averageCalc = (data) => {
     );
     return dataSum / dataValues.length;
 };
-const GraphStatistics = ({ id }) => {
+const GraphStatistics = ({ graph }) => {
     const [statistics, setStatistics] = useState({
         Nodes: 0,
-        Edges: 0,
+        total_edges: graph.edges.length,
         Positive_Edges: 0,
         Negative_Edges: 0,
         Natural_Edges: 0,
+        Diameter: 0,
+        Radius: 0,
+        Density: 0,
+        Self_Loops: 0,
+        Avg_Betweenness_Centrality: 0,
+        Avg_Closeness_Centrality: 0,
+        Avg_Degree_Centrality: 0,
     });
+    console.log('graph: ', graph);
 
     useEffect(() => {
-        const graph = new Graph({ multi: true });
-        const fetchData = async () => {
-            try {
-                const response = await getNeo4jGraph(id);
-                const nodesSet = new Set();
-                statistics.Nodes = 0;
-                statistics.Edges = 0;
-                statistics.Positive_Edges = 0;
-                statistics.Negative_Edges = 0;
-                statistics.Natural_Edges = 0;
-                statistics.Diameter = 0;
-                statistics.Radius = 0;
-                statistics.Density = 0;
-                statistics.Self_Loops = 0;
-                statistics.Avg_Betweenness_Centrality = 0;
-                statistics.Avg_Closeness_Centrality = 0;
-                statistics.Avg_Degree_Centrality = 0;
-                response.records.forEach((record) => {
-                    const node1 = record._fields[record._fieldLookup.p];
-                    const node2 = record._fields[record._fieldLookup.q];
-                    const relationship = record._fields[record._fieldLookup.r];
+        const newGraph = new Graph({ multi: true });
+        graph.nodes.map((node) => {
+            newGraph.addNode(node.id, { ...node });
+        });
+        graph.edges.map((edge) => {
+            newGraph.addEdge(edge.from, edge.to, { ...edge });
+        });
+        console.log('newgraph: ', newGraph);
+        setStatistics(analyzeSentimentType(graph.edges, statistics));
 
-                    const node1Id = `${node1.identity.low}${node1.identity.high}`;
-                    const node2Id = `${node2.identity.low}${node2.identity.high}`;
+        // let radius = eccentricity(graph, Array.from(nodesSet)[0]);
+        // nodesSet.forEach((node) => {
+        //     let currRadius = eccentricity(graph, node);
+        //     if (currRadius < radius) {
+        //         radius = currRadius;
+        //     }
+        // });
+    }, [graph]);
 
-                    if (!nodesSet.has(node1Id)) {
-                        graph.addNode(node1Id);
-                        nodesSet.add(node1Id);
-                    }
+    //             let radius = eccentricity(graph, Array.from(nodesSet)[0]);
+    //             nodesSet.forEach((node) => {
+    //                 let currRadius = eccentricity(graph, node);
+    //                 if (currRadius < radius) {
+    //                     radius = currRadius;
+    //                 }
+    //             });
 
-                    if (!nodesSet.has(node2Id)) {
-                        graph.addNode(node2Id);
-                        nodesSet.add(node2Id);
-                    }
+    //             const betweennessCentralisesAvg = averageCalc(
+    //                 betweennessCentrality(graph, { getEdgeWeight: null }),
+    //             );
+    //             const closenessCentralisesAvg = averageCalc(
+    //                 closenessCentrality(graph),
+    //             );
+    //             const degreeCentralisesAvg = averageCalc(
+    //                 degreeCentrality(graph),
+    //             );
 
-                    graph.addEdge(node1Id, node2Id);
-                    statistics.Edges += 1;
+    //             // Update statistics state
+    //             setStatistics({
+    //                 Nodes: graph.order,
+    //                 Edges: graph.size,
+    //                 Positive_Edges: statistics.Positive_Edges,
+    //                 Negative_Edges: statistics.Negative_Edges,
+    //                 Natural_Edges: statistics.Natural_Edges,
+    //                 Self_Loops: graph.selfLoopCount,
+    //                 Diameter: diameter(graph),
+    //                 Radius: radius,
+    //                 Density: density(graph).toFixed(3),
+    //                 Avg_Betweenness_Centrality:
+    //                     betweennessCentralisesAvg.toFixed(3),
+    //                 Avg_Closeness_Centrality:
+    //                     closenessCentralisesAvg.toFixed(3),
+    //                 Avg_Degree_Centrality: degreeCentralisesAvg.toFixed(3),
+    //             });
+    //         } catch (error) {
+    //             console.error('Failed to fetch graph data:', error);
+    //         }
+    //     };
 
-                    // Count positive, negative, and natural edges
-                    if (relationship.properties.sentimentScore > 0.2) {
-                        statistics.Positive_Edges += 1;
-                    } else if (relationship.properties.sentimentScore < -0.2) {
-                        statistics.Negative_Edges += 1;
-                    } else {
-                        // Assuming a sentimentScore of 0 means a natural edge
-                        statistics.Natural_Edges += 1;
-                    }
-                });
-                let radius = eccentricity(graph, Array.from(nodesSet)[0]);
-                nodesSet.forEach((node) => {
-                    let currRadius = eccentricity(graph, node);
-                    if (currRadius < radius) {
-                        radius = currRadius;
-                    }
-                });
-
-                const betweennessCentralisesAvg = averageCalc(
-                    betweennessCentrality(graph, { getEdgeWeight: null }),
-                );
-                const closenessCentralisesAvg = averageCalc(
-                    closenessCentrality(graph),
-                );
-                const degreeCentralisesAvg = averageCalc(
-                    degreeCentrality(graph),
-                );
-
-                // Update statistics state
-                setStatistics({
-                    Nodes: graph.order,
-                    Edges: graph.size,
-                    Positive_Edges: statistics.Positive_Edges,
-                    Negative_Edges: statistics.Negative_Edges,
-                    Natural_Edges: statistics.Natural_Edges,
-                    Self_Loops: graph.selfLoopCount,
-                    Diameter: diameter(graph),
-                    Radius: radius,
-                    Density: density(graph).toFixed(3),
-                    Avg_Betweenness_Centrality:
-                        betweennessCentralisesAvg.toFixed(3),
-                    Avg_Closeness_Centrality:
-                        closenessCentralisesAvg.toFixed(3),
-                    Avg_Degree_Centrality: degreeCentralisesAvg.toFixed(3),
-                });
-            } catch (error) {
-                console.error('Failed to fetch graph data:', error);
-            }
-        };
-
-        fetchData();
-    }, [id]);
+    //     fetchData();
+    // }, [id]);
 
     // Render or return statistics as needed
     return (
         <div className="h-fit">
             {Object.keys(statistics) && (
-                <div className="grid grid-cols-3 gap-x-20 gap-y-5 bg-slate-200 border border-gray-800 shadow-sm rounded-xl p-10 ">
+                <div className="grid grid-cols-3 gap-x-20 gap-y-5 rounded-xl border border-gray-800 bg-slate-200 p-10 shadow-sm ">
                     {Object.keys(statistics).map((key) => (
                         <StatisticsColumn
                             key={key}

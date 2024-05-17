@@ -7,7 +7,6 @@ const createGraph = (records) => {
         const relationship = record._fields[record._fieldLookup.r];
         const node1Id = `${node1Data.identity.low}_${node1Data.identity.high}`;
         const node2Id = `${node2Data.identity.low}_${node2Data.identity.high}`;
-        console.log(node1Data.properties.name, 'ID: ', node1Id);
         // Store or update node information in Map by id
         if (!nodesMap.has(node1Id)) {
             nodesMap.set(
@@ -27,36 +26,16 @@ const createGraph = (records) => {
             relationship.properties.sentimentScore,
         );
 
-        // Add link
-        if (relationship.properties.sentimentScore <= -0.3) {
-            links.push({
-                from: node1Id,
-                to: node2Id,
-                color: {
-                    color: 'red',
-                    highlight: 'red',
-                    hover: 'red',
-                },
-            });
-        } else if (relationship.properties.sentimentScore >= 0.3) {
-            links.push({
-                from: node1Id,
-                to: node2Id,
-                color: {
-                    color: 'green',
-                    highlight: 'green',
-                    hover: 'green',
-                },
-            });
-        } else {
-            links.push({ from: node1Id, to: node2Id });
-        }
+        links.push({
+            from: node1Id,
+            to: node2Id,
+            sentiment: relationship.properties.sentimentScore,
+        });
     });
 
     _reshapeNodes(links, nodesMap);
     const nodesList = Array.from(nodesMap.values());
-    console.log('nodesMap: ', nodesMap);
-    console.log('nodesList: ', nodesList);
+
     return { nodes: nodesList, edges: links };
 };
 
