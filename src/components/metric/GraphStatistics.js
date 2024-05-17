@@ -42,60 +42,39 @@ const GraphStatistics = ({ graph }) => {
         graph.edges.map((edge) => {
             newGraph.addEdge(edge.from, edge.to, { ...edge });
         });
+
         console.log('newgraph: ', newGraph);
         setStatistics(analyzeSentimentType(graph.edges, statistics));
 
-        // let radius = eccentricity(graph, Array.from(nodesSet)[0]);
+        // let radius = eccentricity(newGraph);
+
         // nodesSet.forEach((node) => {
         //     let currRadius = eccentricity(graph, node);
         //     if (currRadius < radius) {
         //         radius = currRadius;
         //     }
         // });
+        // const betweennessCentralisesAvg = averageCalc(
+        //     betweennessCentrality(graph, { getEdgeWeight: null }),
+        // );
+        // const closenessCentralisesAvg = averageCalc(closenessCentrality(graph));
+        // const degreeCentralisesAvg = averageCalc(degreeCentrality(graph));
+        // // Update statistics state
+        // setStatistics({
+        //     Nodes: graph.order,
+        //     Edges: graph.size,
+        //     Positive_Edges: statistics.Positive_Edges,
+        //     Negative_Edges: statistics.Negative_Edges,
+        //     Natural_Edges: statistics.Natural_Edges,
+        //     Self_Loops: graph.selfLoopCount,
+        //     Diameter: diameter(graph),
+        //     Radius: radius,
+        //     Density: density(graph).toFixed(3),
+        //     Avg_Betweenness_Centrality: betweennessCentralisesAvg.toFixed(3),
+        //     Avg_Closeness_Centrality: closenessCentralisesAvg.toFixed(3),
+        //     Avg_Degree_Centrality: degreeCentralisesAvg.toFixed(3),
+        // });
     }, [graph]);
-
-    //             let radius = eccentricity(graph, Array.from(nodesSet)[0]);
-    //             nodesSet.forEach((node) => {
-    //                 let currRadius = eccentricity(graph, node);
-    //                 if (currRadius < radius) {
-    //                     radius = currRadius;
-    //                 }
-    //             });
-
-    //             const betweennessCentralisesAvg = averageCalc(
-    //                 betweennessCentrality(graph, { getEdgeWeight: null }),
-    //             );
-    //             const closenessCentralisesAvg = averageCalc(
-    //                 closenessCentrality(graph),
-    //             );
-    //             const degreeCentralisesAvg = averageCalc(
-    //                 degreeCentrality(graph),
-    //             );
-
-    //             // Update statistics state
-    //             setStatistics({
-    //                 Nodes: graph.order,
-    //                 Edges: graph.size,
-    //                 Positive_Edges: statistics.Positive_Edges,
-    //                 Negative_Edges: statistics.Negative_Edges,
-    //                 Natural_Edges: statistics.Natural_Edges,
-    //                 Self_Loops: graph.selfLoopCount,
-    //                 Diameter: diameter(graph),
-    //                 Radius: radius,
-    //                 Density: density(graph).toFixed(3),
-    //                 Avg_Betweenness_Centrality:
-    //                     betweennessCentralisesAvg.toFixed(3),
-    //                 Avg_Closeness_Centrality:
-    //                     closenessCentralisesAvg.toFixed(3),
-    //                 Avg_Degree_Centrality: degreeCentralisesAvg.toFixed(3),
-    //             });
-    //         } catch (error) {
-    //             console.error('Failed to fetch graph data:', error);
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, [id]);
 
     // Render or return statistics as needed
     return (

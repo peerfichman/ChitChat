@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ExperimentGraph from './ExperimentGraph';
 import { useParams } from 'react-router-dom';
-import ExperimentStatistics from './ExperimentStatistics';
+import ExperimentStatistics from './GraphStatistics';
 import ExperimentTable from './ExperimentTable';
 import UserSentimentGraph from './UserSentimentGraph';
 import DownloadCSVButton from './DownloadCSVButton';
@@ -17,7 +17,7 @@ const ExperimentMetric = () => {
     const [viewOptions, setViewOptions] = useState(ViewOptions.STATISTICS.id);
     const [graph, setGraph] = useState({ nodes: [], edges: [] });
     const [isLoading, setIsLoading] = useState(true);
-
+    console.log('graph: ', graph);
     useEffect(() => {
         getNeo4jGraph(id)
             .then((response) => {
