@@ -31,6 +31,7 @@ const ExperimentTable = ({ graph }) => {
     );
     titles = titles.map((title) => {
         if (title === 'sentimentSum') return 'Sentiment Sum';
+        if (title === 'label') return 'Name';
         if (title === 'sentimentCount') return 'Sentiment Count';
         if (title === 'closenessCentrality') return 'Closeness Centrality';
         if (title === 'betweennessCentrality') return 'Betweenness Centrality';
