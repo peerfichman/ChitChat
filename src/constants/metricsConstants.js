@@ -2,7 +2,7 @@ const ViewOptions = Object.freeze({
     STATISTICS: { name: 'Statistics', id: 3 },
     GRAPH: { name: 'Graph', id: 1 },
     TABLE: { name: 'Table', id: 2 },
-    SENTIMENT_GRAPH: { name: 'Sentiment Graph', id: 4 },
+    PARTICIPANT_METRICS: { name: 'Participant Metrics', id: 4 },
 });
 
 const GraphAttributes = Object.freeze({
