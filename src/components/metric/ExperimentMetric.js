@@ -16,9 +16,7 @@ import AllMessagesGraphs from "./AllMessagesGraphs";
 
 const ExperimentMetric = () => {
     let { id } = useParams();
-    const [viewOptions, setViewOptions] = useState(
-        ViewOptions.STATISTICS.id,
-    );
+    const [viewOptions, setViewOptions] = useState(ViewOptions.GRAPH.id);
     const [graph, setGraph] = useState({ nodes: [], edges: [] });
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState([]);

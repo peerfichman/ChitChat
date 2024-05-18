@@ -10,7 +10,15 @@ const NodeCard = ({ node }) => {
                 value={parseFloat(node.sentiment).toFixed(2)}
             />
             <DetailObject title="Messages Sent" value={node.sentimentCount} />
-            <DetailObject title="Node Degree" value={node.degree} />
+            <DetailObject title="Degree" value={node.degree} />
+            <DetailObject
+                title="Betweenness Centrality"
+                value={parseFloat(node.betweennessCentrality).toFixed(2)}
+            />
+            <DetailObject
+                title="Closeness Centrality"
+                value={parseFloat(node.closenessCentrality).toFixed(2)}
+            />
         </div>
     );
 };

@@ -13,7 +13,7 @@ const GraphComponent = ({ graph, onClickNode }) => {
         },
     };
     return (
-        <div className="rounded-2 mx-2 h-96 border border-gray-800 bg-slate-200 shadow-md md:w-2/3">
+        <div className="rounded-2 mx-2 h-[560px] border border-gray-800 bg-slate-200 shadow-md md:w-2/3">
             <Graph
                 style={{ width: '100%', height: '100%' }}
                 key={uuidv4()}

@@ -1,4 +1,4 @@
-import Graph from 'graphology';
+import DirectedGraph from 'graphology';
 import {
     GraphAttributes,
     NodeAttributes,
@@ -10,7 +10,7 @@ import { degreeCentrality } from 'graphology-metrics/centrality/degree';
 import { directedDensity } from 'graphology-metrics/graph/density';
 
 const createGraph = (records) => {
-    const graph = new Graph({ multi: true });
+    const graph = new DirectedGraph({ multi: true });
     records.forEach((record) => {
         const node1Data = record._fields[record._fieldLookup.p];
         const node2Data = record._fields[record._fieldLookup.q];
@@ -41,6 +41,8 @@ const createGraph = (records) => {
             from: node1Id,
             to: node2Id,
             sentiment: relationship.properties.sentimentScore,
+            type: relationship.type,
+            message: relationship.properties.message,
         });
     });
 
@@ -123,9 +125,9 @@ const AddEdgesTypes = (graph) => {
             sourceAttributes,
             targetAttributes,
         ) => {
-            if (attributes.sentiment > 0.2) {
+            if (attributes.type == 'positive') {
                 positiveEdges += 1;
-            } else if (attributes.sentiment < -0.2) {
+            } else if (attributes.type == 'negative') {
                 negativeEdges += 1;
             } else {
                 naturalEdges += 1;
@@ -159,7 +161,6 @@ const setGraphRadiusAndDiameter = (graph) => {
         if (currEccentricity < radius && radius != Infinity) {
             radius = currEccentricity;
         }
-
     });
     graph.setAttribute(GraphAttributes.RADIUS, radius);
     graph.setAttribute(GraphAttributes.DIAMETER, diameter);
