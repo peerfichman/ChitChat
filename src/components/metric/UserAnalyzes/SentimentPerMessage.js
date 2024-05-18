@@ -4,7 +4,7 @@ import {
     CartesianGrid,
     Tooltip,
     Line,
-    LineChart,
+    LineChart, Brush,ReferenceLine
 } from 'recharts';
 
 const SentimentPerMessage = ({ data }) => {
@@ -45,6 +45,8 @@ const SentimentPerMessage = ({ data }) => {
                 stroke="#8884d8"
                 activeDot={{ r: 8 }}
             />
+            <ReferenceLine y={0} stroke="#000" />
+            <Brush/>
         </LineChart>
     );
 };

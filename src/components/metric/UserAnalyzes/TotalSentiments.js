@@ -4,7 +4,7 @@ import {
     XAxis,
     YAxis,
     CartesianGrid,
-    Tooltip,
+    Tooltip, Brush,ReferenceLine
 } from 'recharts';
 
 const TotalSentiments = ({ gradientOffset, data }) => {
@@ -55,6 +55,8 @@ const TotalSentiments = ({ gradientOffset, data }) => {
                 stroke="#000"
                 fill="url(#splitColor)"
             />
+            <ReferenceLine y={0} stroke="#000" />
+            <Brush/>
         </AreaChart>
     );
 };
