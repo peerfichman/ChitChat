@@ -13,31 +13,58 @@ const GraphStatistics = ({ graph }) => {
         Diameter: graph.getAttribute(GraphAttributes.DIAMETER),
         Radius: graph.getAttribute(GraphAttributes.RADIUS),
         Density: graph.getAttribute(GraphAttributes.DENSITY),
-        Self_Loops: 0,
-        Avg_Betweenness_Centrality: graph.getAttribute(
-            GraphAttributes.BETWEENNESS_CENTRALITY,
-        ),
-        Avg_Closeness_Centrality: graph.getAttribute(
-            GraphAttributes.CLOSENESS_CENTRALITY,
-        ),
-        Avg_Degree_Centrality: graph.getAttribute(
-            GraphAttributes.DEGREE_CENTRALITY,
-        ),
+        Self_Loops: graph.selfLoopCount,
     });
 
     return (
-        <div className="h-fit">
-            {Object.keys(statistics) && (
-                <div className="grid grid-cols-3 gap-x-20 gap-y-5 rounded-xl border border-gray-800 bg-slate-200 p-10 shadow-sm ">
-                    {Object.keys(statistics).map((key) => (
-                        <StatisticsColumn
-                            key={key}
-                            name={key} // Assuming you want to display the key
-                            count={statistics[key]} // Accessing the count value for each key
-                        />
-                    ))}
+        <div className="flex h-full w-full flex-col">
+            <p className="px-3 text-2xl font-bold text-gray-700">
+                Graph Measures
+            </p>
+            <div className="flex flex-col items-center justify-center gap-5">
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                    <StatisticsColumn
+                        title={'Nodes'}
+                        value={statistics['Nodes']}
+                    />
+                    <StatisticsColumn
+                        title={'Edges'}
+                        value={statistics['total_edges']}
+                    />
                 </div>
-            )}
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                    <StatisticsColumn
+                        title={'Positive Edges'}
+                        value={statistics['Positive_Edges']}
+                    />
+                    <StatisticsColumn
+                        title={'Negative Edges'}
+                        value={statistics['Negative_Edges']}
+                    />
+                    <StatisticsColumn
+                        title={'Natural Edges'}
+                        value={statistics['Natural_Edges']}
+                    />
+                </div>
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+                    <StatisticsColumn
+                        title={'Diameter'}
+                        value={statistics['Diameter']}
+                    />
+                    <StatisticsColumn
+                        title={'Radius'}
+                        value={statistics['Radius']}
+                    />
+                    <StatisticsColumn
+                        title={'Density'}
+                        value={statistics['Density']}
+                    />
+                    <StatisticsColumn
+                        title={'Self Loops'}
+                        value={statistics['Self_Loops']}
+                    />
+                </div>
+            </div>
         </div>
     );
 };

@@ -14,7 +14,7 @@ const ExperimentGraph = ({ graph }) => {
 
     return (
         !isEmpty && (
-            <div className="flex w-full flex-col items-center gap-3 lg:flex-row lg:items-start lg:justify-evenly">
+            <div className="flex h-fit w-full flex-col items-center gap-3 lg:flex-row lg:items-start lg:justify-evenly">
                 {selectedNode && <NodeCard node={selectedNode} />}
                 <GraphComponent
                     graph={graph}

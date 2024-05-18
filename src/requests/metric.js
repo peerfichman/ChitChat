@@ -16,10 +16,13 @@ const getCSV = async (collectionId, experimentName) => {
     const URL = `${baseURL}sna/get/${collectionId}/name/${experimentName}`;
     try {
         const response = await axios.get(URL, { responseType: 'blob' });
+        console.log(response.data);
         const url = window.URL.createObjectURL(response.data);
+        console.log(url);
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute('download', `${experimentName}.csv`);
+        console.log(experimentName);
         document.body.appendChild(link);
         link.click();
 
