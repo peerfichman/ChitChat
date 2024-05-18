@@ -14,7 +14,9 @@ import Loading from './../Loading';
 
 const ExperimentMetric = () => {
     let { id } = useParams();
-    const [viewOptions, setViewOptions] = useState(ViewOptions.STATISTICS.id);
+    const [viewOptions, setViewOptions] = useState(
+        ViewOptions.PARTICIPANT_METRICS.id,
+    );
     const [graph, setGraph] = useState({ nodes: [], edges: [] });
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
@@ -32,7 +34,7 @@ const ExperimentMetric = () => {
         [ViewOptions.STATISTICS.id]: <ExperimentStatistics graph={graph} />,
         [ViewOptions.GRAPH.id]: <ExperimentGraph graph={graph} />,
         [ViewOptions.TABLE.id]: <ExperimentTable id={id} />,
-        [ViewOptions.SENTIMENT_GRAPH.id]: <UserSentimentGraph id={id} />,
+        [ViewOptions.PARTICIPANT_METRICS.id]: <UserSentimentGraph id={id} />,
     };
 
     const handleTabChange = (tabID) => {
