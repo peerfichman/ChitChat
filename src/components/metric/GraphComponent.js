@@ -1,40 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Graph from 'react-graph-vis';
-import { getNeo4jGraph } from '../../requests/metric';
 import { v4 as uuidv4 } from 'uuid';
-import { createGraph } from './utils/graphUtils';
 import { graphOptions } from '../../constants/metricsConstants';
+import { GraphAttributes } from '../../constants/metricsConstants';
 
-const GraphComponent = ({ id, onClickNode, setIsEmpty }) => {
-    const [graph, setGraph] = useState({ nodes: [], edges: [] });
-    useEffect(() => {
-        getNeo4jGraph(id)
-            .then((response) => {
-                setGraph(createGraph(response.records));
-                setIsEmpty(false);
-            })
-            .catch((e) => {
-                console.error('Failed to fetch graph data:', e);
-            });
-    }, [id]); // Re-fetch when id changes
-
+const GraphComponent = ({ graph, onClickNode }) => {
     const events = {
         select: (event) => {
             if (event.nodes.length > 0) {
-                const node = graph.nodes.find(
-                    (node) => node.id === event.nodes[0],
+                console.log(
+                    'clicked: ',
+                    graph.getNodeAttributes(event.nodes[0]),
                 );
-                onClickNode(node);
+                onClickNode(graph.getNodeAttributes(event.nodes[0]));
             }
         },
     };
-
+    console.log('graph: ', graph.getAttribute(GraphAttributes.GRAPH_VIEW));
     return (
         <div className="rounded-2 mx-2 h-96 border border-gray-800 bg-slate-200 shadow-md md:w-2/3">
             <Graph
                 style={{ width: '100%', height: '100%' }}
                 key={uuidv4()}
-                graph={graph}
+                graph={graph.getAttribute(GraphAttributes.GRAPH_VIEW)}
                 options={graphOptions}
                 events={events}
                 getNetwork={(network) => {}}

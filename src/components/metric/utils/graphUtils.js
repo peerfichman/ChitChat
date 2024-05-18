@@ -1,81 +1,216 @@
+import Graph from 'graphology';
+import {
+    GraphAttributes,
+    NodeAttributes,
+} from '../../../constants/metricsConstants';
+import eccentricity from 'graphology-metrics/node/eccentricity';
+import betweennessCentrality from 'graphology-metrics/centrality/betweenness';
+import closenessCentrality from 'graphology-metrics/centrality/closeness';
+import { degreeCentrality } from 'graphology-metrics/centrality/degree';
+import { directedDensity } from 'graphology-metrics/graph/density';
+
 const createGraph = (records) => {
-    const nodesMap = new Map(); // Use Map instead of Set
-    const links = [];
+    const graph = new Graph({ multi: true });
     records.forEach((record) => {
         const node1Data = record._fields[record._fieldLookup.p];
         const node2Data = record._fields[record._fieldLookup.q];
         const relationship = record._fields[record._fieldLookup.r];
         const node1Id = `${node1Data.identity.low}_${node1Data.identity.high}`;
         const node2Id = `${node2Data.identity.low}_${node2Data.identity.high}`;
-        console.log(node1Data.properties.name, 'ID: ', node1Id);
         // Store or update node information in Map by id
-        if (!nodesMap.has(node1Id)) {
-            nodesMap.set(
+        if (!graph.hasNode(node1Id)) {
+            graph.addNode(
                 node1Id,
                 _createNode(node1Id, node1Data.properties.name),
             );
         }
-        if (!nodesMap.has(node2Id)) {
-            nodesMap.set(
+        if (!graph.hasNode(node2Id)) {
+            graph.addNode(
                 node2Id,
                 _createNode(node2Id, node2Data.properties.name),
             );
         }
 
         _changeNodeSentiment(
-            nodesMap.get(node1Id),
+            graph,
+            node1Id,
             relationship.properties.sentimentScore,
         );
 
-        // Add link
-        if (relationship.properties.sentimentScore <= -0.3) {
-            links.push({
-                from: node1Id,
-                to: node2Id,
-                color: {
-                    color: 'red',
-                    highlight: 'red',
-                    hover: 'red',
-                },
-            });
-        } else if (relationship.properties.sentimentScore >= 0.3) {
-            links.push({
-                from: node1Id,
-                to: node2Id,
-                color: {
-                    color: 'green',
-                    highlight: 'green',
-                    hover: 'green',
-                },
-            });
-        } else {
-            links.push({ from: node1Id, to: node2Id });
-        }
+        graph.addEdge(node1Id, node2Id, {
+            from: node1Id,
+            to: node2Id,
+            sentiment: relationship.properties.sentimentScore,
+        });
     });
 
-    _reshapeNodes(links, nodesMap);
-    const nodesList = Array.from(nodesMap.values());
-    console.log('nodesMap: ', nodesMap);
-    console.log('nodesList: ', nodesList);
-    return { nodes: nodesList, edges: links };
+    _addNodesDegrees(graph.edges(), graph);
+    _addNodesAttributes(graph);
+    _addGraphAttributes(graph);
+
+    console.log('Graph: ', graph);
+    console.log('Graph Attributes: ', graph.getAttributes());
+    return graph;
 };
 
-const _changeNodeSentiment = (node, sentimentScore) => {
-    node.sentimentSum += sentimentScore;
-    node.sentimentCount += 1;
-    node.sentiment = node.sentimentSum / node.sentimentCount;
+const _addNodesAttributes = (graph) => {
+    graph.forEachNode((node, attr) => {
+        graph.setNodeAttribute(
+            node,
+            NodeAttributes.ECCENTRICITY,
+            eccentricity(graph, node),
+        );
+        const degree = graph.getNodeAttribute(node, NodeAttributes.DEGREE);
+        graph.setNodeAttribute(
+            node,
+            NodeAttributes.SIZE,
+            attr.size + 3 * degree,
+        );
+        graph.setNodeAttribute(
+            node,
+            NodeAttributes.COLOR,
+            _LightenDarkenColor(attr.color, -15 * degree),
+        );
+    });
+    betweennessCentrality.assign(graph);
+    closenessCentrality.assign(graph);
+    degreeCentrality.assign(graph);
+};
+
+const _addGraphAttributes = (graph) => {
+    setGraphRadiusAndDiameter(graph);
+
+    graph.setAttribute(GraphAttributes.GRAPH_VIEW, {
+        nodes: _createNodesForVisualization(graph),
+        edges: _createEdgesForVisualization(graph),
+    });
+    graph.setAttribute(
+        GraphAttributes.BETWEENNESS_CENTRALITY,
+        averageCalc(betweennessCentrality(graph, { getEdgeWeight: null })),
+    );
+    graph.setAttribute(
+        GraphAttributes.CLOSENESS_CENTRALITY,
+        averageCalc(closenessCentrality(graph)),
+    );
+    graph.setAttribute(
+        GraphAttributes.DEGREE_CENTRALITY,
+        averageCalc(degreeCentrality(graph)),
+    );
+    graph.setAttribute(
+        GraphAttributes.DENSITY,
+        directedDensity(graph).toFixed(2),
+    );
+    AddEdgesTypes(graph);
+};
+
+const averageCalc = (data) => {
+    const dataValues = Object.values(data);
+    const dataSum = dataValues.reduce(
+        (accumulator, currentValue) => accumulator + currentValue,
+        0,
+    );
+    return (dataSum / dataValues.length).toFixed(2);
+};
+
+const AddEdgesTypes = (graph) => {
+    let positiveEdges = 0;
+    let negativeEdges = 0;
+    let naturalEdges = 0;
+    graph.forEachEdge(
+        (
+            edge,
+            attributes,
+            source,
+            target,
+            sourceAttributes,
+            targetAttributes,
+        ) => {
+            if (attributes.sentiment > 0.2) {
+                positiveEdges += 1;
+            } else if (attributes.sentiment < -0.2) {
+                negativeEdges += 1;
+            } else {
+                naturalEdges += 1;
+            }
+        },
+    );
+
+    graph.setAttribute(GraphAttributes.POSITIVE_EDGES, positiveEdges);
+    graph.setAttribute(GraphAttributes.NEGATIVE_EDGES, negativeEdges);
+    graph.setAttribute(GraphAttributes.NATURAL_EDGES, naturalEdges);
+};
+
+export { AddEdgesTypes as analyzeSentimentType };
+
+const setGraphRadiusAndDiameter = (graph) => {
+    let radius = 100;
+    let diameter = 0;
+    graph.forEachNode((node, attributes) => {
+        let currEccentricity = graph.getNodeAttribute(
+            node,
+            NodeAttributes.ECCENTRICITY,
+        );
+        if (currEccentricity == Infinity) {
+            diameter = Infinity;
+            radius = Infinity;
+        }
+
+        if (currEccentricity > diameter && diameter != Infinity) {
+            diameter = currEccentricity;
+        }
+        if (currEccentricity < radius && radius != Infinity) {
+            radius = currEccentricity;
+        }
+
+        console.log('currEccentricity: ', currEccentricity);
+    });
+    graph.setAttribute(GraphAttributes.RADIUS, radius);
+    graph.setAttribute(GraphAttributes.DIAMETER, diameter);
+};
+
+const _createNodesForVisualization = (graph) => {
+    const nodesForVis = [];
+    graph.forEachNode((node, attributes) => {
+        nodesForVis.push(attributes);
+    });
+    return nodesForVis;
+};
+
+const _createEdgesForVisualization = (graph) => {
+    const edgesForVis = [];
+    graph.forEachEdge((edge, attributes) => {
+        edgesForVis.push(attributes);
+    });
+    return edgesForVis;
+};
+
+const _changeNodeSentiment = (graph, nodeId, sentimentScore) => {
+    graph.updateNode(nodeId, (attr) => {
+        const sentimentCount = attr.sentimentCount + 1;
+        const sentimentSum = parseFloat(
+            parseFloat(attr.sentimentSum) + parseFloat(sentimentScore),
+        ).toFixed(2);
+        const sentiment = parseFloat(sentimentSum / sentimentCount).toFixed(2);
+        return {
+            ...attr,
+            sentimentSum,
+            sentimentCount,
+            sentiment,
+        };
+    });
 };
 
 const _createNode = (nodeId, nodeName) => {
     return {
-        id: nodeId,
-        label: nodeName,
-        sentimentSum: 0,
-        sentimentCount: 0,
-        sentiment: 0,
-        size: 13,
-        degree: 0,
-        color: '#e8e8e8',
+        [NodeAttributes.ID]: nodeId,
+        [NodeAttributes.LABEL]: nodeName,
+        [NodeAttributes.SENTIMENT_SUM]: 0,
+        [NodeAttributes.SENTIMENT_COUNT]: 0,
+        [NodeAttributes.SENTIMENT]: 0,
+        [NodeAttributes.SIZE]: 13,
+        [NodeAttributes.DEGREE]: 0,
+        [NodeAttributes.COLOR]: '#e8e8e8',
+        [NodeAttributes.ECCENTRICITY]: 0,
     };
 };
 
@@ -103,17 +238,13 @@ const _LightenDarkenColor = (col, amt) => {
     return (usePound ? '#' : '') + (g | (b << 8) | (r << 16)).toString(16);
 };
 
-const _increaseSizeAndColor = (node) => {
-    node.size += 3;
-    node.degree += 1;
-    node.color = _LightenDarkenColor(node.color, -15);
-};
+const _addNodesDegrees = (edges, graph) => {
+    const pairs = edges.map((edge) => {
+        const edgeAtributes = graph.getEdgeAttributes(edge);
 
-const _reshapeNodes = (links, nodesMap) => {
-    const pairs = links.map((link) => {
         return {
-            from: link.from,
-            to: link.to,
+            from: edgeAtributes.from,
+            to: edgeAtributes.to,
         };
     });
     const uniquePairs = Array.from(
@@ -122,7 +253,12 @@ const _reshapeNodes = (links, nodesMap) => {
     );
 
     uniquePairs.forEach((pair) => {
-        _increaseSizeAndColor(nodesMap.get(pair.from));
+        graph.updateNode(pair.from, (attr) => {
+            return {
+                ...attr,
+                degree: attr.degree + 1,
+            };
+        });
     });
 };
 

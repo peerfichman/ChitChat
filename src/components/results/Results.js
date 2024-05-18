@@ -72,17 +72,6 @@ const Results = () => {
         setFilteredExperiments(sorted);
     };
 
-    const handleFilter = (status = '') => {
-        if (status) {
-            const filtered = experiments.filter((experiment) => {
-                return experiment.exp_status === status;
-            });
-            setFilteredExperiments(filtered);
-        } else {
-            setFilteredExperiments(experiments);
-        }
-    };
-
     return experiments ? (
         <div className="mb-16 flex min-h-screen w-full flex-col items-center gap-3 bg-slate-100">
             <PageTitle>Results</PageTitle>
