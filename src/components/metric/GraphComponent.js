@@ -8,15 +8,10 @@ const GraphComponent = ({ graph, onClickNode }) => {
     const events = {
         select: (event) => {
             if (event.nodes.length > 0) {
-                console.log(
-                    'clicked: ',
-                    graph.getNodeAttributes(event.nodes[0]),
-                );
                 onClickNode(graph.getNodeAttributes(event.nodes[0]));
             }
         },
     };
-    console.log('graph: ', graph.getAttribute(GraphAttributes.GRAPH_VIEW));
     return (
         <div className="rounded-2 mx-2 h-96 border border-gray-800 bg-slate-200 shadow-md md:w-2/3">
             <Graph

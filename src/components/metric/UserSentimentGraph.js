@@ -1,43 +1,16 @@
-import React, { PureComponent, useEffect, useState } from 'react';
-import {
-    AreaChart,
-    Area,
-    XAxis,
-    YAxis,
-    Legend,
-    CartesianGrid,
-    Tooltip,
-    BarChart,
-    Bar,
-    Rectangle,
-    Line,
-    LineChart,
-} from 'recharts';
-import { getMessagesByCollectionId } from '../../requests/FireBase';
+import React, { useState } from 'react';
 import ChartBlock from './UserAnalyzes/ChartBlock';
 import TotalSentiments from './UserAnalyzes/TotalSentiments';
 import SentimentPerMessage from './UserAnalyzes/SentimentPerMessage';
 import SentimentClassification from './UserAnalyzes/SentimentClassification';
 import AverageSentiments from './UserAnalyzes/AverageSentiments';
 
-const UserSentimentGraph = ({ id }) => {
-    const [data, setData] = useState([]);
+const UserSentimentGraph = ({ data, users }) => {
     const [filteredData, setFilteredData] = useState([]);
-    const [users, setUsers] = useState([]);
     const [barData, setBarData] = useState([]);
     const [sentimentScoreList, setSentimentScoreList] = useState([]);
     const [averageScore, setAverageScore] = useState([]);
 
-    useEffect(() => {
-        getMessagesByCollectionId(id).then((messages) => {
-            setData(messages);
-
-            let allNames = messages.map((obj) => obj.name);
-            allNames = allNames.filter((name) => name !== 'ChitChat');
-            const uniqueNames = [...new Set(allNames)];
-            setUsers(uniqueNames);
-        });
-    }, [id]);
 
     const filterMessagesByName = (userName) => {
         const filteredData = data.filter((item) => item.name === userName);
@@ -100,8 +73,6 @@ const UserSentimentGraph = ({ id }) => {
                 sentiment: averageScore,
             });
         });
-
-        console.log('averageScoreList', averageScoreList);
         setFilteredData(tempData);
         setSentimentScoreList(sentimentScoreList);
         setAverageScore(averageScoreList);

@@ -4,7 +4,7 @@ import {
     XAxis,
     YAxis,
     CartesianGrid,
-    Tooltip,
+    Tooltip, Brush,ReferenceLine
 } from 'recharts';
 
 const AverageSentiments = ({ gradientOffset, data }) => {
@@ -26,7 +26,7 @@ const AverageSentiments = ({ gradientOffset, data }) => {
                 fontSize={10}
             />
             <YAxis
-                domain={[-5, 5]}
+                domain={[-1, 1]}
                 label={{
                     value: 'Sentiment',
                     angle: -90,
@@ -55,6 +55,8 @@ const AverageSentiments = ({ gradientOffset, data }) => {
                 stroke="#000"
                 fill="url(#splitColor)"
             />
+            <ReferenceLine y={0} stroke="#000" />
+            <Brush/>
         </AreaChart>
     );
 };

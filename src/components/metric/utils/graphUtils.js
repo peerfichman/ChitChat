@@ -48,8 +48,6 @@ const createGraph = (records) => {
     _addNodesAttributes(graph);
     _addGraphAttributes(graph);
 
-    console.log('Graph: ', graph);
-    console.log('Graph Attributes: ', graph.getAttributes());
     return graph;
 };
 
@@ -162,7 +160,6 @@ const setGraphRadiusAndDiameter = (graph) => {
             radius = currEccentricity;
         }
 
-        console.log('currEccentricity: ', currEccentricity);
     });
     graph.setAttribute(GraphAttributes.RADIUS, radius);
     graph.setAttribute(GraphAttributes.DIAMETER, diameter);

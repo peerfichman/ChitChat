@@ -3,6 +3,7 @@ const ViewOptions = Object.freeze({
     GRAPH: { name: 'Graph', id: 1 },
     TABLE: { name: 'Table', id: 2 },
     PARTICIPANT_METRICS: { name: 'Participant Metrics', id: 4 },
+    EXPERIMENT_METRICS: { name: 'Experiment Metrics', id: 5 },
 });
 
 const GraphAttributes = Object.freeze({
