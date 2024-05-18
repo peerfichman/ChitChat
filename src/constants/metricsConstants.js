@@ -5,6 +5,31 @@ const ViewOptions = Object.freeze({
     SENTIMENT_GRAPH: { name: 'Sentiment Graph', id: 4 },
 });
 
+const GraphAttributes = Object.freeze({
+    RADIUS: 'Radius',
+    DIAMETER: 'Diameter',
+    GRAPH_VIEW: 'graphView',
+    BETWEENNESS_CENTRALITY: 'betweennessCentrality',
+    CLOSENESS_CENTRALITY: 'closenessCentrality',
+    DEGREE_CENTRALITY: 'degreeCentrality',
+    DENSITY: 'density',
+    POSITIVE_EDGES: 'positiveEdges',
+    NEGATIVE_EDGES: 'negativeEdges',
+    NATURAL_EDGES: 'naturalEdges',
+});
+
+const NodeAttributes = Object.freeze({
+    ID: 'id',
+    LABEL: 'label',
+    SENTIMENT: 'sentiment',
+    SENTIMENT_SUM: 'sentimentSum',
+    SENTIMENT_COUNT: 'sentimentCount',
+    DEGREE: 'degree',
+    SIZE: 'size',
+    COLOR: 'color',
+    ECCENTRICITY: 'eccentricity',
+});
+
 const graphOptions = {
     layout: {
         randomSeed: 1,
@@ -48,4 +73,4 @@ const graphOptions = {
     },
 };
 
-export { ViewOptions, graphOptions };
+export { ViewOptions, GraphAttributes, NodeAttributes, graphOptions };
