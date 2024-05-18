@@ -37,7 +37,7 @@ const ChangeStatusButton = ({ status, setStatus, experiment }) => {
     if (status === statusOptions.PROCESSING) {
         return (
             <div className="mr-7 flex items-center">
-                <Button enabled={false} />;
+                <Button enabled={false} />
             </div>
         );
     }

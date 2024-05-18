@@ -11,7 +11,7 @@ const colorDict = {
 
 const sizeDict = {
     small: 'py-2 text-md w-1/2',
-    large: 'py-2 text-lg w-1/6',
+    large: 'py-2 text-lg w-1/3 lg:w-1/6',
 };
 
 const Status = ({ status, size = 'large' }) => {

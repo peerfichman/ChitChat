@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router';
+import CardDetailObject from './../CardDetailObject';
 
 const ResearchCard = ({ research }) => {
     const navigate = useNavigate();
@@ -10,14 +11,14 @@ const ResearchCard = ({ research }) => {
             <p className="w-11/12 truncate text-center text-2xl font-bold text-gray-800">
                 {research.study_name}
             </p>
-            <div className="flex gap-1">
-                <p className="font-bold text-gray-500">Experiments:</p>
-                <p className="text-gray-500">{research.study_num_exp}</p>
-            </div>
-            <div className="flex gap-1">
-                <p className="font-bold text-gray-500">Created At:</p>
-                <p className="text-gray-500">{research.study_created_at}</p>
-            </div>
+            <CardDetailObject
+                title="Experiments"
+                value={research.study_num_exp}
+            />
+            <CardDetailObject
+                title="Created At"
+                value={research.study_created_at}
+            />
         </div>
     );
 };

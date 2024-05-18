@@ -13,7 +13,7 @@ const ResearchDetails = ({ study }) => {
     const [isEditingDesc, setIsEditingDesc] = useState(false);
 
     return (
-        <div className="grid w-full grid-cols-2">
+        <div className="grid w-full grid-cols-1 lg:grid-cols-2">
             <DetailObject title="Created At" value={study.study_created_at} />
             <EditableDetailObject
                 title="Default Provoking Prompt"
