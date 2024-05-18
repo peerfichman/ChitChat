@@ -11,12 +11,12 @@ import Tab from '../Tab';
 import { getNeo4jGraph } from '../../requests/metric';
 import { createGraph } from './utils/graphUtils';
 import Loading from './../Loading';
-import {getMessagesByCollectionId} from "../../requests/FireBase";
-import AllMessagesGraphs from "./AllMessagesGraphs";
+import { getMessagesByCollectionId } from '../../requests/FireBase';
+import AllMessagesGraphs from './AllMessagesGraphs';
 
 const ExperimentMetric = () => {
     let { id } = useParams();
-    const [viewOptions, setViewOptions] = useState(ViewOptions.GRAPH.id);
+    const [viewOptions, setViewOptions] = useState(ViewOptions.TABLE.id);
     const [graph, setGraph] = useState({ nodes: [], edges: [] });
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState([]);
@@ -40,14 +40,16 @@ const ExperimentMetric = () => {
             setUsers(uniqueNames);
         });
     }, [id]); // Re-fetch when id changes
-
+    console.log('graph: ', graph);
+    console.log('data: ', data);
     const viewDict = {
         [ViewOptions.STATISTICS.id]: <ExperimentStatistics graph={graph} />,
         [ViewOptions.GRAPH.id]: <ExperimentGraph graph={graph} />,
-        [ViewOptions.TABLE.id]: <ExperimentTable id={id} />,
-        [ViewOptions.PARTICIPANT_METRICS.id]: <UserSentimentGraph data={data} users={users} />,
-        [ViewOptions.EXPERIMENT_METRICS.id]: <AllMessagesGraphs data={data}/>,
-
+        [ViewOptions.TABLE.id]: <ExperimentTable graph={graph} />,
+        [ViewOptions.PARTICIPANT_METRICS.id]: (
+            <UserSentimentGraph data={data} users={users} />
+        ),
+        [ViewOptions.EXPERIMENT_METRICS.id]: <AllMessagesGraphs data={data} />,
     };
 
     const handleTabChange = (tabID) => {
