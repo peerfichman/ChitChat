@@ -2,50 +2,59 @@ import Head from './table/Head';
 import HeadCell from './table/HeadCell';
 import Body from './table/Body';
 import Row from './table/Row';
+import DownloadCSVButton from './DownloadCSVButton';
 
 const ExperimentTable = ({ graph }) => {
-    let titles = [];
+    const titles = [
+        'Name',
+        'Calculated Sentiment',
+        'Sum of Sentiments',
+        'Number of Messages Sent',
+        'Out Degree',
+        'Degree',
+        'Eccentricity',
+        'Betweenness Centrality',
+        'Closeness Centrality',
+    ];
     let rows = {};
+    graph.forEachNode((node_id, attributes) => {
+        rows[node_id] = [
+            attributes['label'],
+            attributes['sentiment'],
+            attributes['sentimentSum'],
+            attributes['sentimentCount'],
+            attributes['outDegree'],
+            attributes['degree'],
+            attributes['eccentricity'],
+            attributes['betweennessCentrality'].toFixed(2),
+            attributes['closenessCentrality'].toFixed(2),
+        ];
+    });
+    const details = [
+        '',
+        '',
+        '',
+        '',
+        'is the number of edges originating from a node.',
+        'is the count of its incoming and outgoing edges.',
+        'is the maximum distance from it to any other node',
+        "measures the extent to which a node lies on the shortest paths between other nodes, indicating its role as a bridge or bottleneck in the network's communication flow.",
+        'measures how quickly a node can reach all other nodes, based on the shortest path distances.',
+    ];
 
-    graph.forEachNode((node, attributes) => {
-        titles = Object.keys(attributes);
-        console.log('titles', titles);
-        let row = Object.values(attributes);
-        row = row.filter(
-            (value) =>
-                (value !== node) &
-                (value !== attributes.size) &
-                (value !== attributes.color) &
-                (value !== attributes.degreeCentrality),
-        );
-        row[6] = row[6].toFixed(2);
-        row[7] = row[7].toFixed(2);
-        rows[node] = row;
-    });
-    titles = titles.filter(
-        (title) =>
-            (title !== 'id') &
-            (title !== 'size') &
-            (title !== 'color') &
-            (title !== 'degreeCentrality'),
-    );
-    titles = titles.map((title) => {
-        if (title === 'sentimentSum') return 'Sentiment Sum';
-        if (title === 'label') return 'Name';
-        if (title === 'sentimentCount') return 'Sentiment Count';
-        if (title === 'closenessCentrality') return 'Closeness Centrality';
-        if (title === 'betweennessCentrality') return 'Betweenness Centrality';
-        return title;
-    });
     return (
-        <div className="flex flex-col">
+        <div className="flex w-11/12 flex-col">
             <div className="-m-1.5 overflow-x-auto">
                 <div className="inline-block min-w-full p-1.5 align-middle">
                     <div className="overflow-hidden rounded-lg border">
-                        <table className="min-w-full divide-y divide-gray-200">
+                        <div className=" min-w-full divide-y divide-gray-200">
                             <Head>
-                                {titles.map((title) => (
-                                    <HeadCell key={title} title={title} />
+                                {titles.map((title, index) => (
+                                    <HeadCell
+                                        key={index}
+                                        title={title}
+                                        details={details[index]}
+                                    />
                                 ))}
                             </Head>
                             <Body>
@@ -53,9 +62,16 @@ const ExperimentTable = ({ graph }) => {
                                     <Row key={key} row={rows[key]} />
                                 ))}
                             </Body>
-                        </table>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div className="flex justify-end pr-2 pt-2">
+                <DownloadCSVButton
+                    data={Object.values(rows)}
+                    headers={titles}
+                    filename={'Participants info Table'}
+                />
             </div>
         </div>
     );

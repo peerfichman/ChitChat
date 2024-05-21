@@ -1,8 +1,4 @@
 const Head = ({ children }) => {
-    return (
-        <thead className="bg-gray-50">
-            <tr>{children}</tr>
-        </thead>
-    );
+    return <div className="grid grid-cols-9 bg-gray-50">{children}</div>;
 };
 export default Head;

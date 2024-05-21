@@ -10,6 +10,9 @@ const ExperimentGraph = ({ graph }) => {
         sentiment: '',
         sentimentCount: '',
         degree: '',
+        outDegree: '',
+        betweennessCentrality: '',
+        closenessCentrality: '',
     });
 
     return (

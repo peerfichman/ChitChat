@@ -1,5 +1,5 @@
 const Body = ({ children }) => {
-    return <tbody className="divide-y divide-gray-200">{children}</tbody>;
+    return <div className="divide-y divide-gray-200">{children}</div>;
 };
 
 export default Body;

@@ -1,10 +1,20 @@
-const HeadCell = ({ title }) => {
+import Tooltip from './../../Tooltip';
+import { HiQuestionMarkCircle } from 'react-icons/hi';
+
+const HeadCell = ({ title, details }) => {
     return (
-        <th
-            scope="col"
-            className="w-10 px-6 py-3 text-start text-xs font-medium uppercase text-gray-500">
-            {title}
-        </th>
+        <div className="">
+            <div
+                scope="col"
+                className="pt-3 text-center text-xs font-medium uppercase text-gray-500">
+                {title}
+            </div>
+            <Tooltip
+                Icon={HiQuestionMarkCircle}
+                details={details}
+                title={title}
+            />
+        </div>
     );
 };
 

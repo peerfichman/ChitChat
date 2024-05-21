@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import ExperimentStatistics from './GraphStatistics';
 import ExperimentTable from './ExperimentTable';
 import UserSentimentGraph from './UserSentimentGraph';
-import DownloadCSVButton from './DownloadCSVButton';
 import PageTitle from '../PageTitle';
 import { ViewOptions } from '../../constants/metricsConstants';
 import Tab from '../Tab';
@@ -40,8 +39,7 @@ const ExperimentMetric = () => {
             setUsers(uniqueNames);
         });
     }, [id]); // Re-fetch when id changes
-    console.log('graph: ', graph);
-    console.log('data: ', data);
+
     const viewDict = {
         [ViewOptions.STATISTICS.id]: <ExperimentStatistics graph={graph} />,
         [ViewOptions.GRAPH.id]: <ExperimentGraph graph={graph} />,
@@ -60,7 +58,7 @@ const ExperimentMetric = () => {
     }
 
     return (
-        <div className="mb-10 flex min-h-screen w-full flex-col items-center gap-3 bg-slate-100">
+        <div className="mb-20 flex min-h-screen w-full flex-col items-center gap-3 bg-slate-100">
             <PageTitle>Experiment Results</PageTitle>
             <div className="flex w-11/12 flex-col">
                 <div className="">
@@ -74,7 +72,6 @@ const ExperimentMetric = () => {
                     {viewDict[viewOptions]}
                 </div>
             </div>
-            <DownloadCSVButton collectionId={id} experimentName="messages" />
         </div>
     );
 };

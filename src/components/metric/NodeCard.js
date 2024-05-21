@@ -7,17 +7,18 @@ const NodeCard = ({ node }) => {
             <DetailObject title="Name" value={node.label} />
             <DetailObject
                 title="Calculated Sentiment"
-                value={parseFloat(node.sentiment).toFixed(2)}
+                value={node.sentiment && parseFloat(node.sentiment).toFixed(2)}
             />
             <DetailObject title="Messages Sent" value={node.sentimentCount} />
             <DetailObject title="Degree" value={node.degree} />
+            <DetailObject title="Out Degree" value={node.outDegree} />
             <DetailObject
                 title="Betweenness Centrality"
-                value={parseFloat(node.betweennessCentrality).toFixed(2)}
+                value={node.betweennessCentrality && parseFloat(node.betweennessCentrality).toFixed(2)}
             />
             <DetailObject
                 title="Closeness Centrality"
-                value={parseFloat(node.closenessCentrality).toFixed(2)}
+                value={node.closenessCentrality && parseFloat(node.closenessCentrality).toFixed(2)}
             />
         </div>
     );

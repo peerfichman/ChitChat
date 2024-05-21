@@ -6,7 +6,6 @@ import {
 import eccentricity from 'graphology-metrics/node/eccentricity';
 import betweennessCentrality from 'graphology-metrics/centrality/betweenness';
 import closenessCentrality from 'graphology-metrics/centrality/closeness';
-import { degreeCentrality } from 'graphology-metrics/centrality/degree';
 import { directedDensity } from 'graphology-metrics/graph/density';
 
 const createGraph = (records) => {
@@ -74,7 +73,6 @@ const _addNodesAttributes = (graph) => {
     });
     betweennessCentrality.assign(graph);
     closenessCentrality.assign(graph);
-    degreeCentrality.assign(graph);
 };
 
 const _addGraphAttributes = (graph) => {
@@ -91,10 +89,6 @@ const _addGraphAttributes = (graph) => {
     graph.setAttribute(
         GraphAttributes.CLOSENESS_CENTRALITY,
         averageCalc(closenessCentrality(graph)),
-    );
-    graph.setAttribute(
-        GraphAttributes.DEGREE_CENTRALITY,
-        averageCalc(degreeCentrality(graph)),
     );
     graph.setAttribute(
         GraphAttributes.DENSITY,
@@ -207,6 +201,7 @@ const _createNode = (nodeId, nodeName) => {
         [NodeAttributes.SENTIMENT]: 0,
         [NodeAttributes.SIZE]: 13,
         [NodeAttributes.DEGREE]: 0,
+        [NodeAttributes.OUT_DEGREE]: 0,
         [NodeAttributes.COLOR]: '#e8e8e8',
         [NodeAttributes.ECCENTRICITY]: 0,
     };
@@ -252,6 +247,13 @@ const _addNodesDegrees = (edges, graph) => {
 
     uniquePairs.forEach((pair) => {
         graph.updateNode(pair.from, (attr) => {
+            return {
+                ...attr,
+                degree: attr.degree + 1,
+                outDegree: attr.outDegree + 1,
+            };
+        });
+        graph.updateNode(pair.to, (attr) => {
             return {
                 ...attr,
                 degree: attr.degree + 1,
