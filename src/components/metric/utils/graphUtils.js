@@ -9,7 +9,7 @@ import closenessCentrality from 'graphology-metrics/centrality/closeness';
 import { directedDensity } from 'graphology-metrics/graph/density';
 import { getSurveyResults } from '../../../requests/metric';
 
-const createGraph = (records, exp_id) => {
+const createGraph = (records, exp_id, surveyResults) => {
     const graph = new DirectedGraph({ multi: true });
     records.forEach((record) => {
         const node1Data = record._fields[record._fieldLookup.p];
@@ -19,16 +19,10 @@ const createGraph = (records, exp_id) => {
         const node2Id = `${node2Data.identity.low}_${node2Data.identity.high}`;
         // Store or update node information in Map by id
         if (!graph.hasNode(node1Id)) {
-            graph.addNode(
-                node1Id,
-                _createNode(node1Id, node1Data.properties.name),
-            );
+            graph.addNode(node1Id, _createNode(node1Id, node1Data));
         }
         if (!graph.hasNode(node2Id)) {
-            graph.addNode(
-                node2Id,
-                _createNode(node2Id, node2Data.properties.name),
-            );
+            graph.addNode(node2Id, _createNode(node2Id, node2Data));
         }
 
         _changeNodeSentiment(
@@ -47,26 +41,32 @@ const createGraph = (records, exp_id) => {
     });
 
     _addNodesDegrees(graph.edges(), graph);
-    _addNodesAttributes(graph, exp_id);
+    _addNodesAttributes(graph, surveyResults);
     _addGraphAttributes(graph);
 
     return graph;
 };
 
-const _addNodesAttributes = (graph, exp_id) => {
+const _addNodesAttributes = async (graph, surveyResults) => {
     //TODO: Configure how to know which node is the user
-    const surveyResults = getSurveyResults(exp_id);
+
     graph.forEachNode((node_id, attr) => {
-        console.log(attr);
+        // console.log('attr.user_id', attr.user_id);
+        console.log('surveyResults', surveyResults);
+        console.log('attr', attr.uid);
+        console.log('surveyResults', surveyResults[attr.uid]);
+        // console.log('node_id', node_id);
         graph.setNodeAttribute(
             node_id,
             NodeAttributes.OPINION_BEFORE,
-            surveyResults.opinionBefore,
+            surveyResults[attr.uid] ? surveyResults[attr.uid].opinion_pre : '-',
         );
         graph.setNodeAttribute(
             node_id,
             NodeAttributes.OPINION_AFTER,
-            surveyResults.opinionAfter,
+            surveyResults[attr.uid]
+                ? surveyResults[attr.uid].opinion_post
+                : '-',
         );
 
         graph.setNodeAttribute(
@@ -86,6 +86,7 @@ const _addNodesAttributes = (graph, exp_id) => {
             _LightenDarkenColor(attr.color, -15 * degree),
         );
     });
+
     betweennessCentrality.assign(graph);
     closenessCentrality.assign(graph);
 };
@@ -207,10 +208,11 @@ const _changeNodeSentiment = (graph, nodeId, sentimentScore) => {
     });
 };
 
-const _createNode = (nodeId, nodeName) => {
+const _createNode = (nodeId, nodeData) => {
     return {
         [NodeAttributes.ID]: nodeId,
-        [NodeAttributes.LABEL]: nodeName,
+        [NodeAttributes.LABEL]: nodeData.properties.name,
+        [NodeAttributes.UID]: nodeData.properties.uid,
         [NodeAttributes.SENTIMENT_SUM]: 0,
         [NodeAttributes.SENTIMENT_COUNT]: 0,
         [NodeAttributes.SENTIMENT]: 0,

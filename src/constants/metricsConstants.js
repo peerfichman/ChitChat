@@ -21,6 +21,7 @@ const GraphAttributes = Object.freeze({
 const NodeAttributes = Object.freeze({
     ID: 'id',
     LABEL: 'label',
+    UID: 'uid',
     SENTIMENT: 'sentiment',
     SENTIMENT_SUM: 'sentimentSum',
     SENTIMENT_COUNT: 'sentimentCount',

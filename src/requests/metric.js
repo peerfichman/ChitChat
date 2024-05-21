@@ -47,11 +47,8 @@ const createGraph = async (collectionId) => {
 
 const getSurveyResults = async (exp_id) => {
     const URL = `${baseURL}surveys/${exp_id}/participants-answers`;
-    console.log(URL);
-    console.log(exp_id);
     try {
         const response = await axios.get(URL);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Failed to fetch metric', error);
