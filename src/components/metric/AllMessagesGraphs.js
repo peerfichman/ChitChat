@@ -4,7 +4,6 @@ import UsersMessages from './UserAnalyzes/UsersMessages';
 import DownloadCSVButton from './DownloadCSVButton';
 
 const AllMessagesGraphs = ({ data }) => {
-    console.log(data);
     return (
         <div className="flex w-full flex-col items-center">
             <div>

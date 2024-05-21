@@ -21,6 +21,7 @@ const GraphAttributes = Object.freeze({
 const NodeAttributes = Object.freeze({
     ID: 'id',
     LABEL: 'label',
+    UID: 'uid',
     SENTIMENT: 'sentiment',
     SENTIMENT_SUM: 'sentimentSum',
     SENTIMENT_COUNT: 'sentimentCount',
@@ -29,6 +30,8 @@ const NodeAttributes = Object.freeze({
     SIZE: 'size',
     COLOR: 'color',
     ECCENTRICITY: 'eccentricity',
+    OPINION_BEFORE: 'opinionBefore',
+    OPINION_AFTER: 'opinionAfter',
 });
 
 const graphOptions = {

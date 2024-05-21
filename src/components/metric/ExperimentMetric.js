@@ -7,7 +7,7 @@ import UserSentimentGraph from './UserSentimentGraph';
 import PageTitle from '../PageTitle';
 import { ViewOptions } from '../../constants/metricsConstants';
 import Tab from '../Tab';
-import { getNeo4jGraph } from '../../requests/metric';
+import { getNeo4jGraph, getSurveyResults } from '../../requests/metric';
 import { createGraph } from './utils/graphUtils';
 import Loading from './../Loading';
 import { getMessagesByCollectionId } from '../../requests/FireBase';
@@ -24,12 +24,23 @@ const ExperimentMetric = () => {
     useEffect(() => {
         getNeo4jGraph(id)
             .then((response) => {
-                setGraph(createGraph(response.records));
-                setIsLoading(false);
+                getSurveyResults(id).then((surveyResults) => {
+                    //make the survey results as dictthe the uid is key and the rest value
+                    const surveyResultsDict = {};
+                    surveyResults.forEach((result) => {
+                        surveyResultsDict[result.user_id] = result;
+                    });
+                    console.log(response);
+                    setGraph(
+                        createGraph(response.records, id, surveyResultsDict),
+                    );
+                    setIsLoading(false);
+                });
             })
             .catch((e) => {
                 console.error('Failed to fetch graph data:', e);
             });
+
         getMessagesByCollectionId(id).then((messages) => {
             setData(messages.filter((message) => message.name !== 'ChitChat'));
 
@@ -69,7 +80,7 @@ const ExperimentMetric = () => {
                     />
                 </div>
                 <div className="flex justify-center border-x border-b bg-white py-3">
-                    {viewDict[viewOptions]}
+                    {graph && viewDict[viewOptions]}
                 </div>
             </div>
         </div>

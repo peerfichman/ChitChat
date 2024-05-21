@@ -13,10 +13,8 @@ const Tooltip = ({ Icon, details, title }) => {
             {isOpen && details && (
                 <div className="absolute right-10 top-6 flex w-[130px] flex-col items-start rounded border border-gray-300 bg-white p-1">
                     <p>
-                        <b>
-                            {'Node '} {title}
-                        </b>{' '}
-                        {details}
+                        {'Node '}
+                        <b>{title}</b> {details}
                     </p>
                 </div>
             )}

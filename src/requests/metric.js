@@ -45,4 +45,15 @@ const createGraph = async (collectionId) => {
     }
 };
 
-export { getNeo4jGraph, getCSV, createGraph };
+const getSurveyResults = async (exp_id) => {
+    const URL = `${baseURL}surveys/${exp_id}/participants-answers`;
+    try {
+        const response = await axios.get(URL);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to fetch metric', error);
+        return null;
+    }
+};
+
+export { getNeo4jGraph, getCSV, createGraph, getSurveyResults };
