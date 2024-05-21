@@ -10,6 +10,8 @@ const ExperimentTable = ({ graph }) => {
         'Calculated Sentiment',
         'Sum of Sentiments',
         'Number of Messages Sent',
+        'Opinion Before',
+        'Opinion After',
         'Out Degree',
         'Degree',
         'Eccentricity',
@@ -23,6 +25,8 @@ const ExperimentTable = ({ graph }) => {
             attributes['sentiment'],
             attributes['sentimentSum'],
             attributes['sentimentCount'],
+            graph.getNodeAttribute(node_id, 'opinionBefore'),
+            graph.getNodeAttribute(node_id, 'opinionAfter'),
             attributes['outDegree'],
             attributes['degree'],
             attributes['eccentricity'],
@@ -31,6 +35,8 @@ const ExperimentTable = ({ graph }) => {
         ];
     });
     const details = [
+        '',
+        '',
         '',
         '',
         '',

@@ -7,8 +7,9 @@ import eccentricity from 'graphology-metrics/node/eccentricity';
 import betweennessCentrality from 'graphology-metrics/centrality/betweenness';
 import closenessCentrality from 'graphology-metrics/centrality/closeness';
 import { directedDensity } from 'graphology-metrics/graph/density';
+import { getSurveyResults } from '../../../requests/metric';
 
-const createGraph = (records) => {
+const createGraph = (records, exp_id) => {
     const graph = new DirectedGraph({ multi: true });
     records.forEach((record) => {
         const node1Data = record._fields[record._fieldLookup.p];
@@ -46,27 +47,41 @@ const createGraph = (records) => {
     });
 
     _addNodesDegrees(graph.edges(), graph);
-    _addNodesAttributes(graph);
+    _addNodesAttributes(graph, exp_id);
     _addGraphAttributes(graph);
 
     return graph;
 };
 
-const _addNodesAttributes = (graph) => {
-    graph.forEachNode((node, attr) => {
+const _addNodesAttributes = (graph, exp_id) => {
+    //TODO: Configure how to know which node is the user
+    const surveyResults = getSurveyResults(exp_id);
+    graph.forEachNode((node_id, attr) => {
+        console.log(attr);
         graph.setNodeAttribute(
-            node,
-            NodeAttributes.ECCENTRICITY,
-            eccentricity(graph, node),
+            node_id,
+            NodeAttributes.OPINION_BEFORE,
+            surveyResults.opinionBefore,
         );
-        const degree = graph.getNodeAttribute(node, NodeAttributes.DEGREE);
         graph.setNodeAttribute(
-            node,
+            node_id,
+            NodeAttributes.OPINION_AFTER,
+            surveyResults.opinionAfter,
+        );
+
+        graph.setNodeAttribute(
+            node_id,
+            NodeAttributes.ECCENTRICITY,
+            eccentricity(graph, node_id),
+        );
+        const degree = graph.getNodeAttribute(node_id, NodeAttributes.DEGREE);
+        graph.setNodeAttribute(
+            node_id,
             NodeAttributes.SIZE,
             attr.size + 3 * degree,
         );
         graph.setNodeAttribute(
-            node,
+            node_id,
             NodeAttributes.COLOR,
             _LightenDarkenColor(attr.color, -15 * degree),
         );

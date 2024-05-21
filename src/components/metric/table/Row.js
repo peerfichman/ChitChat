@@ -2,7 +2,7 @@ import RowCell from './RowCell';
 
 const Row = ({ row }) => {
     return (
-        <div className="grid grid-cols-9">
+        <div className="grid grid-cols-11">
             {row.map((cell, index) => (
                 <RowCell key={index} value={cell} />
             ))}

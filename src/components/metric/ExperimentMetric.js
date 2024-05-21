@@ -24,12 +24,13 @@ const ExperimentMetric = () => {
     useEffect(() => {
         getNeo4jGraph(id)
             .then((response) => {
-                setGraph(createGraph(response.records));
+                setGraph(createGraph(response.records, id));
                 setIsLoading(false);
             })
             .catch((e) => {
                 console.error('Failed to fetch graph data:', e);
             });
+
         getMessagesByCollectionId(id).then((messages) => {
             setData(messages.filter((message) => message.name !== 'ChitChat'));
 
