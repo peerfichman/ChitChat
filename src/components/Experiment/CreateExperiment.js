@@ -158,7 +158,7 @@ const CreateExperiment = () => {
                     defaultValue={experiment.exp_num_participants}
                     maxLength={2}
                 />
-                {AIAgents.length < 3 ? (
+                {AIAgents.length < 7 ? (
                     <button
                         className="h-12 w-[150px] rounded-lg  bg-blue-500 text-sm font-bold text-white hover:bg-blue-700"
                         onClick={addAgentBlock}>
