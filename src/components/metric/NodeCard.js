@@ -1,4 +1,7 @@
 import DetailObject from '../DetailObject';
+import { HiExclamationCircle } from 'react-icons/hi';
+import NodeCardToolTip from './NodeCardToolTip';
+import { eccentricity } from 'graphology-metrics/node/eccentricity';
 
 const NodeCard = ({ node }) => {
     return (
@@ -7,18 +10,44 @@ const NodeCard = ({ node }) => {
             <DetailObject title="Name" value={node.label} />
             <DetailObject
                 title="Calculated Sentiment"
-                value={node.sentiment && parseFloat(node.sentiment).toFixed(2)}
-            />
+                value={node.sentiment && parseFloat(node.sentiment).toFixed(2)}>
+                <NodeCardToolTip
+                    Icon={HiExclamationCircle}
+                    details={{
+                        beforeBolt: 'This Attribute affects the',
+                        bolt: 'color',
+                        afterBolt: 'of the node.',
+                    }}
+                    title={''}
+                />
+            </DetailObject>
             <DetailObject title="Messages Sent" value={node.sentimentCount} />
-            <DetailObject title="Degree" value={node.degree} />
+            <DetailObject title="Degree" value={node.degree}>
+                <NodeCardToolTip
+                    Icon={HiExclamationCircle}
+                    details={{
+                        beforeBolt: 'This Attribute affects the',
+                        bolt: 'size',
+                        afterBolt: 'of the node.',
+                    }}
+                    title={''}
+                />
+            </DetailObject>
             <DetailObject title="Out Degree" value={node.outDegree} />
+            <DetailObject title="Eccentricity" value={node.eccentricity} />
             <DetailObject
                 title="Betweenness Centrality"
-                value={node.betweennessCentrality && parseFloat(node.betweennessCentrality).toFixed(2)}
+                value={
+                    node.betweennessCentrality &&
+                    parseFloat(node.betweennessCentrality).toFixed(2)
+                }
             />
             <DetailObject
                 title="Closeness Centrality"
-                value={node.closenessCentrality && parseFloat(node.closenessCentrality).toFixed(2)}
+                value={
+                    node.closenessCentrality &&
+                    parseFloat(node.closenessCentrality).toFixed(2)
+                }
             />
         </div>
     );

@@ -51,11 +51,6 @@ const _addNodesAttributes = async (graph, surveyResults) => {
     //TODO: Configure how to know which node is the user
 
     graph.forEachNode((node_id, attr) => {
-        // console.log('attr.user_id', attr.user_id);
-        console.log('surveyResults', surveyResults);
-        console.log('attr', attr.uid);
-        console.log('surveyResults', surveyResults[attr.uid]);
-        // console.log('node_id', node_id);
         graph.setNodeAttribute(
             node_id,
             NodeAttributes.OPINION_BEFORE,
@@ -78,12 +73,16 @@ const _addNodesAttributes = async (graph, surveyResults) => {
         graph.setNodeAttribute(
             node_id,
             NodeAttributes.SIZE,
-            attr.size + 3 * degree,
+            attr.size + degree,
         );
+        console.log('NodeAttributes.SENTIMENT', NodeAttributes.SENTIMENT);
         graph.setNodeAttribute(
             node_id,
             NodeAttributes.COLOR,
-            _LightenDarkenColor(attr.color, -15 * degree),
+            _LightenDarkenColor(
+                attr.color,
+                20 * graph.getNodeAttribute(node_id, NodeAttributes.SENTIMENT),
+            ),
         );
     });
 

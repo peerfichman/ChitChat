@@ -7,9 +7,18 @@ const GraphStatistics = ({ graph }) => {
     const [statistics, setStatistics] = useState({
         Nodes: graph.order,
         total_edges: graph.size,
-        Positive_Edges: graph.getAttribute(GraphAttributes.POSITIVE_EDGES),
-        Negative_Edges: graph.getAttribute(GraphAttributes.NEGATIVE_EDGES),
-        Natural_Edges: graph.getAttribute(GraphAttributes.NATURAL_EDGES),
+        Positive_Edges:
+            parseFloat(
+                graph.getAttribute(GraphAttributes.POSITIVE_EDGES) / graph.size,
+            ).toFixed(2) * 100,
+        Negative_Edges:
+            parseFloat(
+                graph.getAttribute(GraphAttributes.NEGATIVE_EDGES) / graph.size,
+            ).toFixed(2) * 100,
+        Natural_Edges:
+            parseFloat(
+                graph.getAttribute(GraphAttributes.NATURAL_EDGES) / graph.size,
+            ).toFixed(2) * 100,
         Diameter: graph.getAttribute(GraphAttributes.DIAMETER),
         Radius: graph.getAttribute(GraphAttributes.RADIUS),
         Density: graph.getAttribute(GraphAttributes.DENSITY),
@@ -35,15 +44,15 @@ const GraphStatistics = ({ graph }) => {
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                     <StatisticsColumn
                         title={'Positive Edges'}
-                        value={statistics['Positive_Edges']}
+                        value={`${statistics['Positive_Edges']}%`}
                     />
                     <StatisticsColumn
                         title={'Negative Edges'}
-                        value={statistics['Negative_Edges']}
+                        value={`${statistics['Negative_Edges']}%`}
                     />
                     <StatisticsColumn
                         title={'Natural Edges'}
-                        value={statistics['Natural_Edges']}
+                        value={`${statistics['Natural_Edges']}%`}
                     />
                 </div>
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">

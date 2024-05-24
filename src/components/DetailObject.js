@@ -3,6 +3,7 @@ import React from 'react';
 const DetailObject = ({
     title,
     value,
+    children,
     isEditable = false,
     onClickEdit = () => {},
     text = 'text-lg',
@@ -22,7 +23,10 @@ const DetailObject = ({
         </div>
     ) : (
         <div className="max-w-96 p-2">
-            <p className={className}>{title}</p>
+            <div className="flex items-center gap-1">
+                <p className={className}>{title}</p>
+                {children}
+            </div>
             {value === '' ? <br></br> : <p>{value}</p>}
         </div>
     );
