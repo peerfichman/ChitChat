@@ -7,18 +7,21 @@ const GraphStatistics = ({ graph }) => {
     const [statistics, setStatistics] = useState({
         Nodes: graph.order,
         total_edges: graph.size,
-        Positive_Edges:
+        Positive_Edges: Math.round(
             parseFloat(
                 graph.getAttribute(GraphAttributes.POSITIVE_EDGES) / graph.size,
-            ).toFixed(2) * 100,
-        Negative_Edges:
+            ) * 100,
+        ),
+        Negative_Edges: Math.round(
             parseFloat(
                 graph.getAttribute(GraphAttributes.NEGATIVE_EDGES) / graph.size,
-            ).toFixed(2) * 100,
-        Natural_Edges:
+            ) * 100,
+        ),
+        Natural_Edges: Math.round(
             parseFloat(
                 graph.getAttribute(GraphAttributes.NATURAL_EDGES) / graph.size,
-            ).toFixed(2) * 100,
+            ) * 100,
+        ),
         Diameter: graph.getAttribute(GraphAttributes.DIAMETER),
         Radius: graph.getAttribute(GraphAttributes.RADIUS),
         Density: graph.getAttribute(GraphAttributes.DENSITY),
