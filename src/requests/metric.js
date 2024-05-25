@@ -56,4 +56,22 @@ const getSurveyResults = async (exp_id) => {
     }
 };
 
-export { getNeo4jGraph, getCSV, createGraph, getSurveyResults };
+const createNetworkXGraph = async (messages) => {
+    const URL = `http://127.0.0.1:5000/graph`;
+    try {
+        const response = await axios.post(URL, [...messages]);
+        console.log('response', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to fetch metric', error);
+        return null;
+    }
+};
+
+export {
+    getNeo4jGraph,
+    getCSV,
+    createGraph,
+    getSurveyResults,
+    createNetworkXGraph,
+};

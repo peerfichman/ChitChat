@@ -7,7 +7,11 @@ import UserSentimentGraph from './UserSentimentGraph';
 import PageTitle from '../PageTitle';
 import { ViewOptions } from '../../constants/metricsConstants';
 import Tab from '../Tab';
-import { getNeo4jGraph, getSurveyResults } from '../../requests/metric';
+import {
+    getNeo4jGraph,
+    getSurveyResults,
+    createNetworkXGraph,
+} from '../../requests/metric';
 import { createGraph } from './utils/graphUtils';
 import Loading from './../Loading';
 import { getMessagesByCollectionId } from '../../requests/FireBase';
@@ -30,7 +34,6 @@ const ExperimentMetric = () => {
                     surveyResults.forEach((result) => {
                         surveyResultsDict[result.user_id] = result;
                     });
-                    console.log(response);
                     setGraph(
                         createGraph(response.records, id, surveyResultsDict),
                     );
@@ -43,7 +46,8 @@ const ExperimentMetric = () => {
 
         getMessagesByCollectionId(id).then((messages) => {
             setData(messages.filter((message) => message.name !== 'ChitChat'));
-
+            console.log(messages);
+            createNetworkXGraph(messages);
             let allNames = messages.map((obj) => obj.name);
             allNames = allNames.filter((name) => name !== 'ChitChat');
             const uniqueNames = [...new Set(allNames)];
