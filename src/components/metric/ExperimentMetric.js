@@ -19,39 +19,38 @@ import AllMessagesGraphs from './AllMessagesGraphs';
 
 const ExperimentMetric = () => {
     let { id } = useParams();
-    const [viewOptions, setViewOptions] = useState(ViewOptions.TABLE.id);
+    const [viewOptions, setViewOptions] = useState(ViewOptions.STATISTICS.id);
     const [graph, setGraph] = useState({ nodes: [], edges: [] });
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState([]);
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        getNeo4jGraph(id)
-            .then((response) => {
+        getMessagesByCollectionId(id).then((messages) => {
+            setData(messages.filter((message) => message.name !== 'ChitChat'));
+            createNetworkXGraph(messages).then((graph) => {
                 getSurveyResults(id).then((surveyResults) => {
                     //make the survey results as dictthe the uid is key and the rest value
                     const surveyResultsDict = {};
                     surveyResults.forEach((result) => {
                         surveyResultsDict[result.user_id] = result;
                     });
-                    setGraph(
-                        createGraph(response.records, id, surveyResultsDict),
-                    );
+                    for (let node of graph.nodes) {
+                        node['opinion_pre'] = surveyResultsDict[node.id]
+                            ? surveyResultsDict[node.id].opinion_pre
+                            : '-';
+                        node['opinion_post'] = surveyResultsDict[node.id]
+                            ? surveyResultsDict[node.id].opinion_post
+                            : '-';
+                    }
+                    let allNames = messages.map((obj) => obj.name);
+                    allNames = allNames.filter((name) => name !== 'ChitChat');
+                    const uniqueNames = [...new Set(allNames)];
+                    setUsers(uniqueNames);
+                    setGraph(graph);
                     setIsLoading(false);
                 });
-            })
-            .catch((e) => {
-                console.error('Failed to fetch graph data:', e);
             });
-
-        getMessagesByCollectionId(id).then((messages) => {
-            setData(messages.filter((message) => message.name !== 'ChitChat'));
-            console.log(messages);
-            createNetworkXGraph(messages);
-            let allNames = messages.map((obj) => obj.name);
-            allNames = allNames.filter((name) => name !== 'ChitChat');
-            const uniqueNames = [...new Set(allNames)];
-            setUsers(uniqueNames);
         });
     }, [id]); // Re-fetch when id changes
 
