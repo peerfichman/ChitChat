@@ -1,5 +1,6 @@
 import axios from 'axios';
 const baseURL = process.env.REACT_APP_CHICHAT_API_URL;
+const pythonBaseURL = process.env.REACT_APP_CHICHAT_PYTHON_API_URL;
 
 const getNeo4jGraph = async (collectionId) => {
     const URL = `${baseURL}sna/get/${collectionId}`;
@@ -57,7 +58,8 @@ const getSurveyResults = async (exp_id) => {
 };
 
 const createNetworkXGraph = async (messages) => {
-    const URL = `http://127.0.0.1:5000/graph`;
+    const URL = `${pythonBaseURL}graph/`;
+    console.log(URL);
     try {
         const response = await axios.post(URL, [...messages]);
         console.log('response', response.data);
