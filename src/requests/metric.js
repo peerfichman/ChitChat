@@ -1,5 +1,6 @@
 import axios from 'axios';
 const baseURL = process.env.REACT_APP_CHICHAT_API_URL;
+const pythonBaseURL = process.env.REACT_APP_CHICHAT_PYTHON_API_URL;
 
 const getNeo4jGraph = async (collectionId) => {
     const URL = `${baseURL}sna/get/${collectionId}`;
@@ -56,4 +57,23 @@ const getSurveyResults = async (exp_id) => {
     }
 };
 
-export { getNeo4jGraph, getCSV, createGraph, getSurveyResults };
+const createNetworkXGraph = async (messages) => {
+    const URL = `${pythonBaseURL}graph/`;
+    console.log(URL);
+    try {
+        const response = await axios.post(URL, [...messages]);
+        console.log('response', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to fetch metric', error);
+        return null;
+    }
+};
+
+export {
+    getNeo4jGraph,
+    getCSV,
+    createGraph,
+    getSurveyResults,
+    createNetworkXGraph,
+};

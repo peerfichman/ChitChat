@@ -13,6 +13,9 @@ const ExperimentGraph = ({ graph }) => {
         outDegree: '',
         betweennessCentrality: '',
         closenessCentrality: '',
+        eccentricity: '',
+        PageRank: '',
+        EigenCentrality: '',
     });
 
     return (

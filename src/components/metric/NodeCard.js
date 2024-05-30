@@ -1,7 +1,6 @@
 import DetailObject from '../DetailObject';
 import { HiExclamationCircle } from 'react-icons/hi';
 import NodeCardToolTip from './NodeCardToolTip';
-import { eccentricity } from 'graphology-metrics/node/eccentricity';
 
 const NodeCard = ({ node }) => {
     return (
@@ -47,6 +46,24 @@ const NodeCard = ({ node }) => {
                 value={
                     node.closenessCentrality &&
                     parseFloat(node.closenessCentrality).toFixed(2)
+                }
+            />
+            <DetailObject
+                title="eccentricity"
+                value={
+                    node.eccentricity &&
+                    parseFloat(node.eccentricity).toFixed(2)
+                }
+            />
+            <DetailObject
+                title="Page Rank"
+                value={node.PageRank && parseFloat(node.PageRank).toFixed(2)}
+            />
+            <DetailObject
+                title="Eigen Centrality"
+                value={
+                    node.EigenCentrality &&
+                    parseFloat(node.EigenCentrality).toFixed(2)
                 }
             />
         </div>

@@ -223,7 +223,7 @@ const _createNode = (nodeId, nodeData) => {
     };
 };
 
-const _LightenDarkenColor = (col, amt) => {
+export const _LightenDarkenColor = (col, amt) => {
     var usePound = false;
     if (col[0] == '#') {
         col = col.slice(1);

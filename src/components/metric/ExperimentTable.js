@@ -8,7 +8,6 @@ const ExperimentTable = ({ graph }) => {
     const titles = [
         'Name',
         'Calculated Sentiment',
-        'Sum of Sentiments',
         'Number of Messages Sent',
         'Opinion Before',
         'Opinion After',
@@ -17,25 +16,27 @@ const ExperimentTable = ({ graph }) => {
         'Eccentricity',
         'Betweenness Centrality',
         'Closeness Centrality',
+        'Eigen Centrality',
+        'Page Rank',
     ];
     let rows = {};
-    graph.forEachNode((node_id, attributes) => {
-        rows[node_id] = [
-            attributes['label'],
-            attributes['sentiment'],
-            attributes['sentimentSum'],
-            attributes['sentimentCount'],
-            graph.getNodeAttribute(node_id, 'opinionBefore'),
-            graph.getNodeAttribute(node_id, 'opinionAfter'),
-            attributes['outDegree'],
-            attributes['degree'],
-            attributes['eccentricity'],
-            attributes['betweennessCentrality'].toFixed(2),
-            attributes['closenessCentrality'].toFixed(2),
+    graph.nodes.map((node) => {
+        rows[node['id']] = [
+            node['label'],
+            node['sentiment'],
+            node['sentimentCount'],
+            node['opinion_pre'],
+            node['opinion_post'],
+            node['outDegree'],
+            node['degree'],
+            node['eccentricity'],
+            node['betweennessCentrality'].toFixed(2),
+            node['closenessCentrality'].toFixed(2),
+            node['EigenCentrality'],
+            node['PageRank'],
         ];
     });
     const details = [
-        '',
         '',
         '',
         '',
@@ -46,6 +47,8 @@ const ExperimentTable = ({ graph }) => {
         'is the maximum distance from it to any other node',
         "measures the extent to which a node lies on the shortest paths between other nodes, indicating its role as a bridge or bottleneck in the network's communication flow.",
         'measures how quickly a node can reach all other nodes, based on the shortest path distances.',
+        'measures the influence of a node based on the number and quality of its connections.',
+        'evaluates the importance of a node based on the importance of its neighbors and their connections',
     ];
 
     return (
