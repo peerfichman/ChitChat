@@ -19,7 +19,6 @@ import {
     getAllExperimentsOfResearch,
     getResearchById,
 } from '../../requests/researches';
-import AllItemsBlock from './../AllItemsBlock';
 
 const CreateExperiment = () => {
     const { research_id } = useParams();
@@ -29,11 +28,14 @@ const CreateExperiment = () => {
         expSubject: research?.study_subject || '',
         expPrompt: research?.study_prompt || '',
         exp_num_participants: 1,
+        simultaneous_responses: false,
     });
     const [AIAgents, setAIAgents] = useState([]);
     const [creatingExperiment, setCreatingExperiment] = useState(false);
     const [allExperiments, setAllExperiments] = useState([]);
     const navigate = useNavigate();
+
+    console.log(experiment);
 
     useEffect(() => {
         getResearchById(research_id)
@@ -123,7 +125,7 @@ const CreateExperiment = () => {
                 [AgentParametersInDB.OPINION_ALIGNMENT]:
                     OpinionAlignment.SUPPORT,
                 [AgentParametersInDB.TALKING_STYLE]: TalkingStyle.CASUAL,
-                [AgentParametersInDB.ACTIVITY_LEVEL]: ActivityLevels.ACTIVITY_1,
+                [AgentParametersInDB.ACTIVITY_LEVEL]: 20,
                 [AgentParametersInDB.NUMBER_OF_MESSAGES]:
                     NumberOfMessages.ACTIVITY_3,
             },
@@ -172,6 +174,37 @@ const CreateExperiment = () => {
                         Add Agent
                     </button>
                 )}
+                {AIAgents.length > 0 ? (
+                    <div className="flex">
+                        <input
+                            type="checkbox"
+                            className="mt-0.5 shrink-0 rounded border-gray-200 text-blue-600  "
+                            id="hs-checked-checkbox"
+                            onChange={(e) => {
+                                handleExperimentChanges(
+                                    'simultaneous_responses',
+                                    e.target.checked,
+                                );
+                            }}
+                        />
+                        <label className="ms-3 text-sm text-gray-800 dark:text-neutral-400">
+                            Enable agents to respond simultaneously
+                        </label>
+                    </div>
+                ) : (
+                    <div className="flex opacity-40">
+                        <input
+                            type="checkbox"
+                            className="mt-0.5 shrink-0 rounded border-gray-200 text-blue-600  "
+                            id="hs-checked-checkbox"
+                            checked={false}
+                            disabled
+                        />
+                        <label className="ms-3 text-sm text-gray-500 line-through dark:text-neutral-400">
+                            Enable agents to respond simultaneously
+                        </label>
+                    </div>
+                )}
                 <div className="grid grid-cols-2 gap-3">
                     {AIAgents.map((agent) => (
                         <AgentCard
@@ -179,6 +212,7 @@ const CreateExperiment = () => {
                             relevantAgent={agent}
                             agents={AIAgents}
                             setAgent={setAIAgents}
+                            change_checkbox={handleExperimentChanges}
                         />
                     ))}
                 </div>

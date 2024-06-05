@@ -32,7 +32,7 @@ const AgentCardTitles = Object.freeze({
     NAME: 'Name',
     SENTIMENT: 'Sentiment',
     OPINION_ALIGNMENT: 'Opinion Alignment',
-    ACTIVITY_LEVEL: 'Activity Level', // 1-3
+    ACTIVITY_LEVEL: 'Response Probability', // 1-3
     TALKING_STYLE: 'Talking Style',
     NUMBER_OF_MESSAGES: 'Number of Messages to Reply to', //1-5
 });
