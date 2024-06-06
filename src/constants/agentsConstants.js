@@ -9,9 +9,9 @@ const OpinionAlignment = Object.freeze({
 });
 
 const TalkingStyle = Object.freeze({
-    FORMAL: 'Formal',
-    FRIENDLY: 'Friendly',
-    CASUAL: 'Casual',
+    SARCASTIC: 'Sarcastic',
+    EMPHATIC: 'Emphatic',
+    CHARISMATIC: 'Charismatic',
 });
 
 const ActivityLevels = Object.freeze({

@@ -9,16 +9,17 @@ import {
     Sentiments,
     OpinionAlignment,
     TalkingStyle,
-    ActivityLevels,
     NumberOfMessages,
     AgentParametersInDB,
 } from '../../constants/agentsConstants';
 import PageTitle from '../PageTitle';
 import { useParams } from 'react-router-dom';
+import NodeCardToolTip from './../metric/NodeCardToolTip';
 import {
     getAllExperimentsOfResearch,
     getResearchById,
 } from '../../requests/researches';
+import { HiExclamationCircle } from 'react-icons/hi';
 
 const CreateExperiment = () => {
     const { research_id } = useParams();
@@ -34,8 +35,6 @@ const CreateExperiment = () => {
     const [creatingExperiment, setCreatingExperiment] = useState(false);
     const [allExperiments, setAllExperiments] = useState([]);
     const navigate = useNavigate();
-
-    console.log(experiment);
 
     useEffect(() => {
         getResearchById(research_id)
@@ -93,13 +92,6 @@ const CreateExperiment = () => {
             setCreatingExperiment(false);
             return;
         }
-        if (experiment.exp_num_participants < 1) {
-            alert(
-                'Please choose the number of participants for the experiment.',
-            );
-            setCreatingExperiment(false);
-            return;
-        }
         const isNameAlreadyExists = allExperiments.some(
             (exp) => exp.exp_name === experiment.expName,
         );
@@ -124,7 +116,7 @@ const CreateExperiment = () => {
                 [AgentParametersInDB.SENTIMENT]: Sentiments.POSITIVE,
                 [AgentParametersInDB.OPINION_ALIGNMENT]:
                     OpinionAlignment.SUPPORT,
-                [AgentParametersInDB.TALKING_STYLE]: TalkingStyle.CASUAL,
+                [AgentParametersInDB.TALKING_STYLE]: TalkingStyle.EMPHATIC,
                 [AgentParametersInDB.ACTIVITY_LEVEL]: 20,
                 [AgentParametersInDB.NUMBER_OF_MESSAGES]:
                     NumberOfMessages.ACTIVITY_3,
@@ -152,14 +144,6 @@ const CreateExperiment = () => {
                     attribute="expPrompt"
                     defaultValue={experiment.expPrompt}
                 />
-                <InputBlock
-                    title="Maximum Participants"
-                    setValue={handleExperimentChanges}
-                    attribute="exp_num_participants"
-                    isRequired={true}
-                    defaultValue={experiment.exp_num_participants}
-                    maxLength={2}
-                />
                 {AIAgents.length < 7 ? (
                     <button
                         className="h-12 w-[150px] rounded-lg  bg-blue-500 text-sm font-bold text-white hover:bg-blue-700"
@@ -174,8 +158,8 @@ const CreateExperiment = () => {
                         Add Agent
                     </button>
                 )}
-                {AIAgents.length > 0 ? (
-                    <div className="flex">
+                {AIAgents.length > 1 ? (
+                    <div className="flex gap-1">
                         <input
                             type="checkbox"
                             className="mt-0.5 shrink-0 rounded border-gray-200 text-blue-600  "
@@ -187,9 +171,19 @@ const CreateExperiment = () => {
                                 );
                             }}
                         />
-                        <label className="ms-3 text-sm text-gray-800 dark:text-neutral-400">
-                            Enable agents to respond simultaneously
-                        </label>
+                        <p className="flex items-center text-sm text-gray-800">
+                            Agents respond simultaneously
+                        </p>
+                        <NodeCardToolTip
+                            Icon={HiExclamationCircle}
+                            details={{
+                                beforeBolt:
+                                    'When disabled, only one agent can respond for each message, following',
+                                bolt: 'the order',
+                                afterBolt: 'in which they were created.',
+                            }}
+                            title={''}
+                        />
                     </div>
                 ) : (
                     <div className="flex opacity-40">
@@ -200,9 +194,9 @@ const CreateExperiment = () => {
                             checked={false}
                             disabled
                         />
-                        <label className="ms-3 text-sm text-gray-500 line-through dark:text-neutral-400">
-                            Enable agents to respond simultaneously
-                        </label>
+                        <div className="flex text-sm text-gray-500 line-through">
+                            <p>Agents respond simultaneously</p>
+                        </div>
                     </div>
                 )}
                 <div className="grid grid-cols-2 gap-3">

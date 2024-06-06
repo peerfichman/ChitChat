@@ -4,14 +4,11 @@ import Range from './Range';
 import {
     Sentiments,
     OpinionAlignment,
-    ActivityLevels,
     NumberOfMessages,
-    listOfTopics,
     AgentCardTitles,
     AgentParametersInDB,
     TalkingStyle,
 } from '../../constants/agentsConstants';
-import CheckboxList from './checkboxList';
 import SelectBlock from './SelectBlock';
 
 const AgentCard = ({ relevantAgent, agents, setAgent, change_checkbox }) => {
@@ -36,7 +33,7 @@ const AgentCard = ({ relevantAgent, agents, setAgent, change_checkbox }) => {
             (agent) => agent.id !== relevantAgent.id,
         );
         setAgent(updatedAgents);
-        if (updatedAgents.length === 0) {
+        if (updatedAgents.length <= 1) {
             change_checkbox('simultaneous_responses', false);
         }
     };

@@ -19,10 +19,17 @@ const ExperimentCard = ({
                 title="Created At"
                 value={experiment.exp_created_at}
             />
-            <CardDetailObject
-                title="Number of Participants"
-                value={experiment.exp_num_participants}
-            />
+            {experiment.simultaneous_responses ? (
+                <CardDetailObject
+                    title="Agents Response"
+                    value={'Simultaneously'}
+                />
+            ) : (
+                <CardDetailObject
+                    title="Agents Response"
+                    value={'Individually'}
+                />
+            )}
 
             <Status status={experiment.exp_status} size="small" />
         </div>
