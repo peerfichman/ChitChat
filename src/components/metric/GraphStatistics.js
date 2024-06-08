@@ -39,15 +39,15 @@ const GraphStatistics = ({ graph }) => {
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                     <StatisticsColumn
                         title={'Positive Edges'}
-                        value={`${statistics['Positive_Edges'] * 100 }%`}
+                        value={`${Math.round(statistics['Positive_Edges'] * 100) }%`}
                     />
                     <StatisticsColumn
                         title={'Negative Edges'}
-                        value={`${statistics['Negative_Edges'] * 100}%`}
+                        value={`${Math.round(statistics['Negative_Edges'] * 100)}%`}
                     />
                     <StatisticsColumn
                         title={'Natural Edges'}
-                        value={`${statistics['Natural_Edges'] * 100}%`}
+                        value={`${Math.round(statistics['Natural_Edges'] * 100)}%`}
                     />
                 </div>
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-4 xl:grid-cols-4">
