@@ -1,8 +1,16 @@
 import React from 'react';
-const Range = ({ title, value, setValue, min, max, agentField }) => {
+const Range = ({
+    title,
+    value,
+    setValue,
+    min,
+    max,
+    agentField,
+    isPrecentage = false,
+}) => {
     return (
         <div>
-            <label className="block text-lg font-medium ml-1">{title}</label>
+            <label className="ml-1 block text-lg font-medium">{title}</label>
             <div className="flex flex-row gap-1">
                 <input
                     type="range"
@@ -15,7 +23,7 @@ const Range = ({ title, value, setValue, min, max, agentField }) => {
                     step={1}
                     className="w-full"
                 />
-                <p>{value}</p>
+                {isPrecentage ? <p>{value}%</p> : <p>{value}</p>}
             </div>
         </div>
     );

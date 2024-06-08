@@ -18,12 +18,17 @@ const ResearchExperimentCard = ({
                 <p className="font-bold text-gray-500">Number of Agents:</p>
                 <p className="text-gray-500">{experiment.num_agents}</p>
             </div>
-            <div className="flex gap-1">
-                <p className="font-bold text-gray-500">Maximum Participants:</p>
-                <p className="text-gray-500">
-                    {experiment.exp_num_participants}
-                </p>
-            </div>
+            {experiment.simultaneous_responses ? (
+                <div className="flex gap-1">
+                    <p className="font-bold text-gray-500">Agents Response:</p>
+                    <p className="text-gray-500">{'Simultaneously'}</p>
+                </div>
+            ) : (
+                <div className="flex gap-1">
+                    <p className="font-bold text-gray-500">Agents Response:</p>
+                    <p className="text-gray-500">{'Individually'}</p>
+                </div>
+            )}
             <div className="flex gap-1">
                 <p className="font-bold text-gray-500">Created At:</p>
                 <p className="text-gray-500">{experiment.exp_created_at}</p>
