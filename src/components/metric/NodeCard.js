@@ -21,6 +21,7 @@ const NodeCard = ({ node }) => {
                 />
             </DetailObject>
             <DetailObject title="Messages Sent" value={node.sentimentCount} />
+            <DetailObject title="Out Degree" value={node.outDegree} />
             <DetailObject title="Degree" value={node.degree}>
                 <NodeCardToolTip
                     Icon={HiExclamationCircle}
@@ -32,8 +33,13 @@ const NodeCard = ({ node }) => {
                     title={''}
                 />
             </DetailObject>
-            <DetailObject title="Out Degree" value={node.outDegree} />
-            <DetailObject title="Eccentricity" value={node.eccentricity} />
+            <DetailObject
+                title="Eccentricity"
+                value={
+                    node.eccentricity &&
+                    parseFloat(node.eccentricity).toFixed(2)
+                }
+            />
             <DetailObject
                 title="Betweenness Centrality"
                 value={
@@ -49,22 +55,15 @@ const NodeCard = ({ node }) => {
                 }
             />
             <DetailObject
-                title="eccentricity"
-                value={
-                    node.eccentricity &&
-                    parseFloat(node.eccentricity).toFixed(2)
-                }
-            />
-            <DetailObject
-                title="Page Rank"
-                value={node.PageRank && parseFloat(node.PageRank).toFixed(2)}
-            />
-            <DetailObject
                 title="Eigen Centrality"
                 value={
                     node.EigenCentrality &&
                     parseFloat(node.EigenCentrality).toFixed(2)
                 }
+            />
+            <DetailObject
+                title="Page Rank"
+                value={node.PageRank && parseFloat(node.PageRank).toFixed(2)}
             />
         </div>
     );
