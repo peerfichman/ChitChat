@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { statusOptions } from '../constants/experimentsConstants';
-const baseURL = process.env.REACT_APP_CHICHAT_API_URL;
+const baseURL = process.env.REACT_APP_CHICHAT_API_URL + 'api/';
 
 const getAllExperiments = async () => {
     const URL = baseURL + 'experiments';
     try {
-        const response = await axios.get(URL);
+        const response = await axios.get(URL,{ withCredentials: true });
         return response.data;
     } catch (error) {
         console.error('Failed to fetch experiments', error);
@@ -16,7 +16,7 @@ const getAllExperiments = async () => {
 const getExperimentById = async (id) => {
     const URL = baseURL + `experiments/${id}`;
     try {
-        const response = await axios.get(URL);
+        const response = await axios.get(URL, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.error('Failed to fetch experiment', error);
@@ -38,7 +38,7 @@ const createExperiment = async (experiment, agents, study_id) => {
                 study_id,
             },
             agents,
-        });
+        }, { withCredentials: true });
 
         return response.data;
     } catch (error) {
@@ -51,7 +51,7 @@ const updateExperimentStatus = async (exp_id, exp_status) => {
     const newExperiment = { exp_id, exp_status };
     const URL = baseURL + `experiments/status`;
     try {
-        const response = await axios.put(URL, newExperiment);
+        const response = await axios.put(URL, newExperiment, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.error('Failed to update experiment status', error);
@@ -65,7 +65,7 @@ const updateExperimentPrompt = async (exp_id, prompt) => {
         const response = await axios.put(URL, {
             exp_id,
             exp_provoking_prompt: prompt,
-        });
+        }, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.error('Failed to update experiment prompt', error);
