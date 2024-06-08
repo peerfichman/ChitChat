@@ -47,7 +47,7 @@ const createGraph = async (collectionId) => {
 };
 
 const getSurveyResults = async (exp_id) => {
-    const URL = `${baseURL}surveys/${exp_id}/participants-answers`;
+    const URL = `${baseURL}api/surveys/${exp_id}/participants-answers`;
     try {
         const response = await axios.get(URL);
         return response.data;
