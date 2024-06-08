@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import SideBarItem from './SideBarItem';
 import {
     AiOutlineExperiment,
     AiOutlineFileSearch,
     AiOutlineBarChart,
 } from 'react-icons/ai';
+
+import {AuthContext} from "../../context/AuthContext";
+import Loading from "../Loading";
 
 const sideBarItems = [
     {
@@ -35,6 +38,11 @@ const sideBarItems = [
 ];
 
 const SideBar = () => {
+    const { user, loading } = useContext(AuthContext);
+
+    if (loading) {
+        return <Loading/>
+    }
     return (
         <div className="min-w-[250px] border-e border-gray-400 bg-slate-200 py-4">
             <div className="flex flex-col items-center">
@@ -46,10 +54,10 @@ const SideBar = () => {
                 <div className="mt-4 flex flex-col items-center gap-1">
                     <img
                         className="inline-block size-[62px] rounded-full"
-                        src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
+                        src= {user.researcher_photo_url}
                         alt="Image Description"
                     />
-                    <p className="text-lg">Kobi Braynet</p>
+                    <p className="text-lg">{user.researcher_name}</p>
                 </div>
             </div>
             <div className="my-4 border-t border-gray-300"></div>

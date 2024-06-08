@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const baseURL = process.env.REACT_APP_CHICHAT_API_URL + 'studies';
+const baseURL = process.env.REACT_APP_CHICHAT_API_URL + 'api/' + 'studies';
 
 const getAllResearches = async () => {
     try {
-        const response = await axios.get(baseURL);
+        const response = await axios.get(baseURL, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.error('Failed to fetch experiments', error);
@@ -14,7 +14,7 @@ const getAllResearches = async () => {
 
 const getResearchById = async (id) => {
     try {
-        const response = await axios.get(baseURL + `/${id}`);
+        const response = await axios.get(baseURL + `/${id}`, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.error('Failed to fetch experiments', error);
@@ -24,7 +24,7 @@ const getResearchById = async (id) => {
 
 const createResearch = async (study) => {
     try {
-        const response = await axios.post(baseURL, study);
+        const response = await axios.post(baseURL, study, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.error('Failed to create study', error);
@@ -34,7 +34,7 @@ const createResearch = async (study) => {
 
 const getAllExperimentsOfResearch = async (id) => {
     try {
-        const response = await axios.get(baseURL + `/experiments/${id}`);
+        const response = await axios.get(baseURL + `/experiments/${id}`, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.error('Failed to fetch experiments', error);
@@ -47,7 +47,7 @@ const updateResearchPrompt = async (study_id, prompt) => {
         const response = await axios.put(baseURL, {
             study_id,
             study_prompt: prompt,
-        });
+        }, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.error('Failed to update study prompt', error);
@@ -60,7 +60,7 @@ const updateResearchDescription = async (study_id, description) => {
         const response = await axios.put(baseURL, {
             study_id,
             study_description: description,
-        });
+        }, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.error('Failed to update study description', error);
