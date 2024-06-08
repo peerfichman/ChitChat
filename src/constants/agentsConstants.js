@@ -9,9 +9,10 @@ const OpinionAlignment = Object.freeze({
 });
 
 const TalkingStyle = Object.freeze({
-    FORMAL: 'Formal',
-    FRIENDLY: 'Friendly',
-    CASUAL: 'Casual',
+    SARCASTIC: 'Sarcastic',
+    EMPHATIC: 'Emphatic',
+    CHARISMATIC: 'Charismatic',
+    RESERVED: 'Reserved',
 });
 
 const ActivityLevels = Object.freeze({
@@ -32,7 +33,7 @@ const AgentCardTitles = Object.freeze({
     NAME: 'Name',
     SENTIMENT: 'Sentiment',
     OPINION_ALIGNMENT: 'Opinion Alignment',
-    ACTIVITY_LEVEL: 'Activity Level', // 1-3
+    ACTIVITY_LEVEL: 'Response Probability', // 1-3
     TALKING_STYLE: 'Talking Style',
     NUMBER_OF_MESSAGES: 'Number of Messages to Reply to', //1-5
 });

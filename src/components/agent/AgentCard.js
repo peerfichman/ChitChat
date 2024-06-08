@@ -4,17 +4,14 @@ import Range from './Range';
 import {
     Sentiments,
     OpinionAlignment,
-    ActivityLevels,
     NumberOfMessages,
-    listOfTopics,
     AgentCardTitles,
     AgentParametersInDB,
     TalkingStyle,
 } from '../../constants/agentsConstants';
-import CheckboxList from './checkboxList';
 import SelectBlock from './SelectBlock';
 
-const AgentCard = ({ relevantAgent, agents, setAgent }) => {
+const AgentCard = ({ relevantAgent, agents, setAgent, change_checkbox }) => {
     const [activityLevel, setActivityLevel] = useState(
         relevantAgent.activity_level,
     );
@@ -36,6 +33,9 @@ const AgentCard = ({ relevantAgent, agents, setAgent }) => {
             (agent) => agent.id !== relevantAgent.id,
         );
         setAgent(updatedAgents);
+        if (updatedAgents.length <= 1) {
+            change_checkbox('simultaneous_responses', false);
+        }
     };
 
     const modifyActivityRange = (value, field) => {
@@ -104,8 +104,9 @@ const AgentCard = ({ relevantAgent, agents, setAgent }) => {
                     value={activityLevel}
                     setValue={modifyActivityRange}
                     min={0}
-                    max={ActivityLevels.ACTIVITY_3}
+                    max={100}
                     agentField={AgentParametersInDB.ACTIVITY_LEVEL}
+                    isPrecentage={true}
                 />
                 <Range
                     title={AgentCardTitles.NUMBER_OF_MESSAGES}

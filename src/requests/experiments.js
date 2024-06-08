@@ -34,6 +34,7 @@ const createExperiment = async (experiment, agents, study_id) => {
                 exp_name: experiment.expName,
                 exp_status: statusOptions.NOT_STARTED,
                 exp_num_participants: experiment.exp_num_participants,
+                simultaneous_responses: experiment.simultaneous_responses,
                 study_id,
             },
             agents,

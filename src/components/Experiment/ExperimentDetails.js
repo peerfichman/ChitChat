@@ -4,8 +4,10 @@ import { chatURL } from '../../constants/generalConstants';
 import { statusOptions } from '../../constants/experimentsConstants';
 import EditableDetailObject from './../EditableDetailObject';
 import { updateExperimentPrompt } from '../../requests/experiments';
+import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 
 const ExperimentDetails = ({ experiment }) => {
+    console.log(experiment);
     const [prompt, setPrompt] = useState(experiment.exp_provoking_prompt);
     const [isEditingPrompt, setIsEditingPrompt] = useState(false);
     return (
@@ -26,21 +28,18 @@ const ExperimentDetails = ({ experiment }) => {
                 isEditing={isEditingPrompt}
                 setIsEditing={setIsEditingPrompt}
             />
-            {experiment.exp_status == statusOptions.NOT_STARTED ? (
+            <DetailObject
+                title="Login Link"
+                value={`${chatURL}/${experiment.exp_id}`}
+            />
+            {experiment.simultaneous_responses ? (
                 <DetailObject
-                    title="Login Link"
-                    value="Start the experiment to get the login link"
+                    title="Agents Response"
+                    value={'Simultaneously'}
                 />
             ) : (
-                <DetailObject
-                    title="Login Link"
-                    value={`${chatURL}/${experiment.exp_id}`}
-                />
+                <DetailObject title="Agents Response" value={'Individually'} />
             )}
-            <DetailObject
-                title="Maximum Participants"
-                value={experiment.exp_num_participants}
-            />
         </div>
     );
 };

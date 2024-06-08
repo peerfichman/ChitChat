@@ -7,12 +7,7 @@ import UserSentimentGraph from './UserSentimentGraph';
 import PageTitle from '../PageTitle';
 import { ViewOptions } from '../../constants/metricsConstants';
 import Tab from '../Tab';
-import {
-    getNeo4jGraph,
-    getSurveyResults,
-    createNetworkXGraph,
-} from '../../requests/metric';
-import { createGraph } from './utils/graphUtils';
+import { getSurveyResults, createNetworkXGraph } from '../../requests/metric';
 import Loading from './../Loading';
 import { getMessagesByCollectionId } from '../../requests/FireBase';
 import AllMessagesGraphs from './AllMessagesGraphs';
