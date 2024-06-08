@@ -116,7 +116,7 @@ const CreateExperiment = () => {
                 [AgentParametersInDB.SENTIMENT]: Sentiments.POSITIVE,
                 [AgentParametersInDB.OPINION_ALIGNMENT]:
                     OpinionAlignment.SUPPORT,
-                [AgentParametersInDB.TALKING_STYLE]: TalkingStyle.EMPHATIC,
+                [AgentParametersInDB.TALKING_STYLE]: TalkingStyle.RESERVED,
                 [AgentParametersInDB.ACTIVITY_LEVEL]: 20,
                 [AgentParametersInDB.NUMBER_OF_MESSAGES]:
                     NumberOfMessages.ACTIVITY_3,
