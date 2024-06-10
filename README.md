@@ -23,3 +23,9 @@ Data Storage: PostgreSQL is used for efficient and reliable data storage.
 To access the platform, navigate to the following URL:
 
 [ChitChat Platform](https://chitchat-chat-d9fd9.web.app/login)
+
+## Platform Images
+
+Here are some screenshots of the ChitChat platform:
+
+![statistics](https://github.com/peerfichman/ChitChat/assets/116559858/c7a6e88d-5683-4804-a432-546c1e1134a5)
