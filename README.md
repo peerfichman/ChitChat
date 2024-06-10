@@ -17,3 +17,9 @@ Charts detailing both individual participant contributions and collective outcom
 Backend: Utilized Node.js with Express for the backend API.
 
 Data Storage: PostgreSQL is used for efficient and reliable data storage.
+
+## Usage
+
+To access the platform, navigate to the following URL:
+
+ChitChat Platform
