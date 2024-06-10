@@ -28,7 +28,7 @@ Utilized **Node.js** with **Express** for the backend API.
 
  - **PostgreSQL** is used for efficient and reliable data storage.
 
- - ** Neo4J** for the graph creation and storage.
+ - **Neo4J** for the graph creation and storage.
 
 # Usage
 
