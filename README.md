@@ -2,9 +2,13 @@
 ChitChat is a software platform developed as a college final project for conducting research experiments across various subjects within a custom-built chat application. The platform is designed using React and integrates pre-defined AI agents (OpenAI) into chat discussions to facilitate advanced interactions and data collection.
 
 # Features
-Custom Chat Application: Built with React to enable dynamic and interactive chat discussions.
+### Custom Chat Application
 
-AI Integration: Researchers can integrate pre-defined AI agents (OpenAI) into chat discussions.
+Built with React to enable dynamic and interactive chat discussions.
+
+### AI Integration
+
+Researchers can integrate pre-defined AI agents (OpenAI) into chat discussions.
 
 Comprehensive Analysis: Generates detailed analyses using NetworkX, including:
 
