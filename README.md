@@ -10,17 +10,25 @@ Built with React to enable dynamic and interactive chat discussions.
 
 Researchers can integrate pre-defined AI agents (OpenAI) into chat discussions.
 
-Comprehensive Analysis: Generates detailed analyses using NetworkX, including:
+### Comprehensive Analysis 
 
-Social Network Analysis graphs (Neo4J)
+Generates detailed analyses using NetworkX, including:
 
-Statistical data
+  Social Network Analysis graphs 
 
-Charts detailing both individual participant contributions and collective outcomes.
+  Statistical data
 
-Backend: Utilized Node.js with Express for the backend API.
+  Charts detailing both individual participant contributions and collective outcomes.
 
-Data Storage: PostgreSQL is used for efficient and reliable data storage.
+### Backend
+
+Utilized Node.js with Express for the backend API.
+
+### Data Storage
+
+  PostgreSQL is used for efficient and reliable data storage.
+
+  Neo4J for the graph creation and storage.
 
 # Usage
 
