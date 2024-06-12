@@ -8,7 +8,6 @@ import {
 
 import { AuthContext } from '../../context/AuthContext';
 import Loading from '../Loading';
-import { logout } from '../../requests/auth';
 
 const sideBarItems = [
     {
@@ -55,14 +54,18 @@ const SideBar = () => {
                 <div className="mt-4 flex flex-col items-center gap-1">
                     <img
                         className="inline-block size-[62px] rounded-full"
-                        src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
+                        src={user?.researcher_photo_url}
                         alt="Image Description"
                     />
-                    <p className="text-lg">Kobi Braynet</p>
+                    <p className="text-lg">{user?.researcher_name}</p>
                 </div>
-                <button
-                    className="mt-3 rounded-lg border bg-blue-500 px-2 py-1 text-sm text-white"
-                    onClick={logout}>
+                <button className="mt-3 rounded-lg border bg-blue-500 px-2 py-1 text-sm text-white">
+                    {/* // onClick={() => {
+                    //     window.open(
+                    //         `${process.env.REACT_APP_CHICHAT_API_URL}auth/logout`,
+                    //         '_self',
+                    //     );
+                    // }}> */}
                     Log Out
                 </button>
             </div>
