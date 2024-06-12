@@ -59,13 +59,14 @@ const SideBar = () => {
                     />
                     <p className="text-lg">{user?.researcher_name}</p>
                 </div>
-                <button className="mt-3 rounded-lg border bg-blue-500 px-2 py-1 text-sm text-white">
-                    {/* // onClick={() => {
-                    //     window.open(
-                    //         `${process.env.REACT_APP_CHICHAT_API_URL}auth/logout`,
-                    //         '_self',
-                    //     );
-                    // }}> */}
+                <button
+                    className="mt-3 rounded-lg border bg-blue-500 px-2 py-1 text-sm text-white"
+                    onClick={() => {
+                        window.open(
+                            `${process.env.REACT_APP_CHICHAT_API_URL}auth/logout`,
+                            '_self',
+                        );
+                    }}>
                     Log Out
                 </button>
             </div>
