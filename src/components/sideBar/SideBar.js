@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import SideBarItem from './SideBarItem';
 import {
     AiOutlineExperiment,
@@ -6,8 +6,9 @@ import {
     AiOutlineBarChart,
 } from 'react-icons/ai';
 
-import {AuthContext} from "../../context/AuthContext";
-import Loading from "../Loading";
+import { AuthContext } from '../../context/AuthContext';
+import Loading from '../Loading';
+import { logout } from '../../requests/auth';
 
 const sideBarItems = [
     {
@@ -41,7 +42,7 @@ const SideBar = () => {
     const { user, loading } = useContext(AuthContext);
 
     if (loading) {
-        return <Loading/>
+        return <Loading />;
     }
     return (
         <div className="min-w-[250px] border-e border-gray-400 bg-slate-200 py-4">
@@ -54,11 +55,16 @@ const SideBar = () => {
                 <div className="mt-4 flex flex-col items-center gap-1">
                     <img
                         className="inline-block size-[62px] rounded-full"
-                        src= {user.researcher_photo_url}
+                        src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
                         alt="Image Description"
                     />
-                    <p className="text-lg">{user.researcher_name}</p>
+                    <p className="text-lg">Kobi Braynet</p>
                 </div>
+                <button
+                    className="mt-3 rounded-lg border bg-blue-500 px-2 py-1 text-sm text-white"
+                    onClick={logout}>
+                    Log Out
+                </button>
             </div>
             <div className="my-4 border-t border-gray-300"></div>
             <nav

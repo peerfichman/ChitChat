@@ -25,7 +25,7 @@ const AgentDetails = ({ agent }) => {
                 />
                 <DetailObject
                     title={AgentCardTitles.ACTIVITY_LEVEL}
-                    value={agent.activity_level}
+                    value={agent.activity_level + '%'}
                     text="text-md"
                 />
                 <DetailObject
