@@ -10,6 +10,8 @@ import ResearchDetails from './ResearchDetails';
 import { useNavigate } from 'react-router';
 import ResearchExperimentsBlock from './ResearchExperimentsBlock';
 import { getDateFormatted } from '../../utils';
+import { updateResearchName } from '../../requests/researches';
+import EditablePageTitle from './../EditablePageTitle';
 
 const Research = () => {
     let { id } = useParams();
@@ -17,6 +19,9 @@ const Research = () => {
     const [research, setResearch] = useState(null);
     const [loading, setLoading] = useState(true);
     const [experiments, setExperiments] = useState([]);
+
+    const [study, setStudy] = useState(null);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,6 +29,7 @@ const Research = () => {
             .then((data) => {
                 const stringDate = getDateFormatted(data.study_created_at);
                 setResearch({ ...data, study_created_at: stringDate });
+                setStudy(data.study_name);
             })
             .catch((error) => {
                 console.error('Failed to fetch research', error);
@@ -59,7 +65,13 @@ const Research = () => {
         <div className="my-10 flex min-h-screen w-full flex-col items-center bg-slate-100">
             <div className=" flex w-fit flex-col gap-4 rounded-xl bg-white p-4 shadow-sm lg:min-w-[590px]">
                 <div className="flex flex-col gap-2">
-                    <PageTitle marginY="">{research.study_name}</PageTitle>
+                    <EditablePageTitle
+                        title={study}
+                        setTitle={(val) => {
+                            setStudy(val);
+                            updateResearchName(id, val);
+                        }}
+                    />
                     <p className="opacity-55">Research</p>
                 </div>
                 <div className="w-full">

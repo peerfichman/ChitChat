@@ -75,7 +75,7 @@ const _addNodesAttributes = async (graph, surveyResults) => {
             NodeAttributes.SIZE,
             attr.size + degree,
         );
-        console.log('NodeAttributes.SENTIMENT', NodeAttributes.SENTIMENT);
+
         graph.setNodeAttribute(
             node_id,
             NodeAttributes.COLOR,

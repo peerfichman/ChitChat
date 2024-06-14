@@ -14,7 +14,9 @@ const getAllResearches = async () => {
 
 const getResearchById = async (id) => {
     try {
-        const response = await axios.get(baseURL + `/${id}`, { withCredentials: true });
+        const response = await axios.get(baseURL + `/${id}`, {
+            withCredentials: true,
+        });
         return response.data;
     } catch (error) {
         console.error('Failed to fetch experiments', error);
@@ -24,7 +26,9 @@ const getResearchById = async (id) => {
 
 const createResearch = async (study) => {
     try {
-        const response = await axios.post(baseURL, study, { withCredentials: true });
+        const response = await axios.post(baseURL, study, {
+            withCredentials: true,
+        });
         return response.data;
     } catch (error) {
         console.error('Failed to create study', error);
@@ -34,7 +38,9 @@ const createResearch = async (study) => {
 
 const getAllExperimentsOfResearch = async (id) => {
     try {
-        const response = await axios.get(baseURL + `/experiments/${id}`, { withCredentials: true });
+        const response = await axios.get(baseURL + `/experiments/${id}`, {
+            withCredentials: true,
+        });
         return response.data;
     } catch (error) {
         console.error('Failed to fetch experiments', error);
@@ -44,10 +50,14 @@ const getAllExperimentsOfResearch = async (id) => {
 
 const updateResearchPrompt = async (study_id, prompt) => {
     try {
-        const response = await axios.put(baseURL, {
-            study_id,
-            study_prompt: prompt,
-        }, { withCredentials: true });
+        const response = await axios.put(
+            baseURL,
+            {
+                study_id,
+                study_prompt: prompt,
+            },
+            { withCredentials: true },
+        );
         return response.data;
     } catch (error) {
         console.error('Failed to update study prompt', error);
@@ -57,13 +67,51 @@ const updateResearchPrompt = async (study_id, prompt) => {
 
 const updateResearchDescription = async (study_id, description) => {
     try {
-        const response = await axios.put(baseURL, {
-            study_id,
-            study_description: description,
-        }, { withCredentials: true });
+        const response = await axios.put(
+            baseURL,
+            {
+                study_id,
+                study_description: description,
+            },
+            { withCredentials: true },
+        );
         return response.data;
     } catch (error) {
-        console.error('Failed to update study description', error);
+        console.error('Failed to update research description', error);
+        return null;
+    }
+};
+
+const updateResearchSubject = async (study_id, newSubject) => {
+    try {
+        const response = await axios.put(
+            baseURL,
+            {
+                study_id,
+                study_subject: newSubject,
+            },
+            { withCredentials: true },
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Failed to update research subject', error);
+        return null;
+    }
+};
+
+const updateResearchName = async (study_id, newName) => {
+    try {
+        const response = await axios.put(
+            baseURL,
+            {
+                study_id,
+                study_name: newName,
+            },
+            { withCredentials: true },
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Failed to update research name', error);
         return null;
     }
 };
@@ -75,4 +123,6 @@ export {
     getAllExperimentsOfResearch,
     updateResearchPrompt,
     updateResearchDescription,
+    updateResearchSubject,
+    updateResearchName
 };

@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-
 import StatisticsColumn from './StatisticsColumn';
-import { GraphAttributes } from '../../constants/metricsConstants';
 
 const GraphStatistics = ({ graph }) => {
-    console.log(graph);
-    const [statistics, setStatistics] = useState({
+    const statistics = {
         Nodes: graph.nodes.length,
         total_edges: graph.links.length,
         Positive_Edges: graph.graph.positiveEdges,
@@ -18,7 +15,7 @@ const GraphStatistics = ({ graph }) => {
         reciprocity: graph.graph.reciprocity,
         transitivity: graph.graph.transitivity,
         pathLength: graph.graph.pathLength,
-    });
+    };
 
     return (
         <div className="flex h-full w-full flex-col gap-3 pb-3">
@@ -39,7 +36,7 @@ const GraphStatistics = ({ graph }) => {
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                     <StatisticsColumn
                         title={'Positive Edges'}
-                        value={`${Math.round(statistics['Positive_Edges'] * 100) }%`}
+                        value={`${Math.round(statistics['Positive_Edges'] * 100)}%`}
                     />
                     <StatisticsColumn
                         title={'Negative Edges'}

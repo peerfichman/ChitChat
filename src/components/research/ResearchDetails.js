@@ -4,13 +4,16 @@ import { useState } from 'react';
 import {
     updateResearchDescription,
     updateResearchPrompt,
+    updateResearchSubject,
 } from '../../requests/researches';
 
 const ResearchDetails = ({ study }) => {
     const [prompt, setPrompt] = useState(study.study_prompt);
     const [description, setDescription] = useState(study.study_description);
+    const [subject, setSubject] = useState(study.study_subject);
     const [isEditingPrompt, setIsEditingPrompt] = useState(false);
     const [isEditingDesc, setIsEditingDesc] = useState(false);
+    const [isEditingSubject, setIsEditingSubject] = useState(false);
 
     return (
         <div className="grid w-full grid-cols-1 lg:grid-cols-2">
@@ -25,7 +28,16 @@ const ResearchDetails = ({ study }) => {
                 isEditing={isEditingPrompt}
                 setIsEditing={setIsEditingPrompt}
             />
-            <DetailObject title="Subject" value={study.study_subject} />
+            <EditableDetailObject
+                title="Subject"
+                value={subject}
+                setValue={(val) => {
+                    setSubject(val);
+                    updateResearchSubject(study.study_id, val);
+                }}
+                isEditing={isEditingSubject}
+                setIsEditing={setIsEditingSubject}
+            />
             <EditableDetailObject
                 title="Description"
                 value={description}

@@ -14,7 +14,7 @@ const GraphComponent = ({ graph, onClickNode }) => {
             }
         },
     };
-    console.log(graph);
+
     return (
         <div className="rounded-2 mx-2 h-[850px] border border-gray-800 bg-slate-200 shadow-md md:w-2/3">
             <Graph
@@ -22,14 +22,6 @@ const GraphComponent = ({ graph, onClickNode }) => {
                 key={uuidv4()}
                 graph={{
                     nodes: graph.nodes.map((node) => {
-                        console.log('node.color', node.color);
-                        console.log('node.sentiment', node.sentiment);
-                        console.log(
-                            _LightenDarkenColor(
-                                node.color,
-                                20 * node.sentiment,
-                            ),
-                        );
                         return {
                             ...node,
                             color: _LightenDarkenColor(

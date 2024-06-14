@@ -59,10 +59,9 @@ const getSurveyResults = async (exp_id) => {
 
 const createNetworkXGraph = async (messages) => {
     const URL = `${pythonBaseURL}graph/`;
-    console.log(URL);
     try {
         const response = await axios.post(URL, [...messages]);
-        console.log('response', response.data);
+
         return response.data;
     } catch (error) {
         console.error('Failed to fetch metric', error);

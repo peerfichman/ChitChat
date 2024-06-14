@@ -12,6 +12,8 @@ import ChangeStatusButton from '../ChangeStatusButton';
 import AgentsBlock from '../agent/AgentsBlock';
 import PageTitle from '../PageTitle';
 import { getDateFormatted } from '../../utils';
+import EditablePageTitle from './../EditablePageTitle';
+import { updateExperimentName } from '../../requests/experiments';
 
 const Experiment = () => {
     let { id } = useParams();
@@ -19,11 +21,14 @@ const Experiment = () => {
     const [experiment, setExperiment] = useState(null);
     const [loading, setLoading] = useState(true);
     const [Agents, setAgents] = useState([]);
+    const [experimentName, setExperimentName] = useState(null);
+
     useEffect(() => {
         getExperimentById(id)
             .then((data) => {
                 const stringDate = getDateFormatted(data.exp.exp_crated_at);
                 setExperiment({ ...data.exp, exp_created_at: stringDate });
+                setExperimentName(data.exp.exp_name);
                 setAgents(data.agents);
             })
             .catch((error) => {
@@ -47,12 +52,23 @@ const Experiment = () => {
         <div className="flex min-h-screen w-full flex-col items-center bg-slate-100">
             <div className="my-20 flex flex-col gap-4 rounded-xl bg-white p-4 shadow-sm lg:min-w-[590px]">
                 <div className="flex flex-col gap-2">
-                    <PageTitle marginY="">{experiment.exp_name}</PageTitle>
+                    {/* <PageTitle marginY="">{experiment.exp_name}</PageTitle> */}
+                    <EditablePageTitle
+                        title={experimentName}
+                        setTitle={(val) => {
+                            setExperimentName(val);
+                            updateExperimentName(id, val);
+                        }}
+                    />
                     <p className="opacity-55">Experiment</p>
                 </div>
                 <Status status={experiment.exp_status} />
                 <div className="w-full">
-                    <ExperimentDetails experiment={experiment} />
+                    <ExperimentDetails
+                        experiment={experiment}
+                        setExperiment={setExperiment}
+                        agentsLength={Agents.length}
+                    />
                 </div>
                 <AgentsBlock agents={Agents} />
                 <div className="flex h-20 items-center justify-end">

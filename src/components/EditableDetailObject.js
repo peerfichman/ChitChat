@@ -21,13 +21,14 @@ const EditableDetailObject = ({
             onClickSave={handleSave}
         />
     ) : (
-        <DetailObject
-            title={title}
-            value={value}
-            text={text_size}
-            isEditable={true}
-            onClickEdit={() => setIsEditing(true)}
-        />
+            <DetailObject
+                title={title}
+                value={value}
+                text={text_size}
+                isEditable={true}
+                onClickEdit={() => setIsEditing(true)}
+            />
+     
     );
 };
 
