@@ -13,6 +13,7 @@ const TalkingStyle = Object.freeze({
     EMPHATIC: 'Emphatic',
     CHARISMATIC: 'Charismatic',
     RESERVED: 'Reserved',
+    AGGRESIVE: 'Aggressive',
 });
 
 const ActivityLevels = Object.freeze({
